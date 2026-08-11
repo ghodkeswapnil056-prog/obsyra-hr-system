@@ -39,18 +39,43 @@ export function compileTemplate(rawHtml, employee, company, overrides = {}) {
   const genderPronounSmall = employee.gender === "Female" ? "she" : "he";
 
   // Calculate annual breakdown if salary present
-  const basicMonthly = overrides.basicSalary !== undefined ? parseFloat(overrides.basicSalary) : (employee.salary?.basic || 0);
+  const basicMonthly = overrides.basicSalary !== undefined ? parseFloat(overrides.basicSalary) : (employee.salary?.basic || 37500);
   const hraMonthly = overrides.hraSalary !== undefined ? parseFloat(overrides.hraSalary) : (employee.salary?.hra || Math.round(basicMonthly * 0.5));
-  const grossMonthly = overrides.grossSalary !== undefined ? parseFloat(overrides.grossSalary) : (employee.salary?.grossMonthly || (basicMonthly + hraMonthly));
+  const grossMonthly = overrides.grossSalary !== undefined ? parseFloat(overrides.grossSalary) : (employee.salary?.grossMonthly || (basicMonthly + hraMonthly + 1600 + 13400));
   const allowancesMonthly = Math.max(0, grossMonthly - basicMonthly - hraMonthly);
   const ctcAnnual = overrides.annualCtc !== undefined ? parseFloat(overrides.annualCtc) : (employee.salary?.ctcAnnual || (grossMonthly * 12));
   const pfMonthly = employee.salary?.pfDeduction || 1800;
 
-  const defaultSub = overrides.subjectLine || overrides.subject_line || `Confirmation of Employment`;
+  const defaultSub = overrides.subjectLine || overrides.subject_line || `Monthly Salary Slip / Payslip`;
+
+  // Calculated Deductions & Payouts for Salary Slip
+  const conveyanceVal = overrides.conveyance !== undefined ? parseFloat(overrides.conveyance) : 1600;
+  const specialAllowanceVal = overrides.specialAllowance !== undefined ? parseFloat(overrides.specialAllowance) : Math.max(0, allowancesMonthly - conveyanceVal);
+  const otherAllowanceVal = overrides.otherAllowance !== undefined ? parseFloat(overrides.otherAllowance) : 0;
+  const overtimeVal = overrides.overtime !== undefined ? parseFloat(overrides.overtime) : 0;
+  const incentiveVal = overrides.incentive !== undefined ? parseFloat(overrides.incentive) : 0;
+
+  const totalEarningsVal = overrides.totalEarnings !== undefined ? parseFloat(overrides.totalEarnings) : (basicMonthly + hraMonthly + conveyanceVal + specialAllowanceVal + otherAllowanceVal + overtimeVal + incentiveVal);
+
+  const employeePfVal = overrides.employeePf !== undefined ? parseFloat(overrides.employeePf) : pfMonthly;
+  const profTaxVal = overrides.professionalTax !== undefined ? parseFloat(overrides.professionalTax) : 200;
+  const tdsVal = overrides.tds !== undefined ? parseFloat(overrides.tds) : 1500;
+  const employeeEsiVal = overrides.employeeEsi !== undefined ? parseFloat(overrides.employeeEsi) : 0;
+  const loanDeductionVal = overrides.loanDeduction !== undefined ? parseFloat(overrides.loanDeduction) : 0;
+  const lopDeductionVal = overrides.lopDeduction !== undefined ? parseFloat(overrides.lopDeduction) : 0;
+  const otherDeductionVal = overrides.otherDeduction !== undefined ? parseFloat(overrides.otherDeduction) : 0;
+
+  const totalDeductionsVal = overrides.totalDeductions !== undefined ? parseFloat(overrides.totalDeductions) : (employeePfVal + profTaxVal + tdsVal + employeeEsiVal + loanDeductionVal + lopDeductionVal + otherDeductionVal);
+  const netSalaryVal = overrides.netSalary !== undefined ? parseFloat(overrides.netSalary) : (totalEarningsVal - totalDeductionsVal);
+
+  const employerPfVal = overrides.employerPf !== undefined ? parseFloat(overrides.employerPf) : pfMonthly;
+  const employerEsiVal = overrides.employerEsi !== undefined ? parseFloat(overrides.employerEsi) : 0;
+  const otherEmployerContribVal = overrides.otherEmployerContribution !== undefined ? parseFloat(overrides.otherEmployerContribution) : 0;
+  const totalEmployerContribVal = overrides.totalEmployerContribution !== undefined ? parseFloat(overrides.totalEmployerContribution) : (employerPfVal + employerEsiVal + otherEmployerContribVal);
 
   // Comprehensive Base Variable Dictionary
   const variables = {
-    // Subject Line Alias Keys (snake_case and camelCase)
+    // Subject Line Alias Keys
     subject_line: defaultSub,
     subjectLine: defaultSub,
 
@@ -61,6 +86,7 @@ export function compileTemplate(rawHtml, employee, company, overrides = {}) {
     company_gstin: company.gstin,
     company_email: company.email,
     company_phone: company.phone,
+    company_contact: company.phone,
     company_website: company.website,
     company_hr_email: company.hrEmail,
     company_address: company.corporateAddress,
@@ -69,9 +95,54 @@ export function compileTemplate(rawHtml, employee, company, overrides = {}) {
     signatory_designation: company.authorizedSignatoryDesignation,
     authorized_person_designation: company.authorizedSignatoryDesignation,
 
+    // Monthly Payslip / Salary Slip Specific Variables
+    salary_slip_number: overrides.docNumber || "OBSYRA/PAY/2026/0801",
+    salary_month: overrides.salaryMonth || "August",
+    salary_year: overrides.salaryYear || "2026",
+    pay_period: overrides.payPeriod || "01 August 2026 – 31 August 2026",
+    paid_days: overrides.paidDays || "31",
+    working_days: overrides.workingDays || "31",
+    lop_days: overrides.lopDays || "0",
+    masked_bank_account: overrides.maskedBankAccount || "XXXX XXXX 4821",
+    pan_number: overrides.panNumber || "ABCDE1234F",
+    uan_number: overrides.uanNumber || "101298473612",
+
+    // Earnings & Deductions Breakdown
+    basic_salary: formatCurrency(basicMonthly),
+    hra: formatCurrency(hraMonthly),
+    conveyance: formatCurrency(conveyanceVal),
+    special_allowance: formatCurrency(specialAllowanceVal),
+    other_allowance: formatCurrency(otherAllowanceVal),
+    overtime: formatCurrency(overtimeVal),
+    incentive: formatCurrency(incentiveVal),
+    total_earnings: formatCurrency(totalEarningsVal),
+
+    employee_pf: formatCurrency(employeePfVal),
+    professional_tax: formatCurrency(profTaxVal),
+    tds: formatCurrency(tdsVal),
+    employee_esi: formatCurrency(employeeEsiVal),
+    loan_deduction: formatCurrency(loanDeductionVal),
+    lop_deduction: formatCurrency(lopDeductionVal),
+    other_deduction: formatCurrency(otherDeductionVal),
+    total_deductions: formatCurrency(totalDeductionsVal),
+
+    net_salary: formatCurrency(netSalaryVal),
+    net_salary_in_words: numberToWords(netSalaryVal),
+
+    employer_pf: formatCurrency(employerPfVal),
+    employer_esi: formatCurrency(employerEsiVal),
+    other_employer_contribution: formatCurrency(otherEmployerContribVal),
+    total_employer_contribution: formatCurrency(totalEmployerContribVal),
+    monthly_ctc: formatCurrency(Math.round(ctcAnnual / 12)),
+
+    payment_date: formatDate(overrides.paymentDate || overrides.issueDate || new Date()),
+    payment_mode: overrides.paymentMode || "Bank Transfer (NEFT/RTGS)",
+    bank_name: overrides.bankName || "HDFC Bank Ltd.",
+    payment_reference: overrides.paymentReference || "HDFC-NEFT-20260811-098231",
+
     // Document Metadata & Dates
-    doc_number: overrides.docNumber || "OBSYRA/HR/CONF/2026/0001",
-    docNumber: overrides.docNumber || "OBSYRA/HR/CONF/2026/0001",
+    doc_number: overrides.docNumber || "OBSYRA/PAY/2026/0801",
+    docNumber: overrides.docNumber || "OBSYRA/PAY/2026/0801",
     confirmation_letter_number: overrides.docNumber || "OBSYRA/HR/CONF/2026/0001",
     confirmation_date: formatDate(overrides.confirmationDate || overrides.issueDate || new Date()),
     joining_report_number: overrides.docNumber || "OBSYRA/HR/JOIN/2026/0001",
@@ -196,22 +267,6 @@ export function compileTemplate(rawHtml, employee, company, overrides = {}) {
     offer_expiry_date: formatDate(overrides.offerExpiryDate || new Date(Date.now() + 10 * 86400000)),
     offerExpiryDate: formatDate(overrides.offerExpiryDate || new Date(Date.now() + 10 * 86400000)),
 
-    // Warning & PIP Structured Variables
-    review_period_start: formatDate(overrides.reviewPeriodStart || new Date(Date.now() - 60 * 86400000)),
-    review_period_end: formatDate(overrides.reviewPeriodEnd || new Date(Date.now() - 5 * 86400000)),
-    performance_issue_1: overrides.performanceIssue1 || "Inability to meet agreed-upon SLA delivery timelines on 5G network site deployments.",
-    performance_issue_2: overrides.performanceIssue2 || "Variance in quality audit reports and technical configuration documentation.",
-    performance_issue_3: overrides.performanceIssue3 || "Irregular attendance patterns and unauthorized shift tardiness during peak deployment schedules.",
-    performance_issue_4: overrides.performanceIssue4 || "Delay in submitting weekly progress reports and client escalation notices.",
-    previous_discussion_or_notice: overrides.previousDiscussion || "verbal feedback sessions and 1-on-1 performance review meetings held with your Reporting Manager",
-    improvement_requirement_1: overrides.improvementReq1 || "Achieve 100% SLA timeline compliance on all assigned site deployments.",
-    improvement_requirement_2: overrides.improvementReq2 || "Maintain 0% audit defect score across technical configuration deliverables.",
-    improvement_requirement_3: overrides.improvementReq3 || "Ensure strict adherence to designated shift timings and 100% attendance.",
-    improvement_requirement_4: overrides.improvementReq4 || "Submit daily shift handover logs and weekly status reports by 6:00 PM every Friday.",
-    pip_start_date: formatDate(overrides.effectiveDate || new Date()),
-    pip_end_date: formatDate(new Date(Date.parse(overrides.effectiveDate || new Date()) + 30 * 86400000)),
-    employee_comments: overrides.employeeComments || "Acknowledged receipt. PIP action plan reviewed with Manager.",
-
     // Salary Revision & Increment Variables
     ctc: formatCurrency(ctcAnnual),
     annual_ctc: formatCurrency(ctcAnnual),
@@ -254,40 +309,15 @@ export function compileTemplate(rawHtml, employee, company, overrides = {}) {
     settlement_status: overrides.ffStatus || "Completed & Disbursed",
     ff_status: overrides.ffStatus || "Completed & Disbursed",
     settlement_date: formatDate(overrides.settlementDate || new Date()),
-    payment_reference: overrides.paymentReference || "HDFC-NEFT-20260811-098231",
-
-    // Termination Specific Details
-    termination_type: overrides.terminationType || "Business / Operational Requirement",
-    termination_reason: overrides.terminationReason || "Operational restructuring of regional technical deployment teams.",
-    warning_reference: overrides.warningReference || "N/A — Operational Realignment",
-    handover_status: overrides.handoverStatus || "Completed & Verified by Manager",
-    it_clearance_status: overrides.itClearanceStatus || "Revoked & IT Hardware Returned",
-    manager_clearance_status: overrides.managerClearanceStatus || "Approved & Signed",
-    hr_clearance_status: overrides.hrClearanceStatus || "Verified & Archival Completed",
-    finance_clearance_status: overrides.financeClearanceStatus || "Full & Final Settlement Processed",
-
-    // Document Approvals & Audit Trail
-    hr_prepared_by: overrides.hrPreparedBy || "Aisha Verma (Senior HR Specialist)",
-    manager_approval: overrides.managerApproval || "Approved by Avinash Dagdu Aade (Director)",
-
-    // Modular Clause Section Switches
-    showSalaryTable: overrides.showSalaryTable !== undefined ? Boolean(overrides.showSalaryTable) : true,
-    showProbation: overrides.showProbation !== undefined ? Boolean(overrides.showProbation) : true,
-    showConfidentiality: overrides.showConfidentiality !== undefined ? Boolean(overrides.showConfidentiality) : true,
-    showIpClause: overrides.showIpClause !== undefined ? Boolean(overrides.showIpClause) : true,
-    showBackgroundCheck: overrides.showBackgroundCheck !== undefined ? Boolean(overrides.showBackgroundCheck) : true,
-    showDocsChecklist: overrides.showDocsChecklist !== undefined ? Boolean(overrides.showDocsChecklist) : true,
-    showNoticePeriod: overrides.showNoticePeriod !== undefined ? Boolean(overrides.showNoticePeriod) : true,
-    showAcceptanceSheet: overrides.showAcceptanceSheet !== undefined ? Boolean(overrides.showAcceptanceSheet) : true,
 
     // Financial Breakdown
-    basic_salary: formatCurrency(basicMonthly),
+    basic_salary_val: formatCurrency(basicMonthly),
     basic_monthly: formatCurrency(basicMonthly),
     basic_annual: formatCurrency(basicMonthly * 12),
-    hra: formatCurrency(hraMonthly),
+    hra_val: formatCurrency(hraMonthly),
     hra_monthly: formatCurrency(hraMonthly),
     hra_annual: formatCurrency(hraMonthly * 12),
-    special_allowance: formatCurrency(allowancesMonthly),
+    special_allowance_val: formatCurrency(allowancesMonthly),
     allowances_monthly: formatCurrency(allowancesMonthly),
     allowances_annual: formatCurrency(allowancesMonthly * 12),
     monthly_gross: formatCurrency(grossMonthly),

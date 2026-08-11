@@ -1864,6 +1864,196 @@ export const initialTemplates = [
         <div style="margin-top: 25px;"><strong>Authorized Signatory</strong></div>
       </div>
     </div>
+  },
+  {
+    id: "TPL-SLIP-01",
+    code: "SLIP",
+    name: "Monthly Salary Slip / Payslip",
+    category: "Compensation",
+    description: "Official monthly employee salary slip with itemized earnings, deductions, net payout, and employer contributions",
+    body: `<div style="font-family: 'Inter', Arial, sans-serif; color: #1e293b; line-height: 1.5;">
+  <div style="text-align: center; border-bottom: 2px solid #0f172a; padding-bottom: 12px; margin-bottom: 15px;">
+    <h2 style="font-family: 'Outfit', Arial, sans-serif; color: #0f172a; text-transform: uppercase; letter-spacing: 1.5px; margin: 0 0 4px 0; font-size: 20px;">SALARY SLIP</h2>
+    <div style="font-size: 14px; font-weight: bold; color: #1e293b;">{{company_name}}</div>
+    <div style="font-size: 12px; color: #64748b;">{{company_address}}</div>
+    <div style="font-size: 12px; color: #64748b;">Phone: {{company_contact}} | Email: {{company_email}}</div>
+    <div style="margin-top: 8px; font-size: 13.5px; font-weight: bold; color: #4f46e5; background: #f1f5f9; display: inline-block; padding: 4px 14px; border-radius: 4px;">
+      Salary Slip for: {{salary_month}} {{salary_year}}
+    </div>
+  </div>
+
+  <h4 style="color: #334155; margin-top: 12px; margin-bottom: 6px; border-bottom: 1px solid #cbd5e1; padding-bottom: 3px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">EMPLOYEE DETAILS</h4>
+  <table style="width: 100%; border-collapse: collapse; margin: 8px 0 14px 0; font-size: 12.5px;">
+    <tr>
+      <td style="padding: 5px 8px; border: 1px solid #e2e8f0; background: #f8fafc; font-weight: 600; width: 20%;">Employee Name:</td>
+      <td style="padding: 5px 8px; border: 1px solid #e2e8f0; font-weight: bold; width: 30%;">{{employee_name}}</td>
+      <td style="padding: 5px 8px; border: 1px solid #e2e8f0; background: #f8fafc; font-weight: 600; width: 20%;">Employee Code:</td>
+      <td style="padding: 5px 8px; border: 1px solid #e2e8f0; font-family: monospace; font-weight: bold; color: #4f46e5; width: 30%;">{{employee_code}}</td>
+    </tr>
+    <tr>
+      <td style="padding: 5px 8px; border: 1px solid #e2e8f0; background: #f8fafc; font-weight: 600;">Designation:</td>
+      <td style="padding: 5px 8px; border: 1px solid #e2e8f0;">{{designation}}</td>
+      <td style="padding: 5px 8px; border: 1px solid #e2e8f0; background: #f8fafc; font-weight: 600;">Department:</td>
+      <td style="padding: 5px 8px; border: 1px solid #e2e8f0;">{{department}}</td>
+    </tr>
+    <tr>
+      <td style="padding: 5px 8px; border: 1px solid #e2e8f0; background: #f8fafc; font-weight: 600;">Project / Client:</td>
+      <td style="padding: 5px 8px; border: 1px solid #e2e8f0;">{{project_name}}</td>
+      <td style="padding: 5px 8px; border: 1px solid #e2e8f0; background: #f8fafc; font-weight: 600;">Work Location:</td>
+      <td style="padding: 5px 8px; border: 1px solid #e2e8f0;">{{work_location}}</td>
+    </tr>
+    <tr>
+      <td style="padding: 5px 8px; border: 1px solid #e2e8f0; background: #f8fafc; font-weight: 600;">Date of Joining:</td>
+      <td style="padding: 5px 8px; border: 1px solid #e2e8f0;">{{joining_date}}</td>
+      <td style="padding: 5px 8px; border: 1px solid #e2e8f0; background: #f8fafc; font-weight: 600;">Pay Period:</td>
+      <td style="padding: 5px 8px; border: 1px solid #e2e8f0;">{{pay_period}}</td>
+    </tr>
+    <tr>
+      <td style="padding: 5px 8px; border: 1px solid #e2e8f0; background: #f8fafc; font-weight: 600;">Paid Days:</td>
+      <td style="padding: 5px 8px; border: 1px solid #e2e8f0; font-weight: bold; color: #10b981;">{{paid_days}} / {{working_days}}</td>
+      <td style="padding: 5px 8px; border: 1px solid #e2e8f0; background: #f8fafc; font-weight: 600;">Leave / LOP Days:</td>
+      <td style="padding: 5px 8px; border: 1px solid #e2e8f0;">{{lop_days}}</td>
+    </tr>
+    <tr>
+      <td style="padding: 5px 8px; border: 1px solid #e2e8f0; background: #f8fafc; font-weight: 600;">Bank Account:</td>
+      <td style="padding: 5px 8px; border: 1px solid #e2e8f0; font-family: monospace;">{{masked_bank_account}}</td>
+      <td style="padding: 5px 8px; border: 1px solid #e2e8f0; background: #f8fafc; font-weight: 600;">PAN / UAN:</td>
+      <td style="padding: 5px 8px; border: 1px solid #e2e8f0; font-family: monospace;">{{pan_number}} | {{uan_number}}</td>
+    </tr>
+  </table>
+
+  <h4 style="color: #334155; margin-top: 12px; margin-bottom: 6px; border-bottom: 1px solid #cbd5e1; padding-bottom: 3px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">EARNINGS & DEDUCTIONS</h4>
+  <table style="width: 100%; border-collapse: collapse; margin: 8px 0 14px 0; font-size: 12px;">
+    <thead>
+      <tr style="background-color: #f8fafc; border-bottom: 2px solid #cbd5e1; text-align: left;">
+        <th style="padding: 6px 8px; border: 1px solid #e2e8f0; width: 32%;">Earnings</th>
+        <th style="padding: 6px 8px; border: 1px solid #e2e8f0; text-align: right; width: 18%;">Amount (₹)</th>
+        <th style="padding: 6px 8px; border: 1px solid #e2e8f0; width: 32%;">Deductions</th>
+        <th style="padding: 6px 8px; border: 1px solid #e2e8f0; text-align: right; width: 18%;">Amount (₹)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding: 5px 8px; border: 1px solid #e2e8f0;">Basic Salary</td>
+        <td style="padding: 5px 8px; border: 1px solid #e2e8f0; text-align: right;">{{basic_salary}}</td>
+        <td style="padding: 5px 8px; border: 1px solid #e2e8f0;">Employee PF</td>
+        <td style="padding: 5px 8px; border: 1px solid #e2e8f0; text-align: right;">{{employee_pf}}</td>
+      </tr>
+      <tr>
+        <td style="padding: 5px 8px; border: 1px solid #e2e8f0;">HRA</td>
+        <td style="padding: 5px 8px; border: 1px solid #e2e8f0; text-align: right;">{{hra}}</td>
+        <td style="padding: 5px 8px; border: 1px solid #e2e8f0;">Professional Tax</td>
+        <td style="padding: 5px 8px; border: 1px solid #e2e8f0; text-align: right;">{{professional_tax}}</td>
+      </tr>
+      <tr>
+        <td style="padding: 5px 8px; border: 1px solid #e2e8f0;">Conveyance Allowance</td>
+        <td style="padding: 5px 8px; border: 1px solid #e2e8f0; text-align: right;">{{conveyance}}</td>
+        <td style="padding: 5px 8px; border: 1px solid #e2e8f0;">TDS</td>
+        <td style="padding: 5px 8px; border: 1px solid #e2e8f0; text-align: right;">{{tds}}</td>
+      </tr>
+      <tr>
+        <td style="padding: 5px 8px; border: 1px solid #e2e8f0;">Special Allowance</td>
+        <td style="padding: 5px 8px; border: 1px solid #e2e8f0; text-align: right;">{{special_allowance}}</td>
+        <td style="padding: 5px 8px; border: 1px solid #e2e8f0;">ESI</td>
+        <td style="padding: 5px 8px; border: 1px solid #e2e8f0; text-align: right;">{{employee_esi}}</td>
+      </tr>
+      <tr>
+        <td style="padding: 5px 8px; border: 1px solid #e2e8f0;">Other Allowance</td>
+        <td style="padding: 5px 8px; border: 1px solid #e2e8f0; text-align: right;">{{other_allowance}}</td>
+        <td style="padding: 5px 8px; border: 1px solid #e2e8f0;">Loan / Advance</td>
+        <td style="padding: 5px 8px; border: 1px solid #e2e8f0; text-align: right;">{{loan_deduction}}</td>
+      </tr>
+      <tr>
+        <td style="padding: 5px 8px; border: 1px solid #e2e8f0;">Overtime</td>
+        <td style="padding: 5px 8px; border: 1px solid #e2e8f0; text-align: right;">{{overtime}}</td>
+        <td style="padding: 5px 8px; border: 1px solid #e2e8f0;">LOP Deduction</td>
+        <td style="padding: 5px 8px; border: 1px solid #e2e8f0; text-align: right;">{{lop_deduction}}</td>
+      </tr>
+      <tr>
+        <td style="padding: 5px 8px; border: 1px solid #e2e8f0;">Incentive / Bonus</td>
+        <td style="padding: 5px 8px; border: 1px solid #e2e8f0; text-align: right;">{{incentive}}</td>
+        <td style="padding: 5px 8px; border: 1px solid #e2e8f0;">Other Deduction</td>
+        <td style="padding: 5px 8px; border: 1px solid #e2e8f0; text-align: right;">{{other_deduction}}</td>
+      </tr>
+      <tr style="background-color: #f1f5f9; font-weight: bold;">
+        <td style="padding: 6px 8px; border: 1.5px solid #cbd5e1;">Total Earnings</td>
+        <td style="padding: 6px 8px; border: 1.5px solid #cbd5e1; text-align: right; color: #166534;">{{total_earnings}}</td>
+        <td style="padding: 6px 8px; border: 1.5px solid #cbd5e1;">Total Deductions</td>
+        <td style="padding: 6px 8px; border: 1.5px solid #cbd5e1; text-align: right; color: #991b1b;">{{total_deductions}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="background: #f0fdf4; border: 1.5px solid #10b981; padding: 10px 14px; border-radius: 6px; margin-bottom: 12px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px;">
+      <div><strong>Gross Earnings:</strong> {{total_earnings}} &nbsp;|&nbsp; <strong>Total Deductions:</strong> {{total_deductions}}</div>
+      <div style="font-size: 15px; font-weight: bold; color: #15803d;">Net Salary Payable: {{net_salary}}</div>
+    </div>
+    <div style="margin-top: 4px; font-size: 12px; color: #166534;">
+      <strong>Amount in Words:</strong> {{net_salary_in_words}}
+    </div>
+  </div>
+
+  <h4 style="color: #334155; margin-top: 10px; margin-bottom: 6px; border-bottom: 1px solid #cbd5e1; padding-bottom: 3px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">EMPLOYER CONTRIBUTIONS</h4>
+  <table style="width: 100%; border-collapse: collapse; margin: 6px 0 10px 0; font-size: 12px;">
+    <thead>
+      <tr style="background-color: #f8fafc; border-bottom: 2px solid #cbd5e1; text-align: left;">
+        <th style="padding: 5px 8px; border: 1px solid #e2e8f0; width: 70%;">Contribution Particulars</th>
+        <th style="padding: 5px 8px; border: 1px solid #e2e8f0; text-align: right; width: 30%;">Amount (₹)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding: 4px 8px; border: 1px solid #e2e8f0;">Employer PF Contribution</td>
+        <td style="padding: 4px 8px; border: 1px solid #e2e8f0; text-align: right;">{{employer_pf}}</td>
+      </tr>
+      <tr>
+        <td style="padding: 4px 8px; border: 1px solid #e2e8f0;">Employer ESI Contribution</td>
+        <td style="padding: 4px 8px; border: 1px solid #e2e8f0; text-align: right;">{{employer_esi}}</td>
+      </tr>
+      <tr>
+        <td style="padding: 4px 8px; border: 1px solid #e2e8f0;">Other Employer Contribution</td>
+        <td style="padding: 4px 8px; border: 1px solid #e2e8f0; text-align: right;">{{other_employer_contribution}}</td>
+      </tr>
+      <tr style="background-color: #f8fafc; font-weight: bold;">
+        <td style="padding: 5px 8px; border: 1px solid #cbd5e1;">Total Employer Contribution</td>
+        <td style="padding: 5px 8px; border: 1px solid #cbd5e1; text-align: right; color: #4f46e5;">{{total_employer_contribution}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="font-size: 11.5px; color: #64748b; margin-bottom: 10px;">
+    <strong>Monthly CTC:</strong> {{monthly_ctc}} &nbsp;|&nbsp; <strong>Annual CTC:</strong> {{annual_ctc}}
+  </div>
+
+  <h4 style="color: #334155; margin-top: 10px; margin-bottom: 6px; border-bottom: 1px solid #cbd5e1; padding-bottom: 3px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">PAYMENT DETAILS</h4>
+  <table style="width: 100%; border-collapse: collapse; margin: 6px 0 10px 0; font-size: 12px;">
+    <tr>
+      <td style="padding: 4px 8px; border: 1px solid #e2e8f0; background: #f8fafc; font-weight: 600; width: 25%;">Payment Date:</td>
+      <td style="padding: 4px 8px; border: 1px solid #e2e8f0; width: 25%;">{{payment_date}}</td>
+      <td style="padding: 4px 8px; border: 1px solid #e2e8f0; background: #f8fafc; font-weight: 600; width: 25%;">Payment Mode:</td>
+      <td style="padding: 4px 8px; border: 1px solid #e2e8f0; width: 25%;">{{payment_mode}}</td>
+    </tr>
+    <tr>
+      <td style="padding: 4px 8px; border: 1px solid #e2e8f0; background: #f8fafc; font-weight: 600;">Bank Name:</td>
+      <td style="padding: 4px 8px; border: 1px solid #e2e8f0;">{{bank_name}}</td>
+      <td style="padding: 4px 8px; border: 1px solid #e2e8f0; background: #f8fafc; font-weight: 600;">Reference No.:</td>
+      <td style="padding: 4px 8px; border: 1px solid #e2e8f0; font-family: monospace;">{{payment_reference}}</td>
+    </tr>
+  </table>
+
+  <div style="margin-top: 12px; background: #fafafa; border: 1px solid #e2e8f0; padding: 8px 12px; border-radius: 6px; font-size: 11px; color: #64748b; line-height: 1.4;">
+    <strong>Declaration:</strong> This salary slip is generated electronically by <strong>{{company_name}}</strong> and contains the salary and payroll information recorded for the above-mentioned pay period. The information contained herein is confidential and intended solely for the employee's official and employment-related use.
+  </div>
+
+  <div style="margin-top: 15px; display: flex; justify-content: space-between; align-items: flex-end;">
+    <div style="font-size: 11px; color: #64748b; font-style: italic;">
+      *This is a computer-generated salary slip and does not require a physical signature unless specified.
+    </div>
+    <div style="text-align: right; font-size: 11.5px;">
+      <div>For <strong>{{company_name}}</strong></div>
+      <div style="margin-top: 15px; font-weight: bold; color: #0f172a;">{{authorized_signatory}}</div>
+      <div style="color: #64748b; font-size: 11px;">{{signatory_designation}}<br>Payroll / HR Department</div>
+    </div>
   </div>
 </div>`
   }
