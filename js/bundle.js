@@ -2356,17 +2356,23 @@ class HRStore {
   constructor() {
     window.store = this;
     this.listeners = [];
+
+    const savedUser = this.loadFromStorage('obsyra_currentUser', {
+      employeeId: "OBS-OPS-26-001",
+      name: "Swapnil Ghodke",
+      email: "swapnil.ghodke@obsyra.com",
+      role: "Super Admin", // Super Admin, HR Admin, HR Executive, Department Manager, Employee
+      designation: "Head of HR",
+      department: "Executive Management",
+      avatar: "SG"
+    });
+
     this.state = {
       company: this.loadFromStorage('obsyra_company', (typeof defaultCompany !== 'undefined' ? defaultCompany : companySettings)),
       employees: this.loadFromStorage('obsyra_employees', initialEmployees),
       templates: this.loadFromStorage('obsyra_templates', initialTemplates),
       history: this.loadFromStorage('obsyra_history', this.getInitialHistory()),
-      currentUser: {
-        name: "Swapnil Ghodke",
-        email: "swapnil.ghodke@obsyra.com",
-        role: "Super Admin", // Super Admin, HR Admin, HR Executive, Manager, Employee
-        avatar: "SG"
-      },
+      currentUser: savedUser,
       activeView: window.pendingView || "dashboard",
       viewParams: window.pendingParams || {}
     };
@@ -2375,6 +2381,76 @@ class HRStore {
       delete window.pendingView;
       delete window.pendingParams;
     }
+  }
+
+  // RBAC Permission Evaluator
+  hasPermission(view) {
+    const role = this.state.currentUser.role;
+    if (role === "Super Admin") return true;
+    
+    if (role === "HR Admin") {
+      return view !== "settings_edit";
+    }
+
+    if (role === "HR Executive") {
+      return ["dashboard", "employees", "profile", "generator", "history", "recruitment", "onboarding", "attendance", "payroll", "performance", "assets", "exit"].includes(view);
+    }
+
+    if (role === "Department Manager") {
+      return ["dashboard", "employees", "profile", "recruitment", "onboarding", "attendance", "performance", "assets"].includes(view);
+    }
+
+    if (role === "Employee") {
+      return ["dashboard", "profile", "attendance", "payroll", "assets"].includes(view);
+    }
+
+    return true;
+  }
+
+  // User Authentication Methods
+  login(employeeId, password) {
+    const emp = this.state.employees.find(e => e.employeeId === employeeId || e.id === employeeId || e.contact?.email === employeeId);
+    if (emp) {
+      let role = "Employee";
+      if (emp.employment?.designation?.includes("Head of HR") || emp.employment?.department === "Executive Management") {
+        role = "Super Admin";
+      } else if (emp.employment?.designation?.includes("Director") || (emp.employment?.designation?.includes("Manager") && emp.employment?.department === "Human Resources")) {
+        role = "HR Admin";
+      } else if (emp.employment?.department === "Human Resources") {
+        role = "HR Executive";
+      } else if (emp.employment?.designation?.includes("Lead") || emp.employment?.designation?.includes("Senior")) {
+        role = "Department Manager";
+      }
+
+      this.state.currentUser = {
+        employeeId: emp.employeeId,
+        name: emp.fullName,
+        email: emp.contact?.email || `${emp.firstName.toLowerCase()}@obsyra.com`,
+        role: role,
+        designation: emp.employment?.designation,
+        department: emp.employment?.department,
+        avatar: `${emp.firstName[0]}${emp.lastName[0]}`
+      };
+      this.saveToStorage('obsyra_currentUser', this.state.currentUser);
+      this.notify();
+      return { success: true, user: this.state.currentUser };
+    } else {
+      return { success: false, message: "Invalid Employee ID or credentials" };
+    }
+  }
+
+  logout() {
+    localStorage.removeItem('obsyra_currentUser');
+    this.state.currentUser = {
+      employeeId: "OBS-GUEST-000",
+      name: "Guest Staff",
+      email: "guest@obsyra.com",
+      role: "Employee",
+      designation: "Staff Member",
+      department: "General",
+      avatar: "GU"
+    };
+    this.notify();
   }
 
   loadFromStorage(key, fallback) {
@@ -4936,6 +5012,67 @@ function renderAddEmployeeModal() {
 }
 
 
+// --- File: loginModal.js ---
+// Login System Modal with Demo Quick-Logins & RBAC Authentication
+
+function renderLoginModal() {
+  return `
+    <div class="modal-overlay active" id="loginModalOverlay" style="z-index: 10000; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: center;">
+      <div class="modal-container glass-card" style="width: 540px; max-width: 92vw; padding: 35px; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: var(--shadow-glow); background: rgba(30, 41, 59, 0.95);">
+        
+        <div style="text-align: center; margin-bottom: 25px;">
+          <img src="assets/obsyra_logo.jpg" alt="Obsyra Logo" style="width: 60px; height: 60px; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); background: #ffffff; padding: 2px;" />
+          <h2 style="font-family: var(--font-heading); font-size: 1.6rem; margin-bottom: 4px; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Obsyra Enterprise HR Portal</h2>
+          <p style="color: var(--text-muted); font-size: 0.88rem;">Role-Based Access Control (RBAC) System & Authentication</p>
+        </div>
+
+        <!-- Role Quick-Login Selector Badges -->
+        <div style="margin-bottom: 25px; background: rgba(255,255,255,0.03); padding: 15px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+          <small style="display: block; color: var(--text-subtle); font-weight: 700; text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.08em; margin-bottom: 10px; text-align: center;">⚡ Demo Quick-Login by Role</small>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;">
+            <button class="btn btn-sm btn-primary" onclick="window.hrApp.quickLogin('OBS-OPS-26-001')">
+              👑 Super Admin
+            </button>
+            <button class="btn btn-sm btn-secondary" onclick="window.hrApp.quickLogin('OBS-DIR-26-000')">
+              🏢 HR Admin
+            </button>
+            <button class="btn btn-sm btn-secondary" onclick="window.hrApp.quickLogin('OBS-HR-26-003')">
+              📝 HR Executive
+            </button>
+            <button class="btn btn-sm btn-secondary" onclick="window.hrApp.quickLogin('OBS-ENG-26-002')">
+              👥 Dept Manager
+            </button>
+            <button class="btn btn-sm btn-secondary" onclick="window.hrApp.quickLogin('OBS-EMP-26-004')">
+              👤 Employee (Self)
+            </button>
+          </div>
+        </div>
+
+        <form onsubmit="window.hrApp.handleLoginSubmit(event)" style="display: flex; flex-direction: column; gap: 16px;">
+          <div class="form-group">
+            <label class="form-label" style="font-weight: 600;">Employee ID / Corporate Email</label>
+            <input type="text" id="loginEmpId" class="form-control" placeholder="e.g. OBS-OPS-26-001 or swapnil.ghodke@obsyra.com" value="OBS-OPS-26-001" required style="font-family: monospace; font-size: 0.95rem;">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" style="font-weight: 600;">Security Password / Passcode</label>
+            <input type="password" id="loginPassword" class="form-control" placeholder="••••••••••••" value="Obsyra2026@" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 10px; font-weight: 700; font-size: 1rem; padding: 12px;">
+            🔒 Secure Sign In to HR Portal
+          </button>
+        </form>
+
+        <div style="margin-top: 20px; text-align: center; color: var(--text-subtle); font-size: 0.78rem;">
+          Obsyra Private Limited • CIN: U63991PN2026PTC252127 • Wagholi, Pune 412207
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+
 // --- File: app.js ---
 // Main HR System Application Router & Controller
 
@@ -4949,11 +5086,51 @@ class HRAppController {
     // Subscribe to global store updates
     store.subscribe(() => this.render());
 
-    // Inject modal into DOM
+    // Inject modals into DOM
     document.body.insertAdjacentHTML('beforeend', renderAddEmployeeModal());
+    document.body.insertAdjacentHTML('beforeend', renderLoginModal());
 
     // Initial render
     this.render();
+  }
+
+  openLoginModal() {
+    const overlay = document.getElementById('loginModalOverlay');
+    if (overlay) overlay.style.display = 'flex';
+  }
+
+  closeLoginModal() {
+    const overlay = document.getElementById('loginModalOverlay');
+    if (overlay) overlay.style.display = 'none';
+  }
+
+  quickLogin(empId) {
+    const res = store.login(empId);
+    if (res.success) {
+      this.closeLoginModal();
+      this.showToast(`Logged in as ${res.user.name} (${res.user.role})`);
+    } else {
+      this.showToast(res.message);
+    }
+  }
+
+  handleLoginSubmit(e) {
+    e.preventDefault();
+    const empId = document.getElementById('loginEmpId')?.value;
+    const pwd = document.getElementById('loginPassword')?.value;
+    const res = store.login(empId, pwd);
+    if (res.success) {
+      this.closeLoginModal();
+      this.showToast(`Logged in as ${res.user.name} (${res.user.role})`);
+    } else {
+      this.showToast(res.message);
+    }
+  }
+
+  logoutUser() {
+    store.logout();
+    this.openLoginModal();
+    this.showToast('Signed out successfully.');
   }
 
   navigate(view, params = {}) {
@@ -4971,6 +5148,28 @@ class HRAppController {
     document.querySelectorAll('.nav-item').forEach(item => {
       item.classList.toggle('active', item.getAttribute('data-view') === activeView);
     });
+
+    // Check RBAC permission for requested view
+    if (!store.hasPermission(activeView)) {
+      viewContainer.innerHTML = `
+        <div class="glass-card" style="margin-top: 40px; text-align: center; padding: 45px; border-left: 4px solid var(--accent-rose);">
+          <div style="font-size: 3rem; margin-bottom: 10px;">🔒</div>
+          <h2 style="color: var(--accent-rose); font-size: 1.5rem; margin-bottom: 10px;">Restricted Access Privilege</h2>
+          <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 600px; margin: 0 auto 20px auto;">
+            Your active logged-in role (<strong>${state.currentUser.role}</strong>) does not have authorization to view or manage the <strong>${activeView.toUpperCase()}</strong> module according to company RBAC policy.
+          </p>
+          <div style="display: flex; gap: 10px; justify-content: center;">
+            <button class="btn btn-primary" onclick="window.hrApp.openLoginModal()">
+              🔑 Switch Account / Sign In as Admin
+            </button>
+            <button class="btn btn-secondary" onclick="window.store.navigate('dashboard')">
+              🏠 Back to Dashboard
+            </button>
+          </div>
+        </div>
+      `;
+      return;
+    }
 
     // Render active module
     switch (activeView) {

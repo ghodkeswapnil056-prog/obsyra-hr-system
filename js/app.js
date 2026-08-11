@@ -8,6 +8,7 @@ import { renderTemplates } from './modules/templates.js';
 import { renderHistory } from './modules/history.js';
 import { renderRecruitment, renderOnboarding, renderAttendanceLeave, renderPayroll, renderPerformance, renderAssets, renderExit, renderReports, renderSettings } from './modules/operationalModules.js';
 import { renderAddEmployeeModal } from './components/addEmployeeModal.js';
+import { renderLoginModal } from './components/loginModal.js';
 import { commitDocNumberSequence } from './engine/serialEngine.js';
 
 class HRAppController {
@@ -20,11 +21,51 @@ class HRAppController {
     // Subscribe to global store updates
     store.subscribe(() => this.render());
 
-    // Inject modal into DOM
+    // Inject modals into DOM
     document.body.insertAdjacentHTML('beforeend', renderAddEmployeeModal());
+    document.body.insertAdjacentHTML('beforeend', renderLoginModal());
 
     // Initial render
     this.render();
+  }
+
+  openLoginModal() {
+    const overlay = document.getElementById('loginModalOverlay');
+    if (overlay) overlay.style.display = 'flex';
+  }
+
+  closeLoginModal() {
+    const overlay = document.getElementById('loginModalOverlay');
+    if (overlay) overlay.style.display = 'none';
+  }
+
+  quickLogin(empId) {
+    const res = store.login(empId);
+    if (res.success) {
+      this.closeLoginModal();
+      this.showToast(`Logged in as ${res.user.name} (${res.user.role})`);
+    } else {
+      this.showToast(res.message);
+    }
+  }
+
+  handleLoginSubmit(e) {
+    e.preventDefault();
+    const empId = document.getElementById('loginEmpId')?.value;
+    const pwd = document.getElementById('loginPassword')?.value;
+    const res = store.login(empId, pwd);
+    if (res.success) {
+      this.closeLoginModal();
+      this.showToast(`Logged in as ${res.user.name} (${res.user.role})`);
+    } else {
+      this.showToast(res.message);
+    }
+  }
+
+  logoutUser() {
+    store.logout();
+    this.openLoginModal();
+    this.showToast('Signed out successfully.');
   }
 
   navigate(view, params = {}) {
@@ -42,6 +83,28 @@ class HRAppController {
     document.querySelectorAll('.nav-item').forEach(item => {
       item.classList.toggle('active', item.getAttribute('data-view') === activeView);
     });
+
+    // Check RBAC permission for requested view
+    if (!store.hasPermission(activeView)) {
+      viewContainer.innerHTML = `
+        <div class="glass-card" style="margin-top: 40px; text-align: center; padding: 45px; border-left: 4px solid var(--accent-rose);">
+          <div style="font-size: 3rem; margin-bottom: 10px;">🔒</div>
+          <h2 style="color: var(--accent-rose); font-size: 1.5rem; margin-bottom: 10px;">Restricted Access Privilege</h2>
+          <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 600px; margin: 0 auto 20px auto;">
+            Your active logged-in role (<strong>${state.currentUser.role}</strong>) does not have authorization to view or manage the <strong>${activeView.toUpperCase()}</strong> module according to company RBAC policy.
+          </p>
+          <div style="display: flex; gap: 10px; justify-content: center;">
+            <button class="btn btn-primary" onclick="window.hrApp.openLoginModal()">
+              🔑 Switch Account / Sign In as Admin
+            </button>
+            <button class="btn btn-secondary" onclick="window.store.navigate('dashboard')">
+              🏠 Back to Dashboard
+            </button>
+          </div>
+        </div>
+      `;
+      return;
+    }
 
     // Render active module
     switch (activeView) {

@@ -147,23 +147,19 @@
 
         <div class="user-profile-widget">
           <div class="role-switcher-dropdown">
-            <span style="font-size: 0.78rem; color: var(--text-muted); margin-right: 6px;">Active Role:</span>
-            <select onchange="window.hrApp.showToast('Switched user role to: ' + this.value)">
-              <option value="Super Admin">Super Admin</option>
-              <option value="HR Admin">HR Admin</option>
-              <option value="HR Executive">HR Executive</option>
-              <option value="Department Manager">Department Manager</option>
-              <option value="Employee">Employee (Self-Service)</option>
+            <span style="font-size: 0.78rem; color: var(--text-muted); margin-right: 6px;">Active RBAC Role:</span>
+            <select onchange="window.store.setUserRole(this.value); window.hrApp.showToast('Active RBAC Privilege set to: ' + this.value);">
+              <option value="Super Admin">Super Admin (Full Access)</option>
+              <option value="HR Admin">HR Admin (Operations & Approvals)</option>
+              <option value="HR Executive">HR Executive (Execution & Data Entry)</option>
+              <option value="Department Manager">Department Manager (Team Supervision)</option>
+              <option value="Employee">Employee (Self-Service Portal)</option>
             </select>
           </div>
 
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <div class="avatar-badge">SG</div>
-            <div>
-              <div style="font-size: 0.88rem; font-weight: 600;">Swapnil Ghodke</div>
-              <div style="font-size: 0.72rem; color: var(--text-muted);">Head of HR</div>
-            </div>
-          </div>
+          <button class="btn btn-sm btn-secondary" onclick="window.hrApp.openLoginModal()" style="display: flex; align-items: center; gap: 6px; font-weight: 600;">
+            🔑 Switch Login
+          </button>
         </div>
       </header>
 

@@ -7,17 +7,23 @@ class HRStore {
   constructor() {
     window.store = this;
     this.listeners = [];
+
+    const savedUser = this.loadFromStorage('obsyra_currentUser', {
+      employeeId: "OBS-OPS-26-001",
+      name: "Swapnil Ghodke",
+      email: "swapnil.ghodke@obsyra.com",
+      role: "Super Admin", // Super Admin, HR Admin, HR Executive, Department Manager, Employee
+      designation: "Head of HR",
+      department: "Executive Management",
+      avatar: "SG"
+    });
+
     this.state = {
       company: this.loadFromStorage('obsyra_company', (typeof defaultCompany !== 'undefined' ? defaultCompany : companySettings)),
       employees: this.loadFromStorage('obsyra_employees', initialEmployees),
       templates: this.loadFromStorage('obsyra_templates', initialTemplates),
       history: this.loadFromStorage('obsyra_history', this.getInitialHistory()),
-      currentUser: {
-        name: "Swapnil Ghodke",
-        email: "swapnil.ghodke@obsyra.com",
-        role: "Super Admin", // Super Admin, HR Admin, HR Executive, Manager, Employee
-        avatar: "SG"
-      },
+      currentUser: savedUser,
       activeView: window.pendingView || "dashboard",
       viewParams: window.pendingParams || {}
     };
@@ -26,6 +32,76 @@ class HRStore {
       delete window.pendingView;
       delete window.pendingParams;
     }
+  }
+
+  // RBAC Permission Evaluator
+  hasPermission(view) {
+    const role = this.state.currentUser.role;
+    if (role === "Super Admin") return true;
+    
+    if (role === "HR Admin") {
+      return view !== "settings_edit";
+    }
+
+    if (role === "HR Executive") {
+      return ["dashboard", "employees", "profile", "generator", "history", "recruitment", "onboarding", "attendance", "payroll", "performance", "assets", "exit"].includes(view);
+    }
+
+    if (role === "Department Manager") {
+      return ["dashboard", "employees", "profile", "recruitment", "onboarding", "attendance", "performance", "assets"].includes(view);
+    }
+
+    if (role === "Employee") {
+      return ["dashboard", "profile", "attendance", "payroll", "assets"].includes(view);
+    }
+
+    return true;
+  }
+
+  // User Authentication Methods
+  login(employeeId, password) {
+    const emp = this.state.employees.find(e => e.employeeId === employeeId || e.id === employeeId || e.contact?.email === employeeId);
+    if (emp) {
+      let role = "Employee";
+      if (emp.employment?.designation?.includes("Head of HR") || emp.employment?.department === "Executive Management") {
+        role = "Super Admin";
+      } else if (emp.employment?.designation?.includes("Director") || (emp.employment?.designation?.includes("Manager") && emp.employment?.department === "Human Resources")) {
+        role = "HR Admin";
+      } else if (emp.employment?.department === "Human Resources") {
+        role = "HR Executive";
+      } else if (emp.employment?.designation?.includes("Lead") || emp.employment?.designation?.includes("Senior")) {
+        role = "Department Manager";
+      }
+
+      this.state.currentUser = {
+        employeeId: emp.employeeId,
+        name: emp.fullName,
+        email: emp.contact?.email || `${emp.firstName.toLowerCase()}@obsyra.com`,
+        role: role,
+        designation: emp.employment?.designation,
+        department: emp.employment?.department,
+        avatar: `${emp.firstName[0]}${emp.lastName[0]}`
+      };
+      this.saveToStorage('obsyra_currentUser', this.state.currentUser);
+      this.notify();
+      return { success: true, user: this.state.currentUser };
+    } else {
+      return { success: false, message: "Invalid Employee ID or credentials" };
+    }
+  }
+
+  logout() {
+    localStorage.removeItem('obsyra_currentUser');
+    this.state.currentUser = {
+      employeeId: "OBS-GUEST-000",
+      name: "Guest Staff",
+      email: "guest@obsyra.com",
+      role: "Employee",
+      designation: "Staff Member",
+      department: "General",
+      avatar: "GU"
+    };
+    this.notify();
   }
 
   loadFromStorage(key, fallback) {
