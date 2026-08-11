@@ -1,4 +1,4 @@
-// Standalone Universal Bundle for Obsyra HR System
+﻿// Standalone Universal Bundle for Obsyra HR System
 
 // --- File: companySettings.js ---
 // Official Company Settings for Obsyra Private Limited (Updated with Ethics Sequence)
@@ -17,8 +17,8 @@ const companySettings = {
   website: "www.obsyra.co.in",
   
   // Official Addresses & Contact
-  corporateAddress: "Wagholi, Pune, Maharashtra, India â€“ 412207",
-  registeredAddress: "Wagholi, Pune, Maharashtra, India â€“ 412207",
+  corporateAddress: "Wagholi, Pune, Maharashtra, India – 412207",
+  registeredAddress: "Wagholi, Pune, Maharashtra, India – 412207",
   serviceCoverage: "PAN India",
   
   // Leadership & Authorized Signatories (From Official Deck)
@@ -57,7 +57,7 @@ const companySettings = {
     <img src="assets/obsyra_logo.jpg" alt="Obsyra Logo" style="height: 65px; width: auto; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));" />
     <div>
       <div style="font-family: 'Outfit', 'Arial', sans-serif; font-weight: 800; font-size: 26px; color: #1e293b; letter-spacing: 2px; line-height: 1;">OBSYRA</div>
-      <div style="font-family: 'Outfit', 'Arial', sans-serif; font-weight: 700; font-size: 10px; color: #c59b27; letter-spacing: 3px; margin: 3px 0 2px 0;">â€” PRIVATE LIMITED â€”</div>
+      <div style="font-family: 'Outfit', 'Arial', sans-serif; font-weight: 700; font-size: 10px; color: #c59b27; letter-spacing: 3px; margin: 3px 0 2px 0;">— PRIVATE LIMITED —</div>
       <div style="font-family: 'Inter', 'Arial', sans-serif; font-weight: 500; font-size: 8.5px; color: #64748b;">EMPOWERING BUSINESSES WITH INNOVATION</div>
     </div>
   </div>`,
@@ -67,7 +67,7 @@ const companySettings = {
     <circle cx="60" cy="60" r="48" stroke="#334155" stroke-width="1.5"/>
     <path id="circlePath" d="M 20, 60 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0" fill="none"/>
     <text fill="#C59B27" font-family="Arial" font-size="9" font-weight="bold" letter-spacing="1">
-      <textPath href="#circlePath" startOffset="0%">OBSYRA PRIVATE LIMITED â˜… OFFICIAL SEAL â˜…</textPath>
+      <textPath href="#circlePath" startOffset="0%">OBSYRA PRIVATE LIMITED ★ OFFICIAL SEAL ★</textPath>
     </text>
     <circle cx="60" cy="60" r="28" fill="#C59B27" fill-opacity="0.08" stroke="#C59B27" stroke-width="1"/>
     <text x="60" y="58" text-anchor="middle" font-family="Arial" font-size="10" font-weight="bold" fill="#334155">CORPORATE</text>
@@ -94,7 +94,6 @@ const companySettings = {
     GEN: 45
   }
 };
-const defaultCompany = companySettings;
 
 
 // --- File: mockEmployees.js ---
@@ -425,7 +424,7 @@ const initialTemplates = [
   <div class="document-page-break">
     <div style="text-align: center; margin-bottom: 25px; border-bottom: 2px solid #4f46e5; padding-bottom: 10px;">
       <h3 style="font-family: 'Outfit', Arial, sans-serif; color: #4f46e5; text-transform: uppercase; letter-spacing: 1.5px; margin: 0; font-size: 18px;">FORMAL CANDIDATE ACCEPTANCE OF OFFER</h3>
-      <div style="font-size: 12px; color: #64748b; margin-top: 4px;">Obsyra Private Limited â€¢ Duplicate Copy for HR Records</div>
+      <div style="font-size: 12px; color: #64748b; margin-top: 4px;">Obsyra Private Limited • Duplicate Copy for HR Records</div>
     </div>
 
     <p style="font-size: 13.5px; line-height: 1.8;">I, <strong>{{candidate_name}}</strong>, hereby acknowledge that I have read, understood, and voluntarily accept the terms and conditions of employment offered to me for the position of <strong>{{designation}}</strong> in the <strong>{{department}}</strong> department at <strong>{{company_name}}</strong> as outlined in Offer Letter Ref No. <strong>{{doc_number}}</strong> dated <strong>{{issue_date}}</strong>.</p>
@@ -459,7 +458,7 @@ const initialTemplates = [
     body: `<div style="font-family: 'Inter', Arial, sans-serif; color: #1e293b; line-height: 1.6;">
   <div style="text-align: right; font-size: 13px; color: #64748b; margin-bottom: 15px;">
     <strong>Ref No:</strong> {{doc_number}}<br>
-    <strong>Version:</strong> 1.0 â€¢ <strong>Effective Date:</strong> May 19, 2026
+    <strong>Version:</strong> 1.0 • <strong>Effective Date:</strong> May 19, 2026
   </div>
 
   <h2 style="text-align: center; font-family: 'Outfit', Arial, sans-serif; color: #4f46e5; text-transform: uppercase; letter-spacing: 1px; margin: 20px 0 10px 0; font-size: 20px;">CODE OF BUSINESS CONDUCT AND ETHICS</h2>
@@ -651,8 +650,8 @@ const initialTemplates = [
   {{#if showSalaryTable}}
   <div class="document-page-break">
     <div style="text-align: center; margin-bottom: 20px; border-bottom: 2px solid #4f46e5; padding-bottom: 8px;">
-      <h3 style="font-family: 'Outfit', Arial, sans-serif; color: #4f46e5; text-transform: uppercase; letter-spacing: 1.5px; margin: 0; font-size: 16px;">ANNEXURE A â€” COMPENSATION STRUCTURE</h3>
-      <div style="font-size: 11.5px; color: #64748b;">Ref No: {{appointment_letter_no}} â€¢ Employee: {{employee_name}} ({{employee_id}})</div>
+      <h3 style="font-family: 'Outfit', Arial, sans-serif; color: #4f46e5; text-transform: uppercase; letter-spacing: 1.5px; margin: 0; font-size: 16px;">ANNEXURE A — COMPENSATION STRUCTURE</h3>
+      <div style="font-size: 11.5px; color: #64748b;">Ref No: {{appointment_letter_no}} • Employee: {{employee_name}} ({{employee_id}})</div>
     </div>
 
     <table style="width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 13px;">
@@ -703,8 +702,8 @@ const initialTemplates = [
   {{#if showAcceptanceSheet}}
   <div class="document-page-break">
     <div style="text-align: center; margin-bottom: 20px; border-bottom: 2px solid #4f46e5; padding-bottom: 8px;">
-      <h3 style="font-family: 'Outfit', Arial, sans-serif; color: #4f46e5; text-transform: uppercase; letter-spacing: 1.5px; margin: 0; font-size: 16px;">ANNEXURE B â€” JOB DESCRIPTION & KEY DELIVERABLES</h3>
-      <div style="font-size: 11.5px; color: #64748b;">Designation: {{designation}} â€¢ Department: {{department}}</div>
+      <h3 style="font-family: 'Outfit', Arial, sans-serif; color: #4f46e5; text-transform: uppercase; letter-spacing: 1.5px; margin: 0; font-size: 16px;">ANNEXURE B — JOB DESCRIPTION & KEY DELIVERABLES</h3>
+      <div style="font-size: 11.5px; color: #64748b;">Designation: {{designation}} • Department: {{department}}</div>
     </div>
 
     <div style="font-size: 13px; line-height: 1.7;">
@@ -797,7 +796,7 @@ const initialTemplates = [
       </tr>
       <tr style="background-color: #f0fdf4;">
         <td style="padding: 6px 10px; border: 1px solid #cbd5e1; font-weight: bold;">Increment (%)</td>
-        <td style="padding: 6px 10px; border: 1px solid #cbd5e1; text-align: right;">â€”</td>
+        <td style="padding: 6px 10px; border: 1px solid #cbd5e1; text-align: right;">—</td>
         <td style="padding: 6px 10px; border: 1px solid #cbd5e1; text-align: right; font-weight: bold; color: #10b981;">{{increment_percentage}}%</td>
       </tr>
     </tbody>
@@ -1010,7 +1009,7 @@ const initialTemplates = [
       </tr>
       <tr style="background-color: #f5f3ff;">
         <td style="padding: 6px 10px; border: 1px solid #ddd6fe; font-weight: bold;">Effective Date</td>
-        <td style="padding: 6px 10px; border: 1px solid #ddd6fe;">â€”</td>
+        <td style="padding: 6px 10px; border: 1px solid #ddd6fe;">—</td>
         <td style="padding: 6px 10px; border: 1px solid #ddd6fe; font-weight: bold; color: #6366f1;">{{effective_date}}</td>
       </tr>
     </tbody>
@@ -1596,7 +1595,7 @@ const initialTemplates = [
   </div>
 
   <h3 style="text-align: center; font-family: 'Outfit', Arial, sans-serif; color: #ef4444; text-transform: uppercase; letter-spacing: 1.5px; margin: 20px 0 15px 0; font-size: 18px; border-bottom: 2px solid #ef4444; padding-bottom: 8px;">
-    OFFICIAL WARNING LETTER â€” PERFORMANCE NOTICE
+    OFFICIAL WARNING LETTER — PERFORMANCE NOTICE
   </h3>
 
   <table style="width: 100%; border-collapse: collapse; margin: 15px 0 20px 0; font-size: 13px;">
@@ -1624,7 +1623,7 @@ const initialTemplates = [
     </tr>
   </table>
 
-  <h4 style="color: #334155; margin-top: 20px; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px;">Subject: Official Warning Letter â€” Performance Notice</h4>
+  <h4 style="color: #334155; margin-top: 20px; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px;">Subject: Official Warning Letter — Performance Notice</h4>
 
   <p>Dear <strong>{{employee_name}}</strong>,</p>
 
@@ -1688,7 +1687,7 @@ const initialTemplates = [
 
   <div style="margin-top: 35px; background: #f8fafc; border: 1.5px solid #cbd5e1; padding: 20px; border-radius: 8px;">
     <h4 style="margin: 0 0 12px 0; color: #334155; font-size: 14px; text-transform: uppercase; border-bottom: 1px solid #e2e8f0; padding-bottom: 6px;">EMPLOYEE ACKNOWLEDGEMENT</h4>
-    <p style="font-size: 13px; margin-bottom: 15px;">I, <strong>{{employee_name}}</strong>, Employee Code <strong>{{employee_code}}</strong>, acknowledge receipt of this Official Warning Letter â€” Performance Notice. My acknowledgement confirms receipt of the document and does not necessarily indicate agreement with its contents.</p>
+    <p style="font-size: 13px; margin-bottom: 15px;">I, <strong>{{employee_name}}</strong>, Employee Code <strong>{{employee_code}}</strong>, acknowledge receipt of this Official Warning Letter — Performance Notice. My acknowledgement confirms receipt of the document and does not necessarily indicate agreement with its contents.</p>
     
     <div style="display: flex; justify-content: space-between; font-size: 13px; margin: 25px 0 15px 0;">
       <div><strong>Employee Signature:</strong> __________________________</div>
@@ -1786,7 +1785,7 @@ const initialTemplates = [
       </tr>
       <tr style="background-color: #fffbeb;">
         <td style="padding: 6px 10px; border: 1px solid #fde68a; font-weight: bold;">Effective Date</td>
-        <td style="padding: 6px 10px; border: 1px solid #fde68a;">â€”</td>
+        <td style="padding: 6px 10px; border: 1px solid #fde68a;">—</td>
         <td style="padding: 6px 10px; border: 1px solid #fde68a; font-weight: bold; color: #d97706;">{{effective_date}}</td>
       </tr>
     </tbody>
@@ -2214,9 +2213,9 @@ const initialTemplates = [
     <thead>
       <tr style="background-color: #f8fafc; border-bottom: 2px solid #cbd5e1; text-align: left;">
         <th style="padding: 6px 8px; border: 1px solid #e2e8f0; width: 32%;">Earnings</th>
-        <th style="padding: 6px 8px; border: 1px solid #e2e8f0; text-align: right; width: 18%;">Amount (â‚¹)</th>
+        <th style="padding: 6px 8px; border: 1px solid #e2e8f0; text-align: right; width: 18%;">Amount (₹)</th>
         <th style="padding: 6px 8px; border: 1px solid #e2e8f0; width: 32%;">Deductions</th>
-        <th style="padding: 6px 8px; border: 1px solid #e2e8f0; text-align: right; width: 18%;">Amount (â‚¹)</th>
+        <th style="padding: 6px 8px; border: 1px solid #e2e8f0; text-align: right; width: 18%;">Amount (₹)</th>
       </tr>
     </thead>
     <tbody>
@@ -2286,7 +2285,7 @@ const initialTemplates = [
     <thead>
       <tr style="background-color: #f8fafc; border-bottom: 2px solid #cbd5e1; text-align: left;">
         <th style="padding: 5px 8px; border: 1px solid #e2e8f0; width: 70%;">Contribution Particulars</th>
-        <th style="padding: 5px 8px; border: 1px solid #e2e8f0; text-align: right; width: 30%;">Amount (â‚¹)</th>
+        <th style="padding: 5px 8px; border: 1px solid #e2e8f0; text-align: right; width: 30%;">Amount (₹)</th>
       </tr>
     </thead>
     <tbody>
@@ -2563,7 +2562,7 @@ function commitDocNumberSequence(docTypeCode, companySettings) {
 // --- File: templateEngine.js ---
 // Template Engine Parser & Formatter Utilities (Supports Level 1/2/3/4 Variables & Section Blocks)
 function formatCurrency(amount) {
-  if (amount === undefined || amount === null || isNaN(amount)) return "â‚¹ 0";
+  if (amount === undefined || amount === null || isNaN(amount)) return "₹ 0";
   return new Intl.NumberFormat('en-IN', {
     style: 'currency',
     currency: 'INR',
@@ -2662,7 +2661,7 @@ function compileTemplate(rawHtml, employee, company, overrides = {}) {
     salary_slip_number: overrides.docNumber || "OBSYRA/PAY/2026/0801",
     salary_month: overrides.salaryMonth || "August",
     salary_year: overrides.salaryYear || "2026",
-    pay_period: overrides.payPeriod || "01 August 2026 â€“ 31 August 2026",
+    pay_period: overrides.payPeriod || "01 August 2026 – 31 August 2026",
     paid_days: overrides.paidDays || "31",
     working_days: overrides.workingDays || "31",
     lop_days: overrides.lopDays || "0",
@@ -2815,10 +2814,10 @@ function compileTemplate(rawHtml, employee, company, overrides = {}) {
     probation_period: overrides.probationPeriod || `${employee.employment?.probationPeriodMonths || 6} Months`,
     probationPeriod: overrides.probationPeriod || `${employee.employment?.probationPeriodMonths || 6} Months`,
     probation_months: overrides.probationMonths || employee.employment?.probationPeriodMonths || 6,
-    working_days: overrides.workingDays || "Monday â€“ Saturday",
-    workingDays: overrides.workingDays || "Monday â€“ Saturday",
-    working_hours: overrides.workingHours || "9:30 AM â€“ 6:30 PM",
-    workingHours: overrides.workingHours || "9:30 AM â€“ 6:30 PM",
+    working_days: overrides.workingDays || "Monday – Saturday",
+    workingDays: overrides.workingDays || "Monday – Saturday",
+    working_hours: overrides.workingHours || "9:30 AM – 6:30 PM",
+    workingHours: overrides.workingHours || "9:30 AM – 6:30 PM",
     shift: overrides.shift || "General Day Shift (09:30 AM - 06:30 PM)",
     weekly_off: overrides.weeklyOff || "Sunday Fixed Off",
     notice_period: overrides.noticePeriod || "30 Days (1 Month)",
@@ -2931,7 +2930,7 @@ function renderDashboard() {
     <div class="page-header">
       <div class="page-title-group">
         <h1>HR Dashboard</h1>
-        <p class="page-subtitle">Welcome back, ${state.currentUser.name} (${state.currentUser.role}) â€¢ ${state.company.name}</p>
+        <p class="page-subtitle">Welcome back, ${state.currentUser.name} (${state.currentUser.role}) • ${state.company.name}</p>
       </div>
       <div style="display: flex; gap: 10px;">
         <button class="btn btn-primary" onclick="window.hrApp.navigate('generator')">
@@ -2993,25 +2992,25 @@ function renderDashboard() {
       <h3 style="margin-bottom: 15px; font-size: 1.1rem;">Quick Action Launchpad</h3>
       <div style="display: flex; gap: 12px; flex-wrap: wrap;">
         <button class="btn btn-secondary" onclick="window.hrApp.navigate('generator', { templateId: 'TPL-ETHICS-01' })">
-          ðŸ“œ Code of Ethics Sign-Off
+          📜 Code of Ethics Sign-Off
         </button>
         <button class="btn btn-secondary" onclick="window.hrApp.navigate('generator', { templateId: 'TPL-APPT-01' })">
-          ðŸ“„ Generate Appointment Letter
+          📄 Generate Appointment Letter
         </button>
         <button class="btn btn-secondary" onclick="window.hrApp.navigate('generator', { templateId: 'TPL-OFFER-01' })">
-          âœ‰ï¸ Generate Offer Letter
+          ✉️ Generate Offer Letter
         </button>
         <button class="btn btn-secondary" onclick="window.hrApp.navigate('generator', { templateId: 'TPL-INCR-01' })">
-          ðŸ“ˆ Generate Increment Letter
+          📈 Generate Increment Letter
         </button>
         <button class="btn btn-secondary" onclick="window.hrApp.navigate('generator', { templateId: 'TPL-EXP-01' })">
-          ðŸŽ–ï¸ Experience Certificate
+          🎖️ Experience Certificate
         </button>
         <button class="btn btn-secondary" onclick="window.hrApp.navigate('employees')">
-          ðŸ‘¥ Employee Directory
+          👥 Employee Directory
         </button>
         <button class="btn btn-secondary" onclick="window.hrApp.navigate('history')">
-          ðŸ“œ Document Vault
+          📜 Document Vault
         </button>
       </div>
     </div>
@@ -3063,7 +3062,7 @@ function renderDashboard() {
                 </div>
                 <div>
                   <strong style="font-size: 0.9rem;">${emp.fullName}</strong>
-                  <div style="font-size: 0.78rem; color: var(--text-muted);">${emp.employment.designation} â€¢ ${emp.employment.department}</div>
+                  <div style="font-size: 0.78rem; color: var(--text-muted);">${emp.employment.designation} • ${emp.employment.department}</div>
                 </div>
               </div>
               <button class="btn btn-sm btn-secondary" onclick="window.hrApp.navigate('profile', { employeeId: '${emp.id}' })">
@@ -3150,7 +3149,7 @@ function renderEmployees() {
                 <td>${emp.employment.department}</td>
                 <td>${emp.employment.designation}</td>
                 <td><small>${emp.employment.dateOfJoining}</small></td>
-                <td><strong>â‚¹ ${(emp.salary?.ctcAnnual || 0).toLocaleString('en-IN')}</strong></td>
+                <td><strong>₹ ${(emp.salary?.ctcAnnual || 0).toLocaleString('en-IN')}</strong></td>
                 <td><span class="badge badge-active">${emp.employment.status}</span></td>
                 <td style="text-align: right;">
                   <div style="display: flex; gap: 6px; justify-content: flex-end;">
@@ -3189,16 +3188,16 @@ function renderEmployeeProfile(employeeId) {
     <div class="page-header">
       <div style="display: flex; align-items: center; gap: 15px;">
         <button class="btn btn-secondary btn-sm" onclick="window.hrApp.navigate('employees')">
-          â† Back to Employees
+          ← Back to Employees
         </button>
         <div>
           <h1 style="margin: 0; font-size: 1.5rem;">${emp.fullName}</h1>
-          <p class="page-subtitle" style="margin: 0;">${emp.employeeId} â€¢ ${emp.employment.designation} â€¢ ${emp.employment.department}</p>
+          <p class="page-subtitle" style="margin: 0;">${emp.employeeId} • ${emp.employment.designation} • ${emp.employment.department}</p>
         </div>
       </div>
       <div style="display: flex; gap: 10px;">
         <button class="btn btn-primary" onclick="window.hrApp.navigate('generator', { employeeId: '${emp.id}' })">
-          ðŸ“„ Generate HR Document
+          📄 Generate HR Document
         </button>
       </div>
     </div>
@@ -3215,10 +3214,10 @@ function renderEmployeeProfile(employeeId) {
             <span class="badge badge-active">${emp.employment.status}</span>
           </div>
           <div style="display: flex; gap: 20px; font-size: 0.88rem; color: var(--text-muted); flex-wrap: wrap;">
-            <span>ðŸ“§ ${emp.email}</span>
-            <span>ðŸ“± ${emp.mobile}</span>
-            <span>ðŸ“ ${emp.employment.workLocation}</span>
-            <span>ðŸ“… Joined: ${emp.employment.dateOfJoining}</span>
+            <span>📧 ${emp.email}</span>
+            <span>📱 ${emp.mobile}</span>
+            <span>📍 ${emp.employment.workLocation}</span>
+            <span>📅 Joined: ${emp.employment.dateOfJoining}</span>
           </div>
         </div>
         <div>
@@ -3433,16 +3432,16 @@ function renderTabContent(tab, emp) {
             <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Instantly generate official HR documents with pre-filled employee data:</p>
             <div style="display: flex; flex-direction: column; gap: 10px;">
               <button class="btn btn-secondary" onclick="window.hrApp.navigate('generator', { employeeId: '${emp.id}', templateId: 'TPL-APPT-01' })">
-                ðŸ“„ Generate Appointment Letter
+                📄 Generate Appointment Letter
               </button>
               <button class="btn btn-secondary" onclick="window.hrApp.navigate('generator', { employeeId: '${emp.id}', templateId: 'TPL-INCR-01' })">
-                ðŸ“ˆ Generate Salary Increment Letter
+                📈 Generate Salary Increment Letter
               </button>
               <button class="btn btn-secondary" onclick="window.hrApp.navigate('generator', { employeeId: '${emp.id}', templateId: 'TPL-NDA-01' })">
-                ðŸ”’ Generate NDA Agreement
+                🔒 Generate NDA Agreement
               </button>
               <button class="btn btn-secondary" onclick="window.hrApp.navigate('generator', { employeeId: '${emp.id}', templateId: 'TPL-EXP-01' })">
-                ðŸŽ–ï¸ Generate Experience Certificate
+                🎖️ Generate Experience Certificate
               </button>
             </div>
           </div>
@@ -3495,7 +3494,7 @@ function renderGenerator() {
     selectedTpl?.code === 'ETHICS' ? `Code of Business Conduct & Ethics Policy` :
     selectedTpl?.code === 'NDA' ? `Non-Disclosure & Confidentiality Agreement` :
     selectedTpl?.code === 'EXP' ? `Experience Certificate` :
-    `${selectedTpl?.name} â€” ${selectedEmp?.fullName}`;
+    `${selectedTpl?.name} — ${selectedEmp?.fullName}`;
 
   // Field Overrides & Section Toggles State
   const overrides = {
@@ -3516,8 +3515,8 @@ function renderGenerator() {
     joiningTime: state.viewParams.joiningTime || "9:30 AM",
     probationPeriod: state.viewParams.probationPeriod || `${selectedEmp?.employment?.probationPeriodMonths || 6} Months`,
     noticePeriod: state.viewParams.noticePeriod || "30 Days (1 Month)",
-    workingHours: state.viewParams.workingHours || "9:30 AM â€“ 6:30 PM",
-    workingDays: state.viewParams.workingDays || "Monday â€“ Saturday",
+    workingHours: state.viewParams.workingHours || "9:30 AM – 6:30 PM",
+    workingDays: state.viewParams.workingDays || "Monday – Saturday",
     basicSalary: state.viewParams.basicSalary !== undefined ? state.viewParams.basicSalary : selectedEmp?.salary?.basic,
     hraSalary: state.viewParams.hraSalary !== undefined ? state.viewParams.hraSalary : selectedEmp?.salary?.hra,
     grossSalary: state.viewParams.grossSalary !== undefined ? state.viewParams.grossSalary : selectedEmp?.salary?.grossMonthly,
@@ -3545,12 +3544,12 @@ function renderGenerator() {
     <div class="page-header" style="margin-bottom: 12px;">
       <div class="page-title-group">
         <h1>Universal Document Generator Workspace</h1>
-        <p class="page-subtitle">Interactive Document Engine: Modular Clause Toggles â€¢ Live Overrides â€¢ High-Fidelity A4 Paper</p>
+        <p class="page-subtitle">Interactive Document Engine: Modular Clause Toggles • Live Overrides • High-Fidelity A4 Paper</p>
       </div>
       <div style="display: flex; gap: 8px;">
-        <button class="btn btn-secondary btn-sm" onclick="window.hrApp.applyPreset('all')">âš¡ All Clauses On</button>
-        <button class="btn btn-secondary btn-sm" onclick="window.hrApp.applyPreset('ctc')">ðŸ’¼ Simple CTC Only</button>
-        <button class="btn btn-secondary btn-sm" onclick="window.hrApp.applyPreset('nda')">ðŸ”’ NDA Offer</button>
+        <button class="btn btn-secondary btn-sm" onclick="window.hrApp.applyPreset('all')">⚡ All Clauses On</button>
+        <button class="btn btn-secondary btn-sm" onclick="window.hrApp.applyPreset('ctc')">💼 Simple CTC Only</button>
+        <button class="btn btn-secondary btn-sm" onclick="window.hrApp.applyPreset('nda')">🔒 NDA Offer</button>
       </div>
     </div>
 
@@ -3558,16 +3557,16 @@ function renderGenerator() {
     <div class="view-mode-toolbar">
       <div class="view-mode-btn-group">
         <button class="view-mode-btn ${viewMode === 'split' ? 'active' : ''}" onclick="window.hrApp.setGeneratorViewMode('split')">
-          ðŸ–¥ï¸ Split View (Controls + Paper)
+          🖥️ Split View (Controls + Paper)
         </button>
         <button class="view-mode-btn ${viewMode === 'paper' ? 'active' : ''}" onclick="window.hrApp.setGeneratorViewMode('paper')">
-          ðŸ“„ Full Paper Preview
+          📄 Full Paper Preview
         </button>
         <button class="view-mode-btn ${viewMode === 'form' ? 'active' : ''}" onclick="window.hrApp.setGeneratorViewMode('form')">
-          âš™ï¸ Full Form Controls
+          ⚙️ Full Form Controls
         </button>
         <button class="view-mode-btn ${viewMode === '3col' ? 'active' : ''}" onclick="window.hrApp.setGeneratorViewMode('3col')">
-          ðŸ“ 3-Column Pro Mode
+          📐 3-Column Pro Mode
         </button>
       </div>
 
@@ -3581,9 +3580,9 @@ function renderGenerator() {
           <option value="110" ${paperZoom == 110 ? 'selected' : ''}>110%</option>
         </select>
 
-        <button class="btn btn-primary btn-sm" onclick="window.hrApp.triggerPrintDocument()">ðŸ–¨ï¸ Print / PDF</button>
-        <button class="btn btn-success btn-sm" onclick="window.hrApp.downloadDocxFile('${selectedTpl?.name}', '${overrides.candidateName}')">ðŸ“¥ Word DOCX</button>
-        <button class="btn btn-secondary btn-sm" onclick="window.hrApp.saveGeneratedToHistory('${selectedTpl?.name}', '${selectedTpl?.category}', '${overrides.docNumber}', '${selectedEmp?.id}')">ðŸ’¾ Save Vault</button>
+        <button class="btn btn-primary btn-sm" onclick="window.hrApp.triggerPrintDocument()">🖨️ Print / PDF</button>
+        <button class="btn btn-success btn-sm" onclick="window.hrApp.downloadDocxFile('${selectedTpl?.name}', '${overrides.candidateName}')">📥 Word DOCX</button>
+        <button class="btn btn-secondary btn-sm" onclick="window.hrApp.saveGeneratedToHistory('${selectedTpl?.name}', '${selectedTpl?.category}', '${overrides.docNumber}', '${selectedEmp?.id}')">💾 Save Vault</button>
       </div>
     </div>
 
@@ -3597,10 +3596,10 @@ function renderGenerator() {
         <!-- Tab Navigation inside Builder Panel -->
         <div style="display: flex; gap: 8px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 10px;">
           <button class="btn btn-sm ${activeTab === 'settings' ? 'btn-primary' : 'btn-secondary'}" style="flex: 1;" onclick="window.hrApp.setGeneratorTab('settings')">
-            âš™ï¸ Settings & Clauses
+            ⚙️ Settings & Clauses
           </button>
           <button class="btn btn-sm ${activeTab === 'fields' ? 'btn-primary' : 'btn-secondary'}" style="flex: 1;" onclick="window.hrApp.setGeneratorTab('fields')">
-            âœï¸ Candidate & Job Details
+            ✍️ Candidate & Job Details
           </button>
         </div>
 
@@ -3642,37 +3641,37 @@ function renderGenerator() {
           <div class="clause-toggle-group">
             <label class="clause-checkbox-item">
               <input type="checkbox" id="chkSalaryTable" ${overrides.showSalaryTable ? 'checked' : ''} onchange="window.hrApp.updateGenerator3ColView()">
-              <span>â˜‘ Show Salary Breakup Table</span>
+              <span>☑ Show Salary Breakup Table</span>
             </label>
 
             <label class="clause-checkbox-item">
               <input type="checkbox" id="chkProbation" ${overrides.showProbation ? 'checked' : ''} onchange="window.hrApp.updateGenerator3ColView()">
-              <span>â˜‘ Include Probation Clause</span>
+              <span>☑ Include Probation Clause</span>
             </label>
 
             <label class="clause-checkbox-item">
               <input type="checkbox" id="chkConfidentiality" ${overrides.showConfidentiality ? 'checked' : ''} onchange="window.hrApp.updateGenerator3ColView()">
-              <span>â˜‘ Confidentiality & NDA Clause</span>
+              <span>☑ Confidentiality & NDA Clause</span>
             </label>
 
             <label class="clause-checkbox-item">
               <input type="checkbox" id="chkIpClause" ${overrides.showIpClause ? 'checked' : ''} onchange="window.hrApp.updateGenerator3ColView()">
-              <span>â˜‘ Intellectual Property (IP) Clause</span>
+              <span>☑ Intellectual Property (IP) Clause</span>
             </label>
 
             <label class="clause-checkbox-item">
               <input type="checkbox" id="chkBackgroundCheck" ${overrides.showBackgroundCheck ? 'checked' : ''} onchange="window.hrApp.updateGenerator3ColView()">
-              <span>â˜‘ Background Check Required</span>
+              <span>☑ Background Check Required</span>
             </label>
 
             <label class="clause-checkbox-item">
               <input type="checkbox" id="chkDocsChecklist" ${overrides.showDocsChecklist ? 'checked' : ''} onchange="window.hrApp.updateGenerator3ColView()">
-              <span>â˜‘ Onboarding Docs Checklist</span>
+              <span>☑ Onboarding Docs Checklist</span>
             </label>
 
             <label class="clause-checkbox-item">
               <input type="checkbox" id="chkAcceptanceSheet" ${overrides.showAcceptanceSheet ? 'checked' : ''} onchange="window.hrApp.updateGenerator3ColView()">
-              <span>â˜‘ Candidate Acceptance Page</span>
+              <span>☑ Candidate Acceptance Page</span>
             </label>
           </div>
         ` : `
@@ -3748,11 +3747,11 @@ function renderGenerator() {
           <div class="grid-2">
             <div class="form-group">
               <label class="form-label">Job Working Hours (Flexible / Non-Fixed)</label>
-              <input type="text" id="builderWorkingHours" class="form-control" value="${overrides.workingHours || ''}" onkeyup="window.hrApp.updateGenerator3ColView()" placeholder="e.g. Flexible Working Hours (8 Hrs/Day) or 9:30 AM â€“ 6:30 PM">
+              <input type="text" id="builderWorkingHours" class="form-control" value="${overrides.workingHours || ''}" onkeyup="window.hrApp.updateGenerator3ColView()" placeholder="e.g. Flexible Working Hours (8 Hrs/Day) or 9:30 AM – 6:30 PM">
             </div>
             <div class="form-group">
               <label class="form-label">Working Days Schedule</label>
-              <input type="text" id="builderWorkingDays" class="form-control" value="${overrides.workingDays || ''}" onkeyup="window.hrApp.updateGenerator3ColView()" placeholder="e.g. Monday â€“ Friday / Rotational Schedule">
+              <input type="text" id="builderWorkingDays" class="form-control" value="${overrides.workingDays || ''}" onkeyup="window.hrApp.updateGenerator3ColView()" placeholder="e.g. Monday – Friday / Rotational Schedule">
             </div>
           </div>
 
@@ -3989,7 +3988,7 @@ function renderTemplates() {
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
           <h3 style="font-size: 1.1rem;">Template Editor: ${currentTpl?.name}</h3>
           <button class="btn btn-primary btn-sm" onclick="window.hrApp.saveTemplateChanges('${currentTpl?.id}')">
-            ðŸ’¾ Save Template
+            💾 Save Template
           </button>
         </div>
 
@@ -4243,7 +4242,7 @@ function renderAddEmployeeModal() {
               </div>
               <div class="form-group">
                 <label class="form-label">Calculated Annual CTC</label>
-                <input type="text" id="newCtcAnnual" class="form-control" value="â‚¹ 10,80,000" readonly style="font-weight: bold; color: var(--accent-teal);">
+                <input type="text" id="newCtcAnnual" class="form-control" value="₹ 10,80,000" readonly style="font-weight: bold; color: var(--accent-teal);">
               </div>
             </div>
           </div>
@@ -4275,11 +4274,11 @@ function renderAddEmployeeModal() {
           <!-- Wizard Navigation Controls -->
           <div style="display: flex; justify-content: space-between; margin-top: 25px; border-top: 1px solid var(--border-color); padding-top: 15px;">
             <button type="button" class="btn btn-secondary" id="wizPrevBtn" onclick="window.hrApp.wizardStepPrev()" style="display: none;">
-              â† Previous
+              ← Previous
             </button>
             <div style="margin-left: auto; display: flex; gap: 10px;">
               <button type="button" class="btn btn-primary" id="wizNextBtn" onclick="window.hrApp.wizardStepNext()">
-                Next Step â†’
+                Next Step →
               </button>
               <button type="submit" class="btn btn-success" id="wizSubmitBtn" style="display: none;">
                 Save Employee Record
@@ -4766,7 +4765,7 @@ class HRAppController {
     const gross = parseFloat(grossInput?.value) || (basic + calculatedHra);
     const annualCtc = gross * 12;
 
-    if (ctcInput) ctcInput.value = `â‚¹ ${annualCtc.toLocaleString('en-IN')}`;
+    if (ctcInput) ctcInput.value = `₹ ${annualCtc.toLocaleString('en-IN')}`;
   }
 
   submitNewEmployee(event) {
