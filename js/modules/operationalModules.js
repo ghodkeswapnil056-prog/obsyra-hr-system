@@ -1,6 +1,7 @@
 // Operational HR Modules (Recruitment, Onboarding, Attendance/Leave, Payroll, Performance, Assets, Exit, Reports, Settings)
 import { store } from '../context.js';
 
+// 1. Recruitment & Manpower Staffing
 export function renderRecruitment() {
   return `
     <div class="page-header">
@@ -8,127 +9,395 @@ export function renderRecruitment() {
         <h1>Recruitment & Manpower Staffing</h1>
         <p class="page-subtitle">Telecom, IT, Infrastructure, and Sectoral Manpower Deployment across PAN India</p>
       </div>
-      <button class="btn btn-primary" onclick="window.hrApp.navigate('generator', { templateId: 'TPL-OFFER-01' })">
-        + Create Offer Letter
-      </button>
+      <div style="display: flex; gap: 10px;">
+        <button class="btn btn-primary" onclick="window.store.navigate('generator', { templateId: 'TPL-OFFER-01' })">
+          ✉️ Generate Offer Letter
+        </button>
+        <button class="btn btn-secondary" onclick="window.store.navigate('generator', { templateId: 'TPL-ETHICS-01' })">
+          📜 Code of Ethics Sign-Off
+        </button>
+      </div>
     </div>
 
     <div class="grid-3" style="margin-bottom: 25px;">
       <div class="glass-card">
         <h3>Active Job Openings</h3>
-        <div style="font-size: 2rem; font-weight: bold; color: var(--primary); margin: 10px 0;">4 Roles</div>
+        <div style="font-size: 2rem; font-weight: bold; color: var(--primary); margin: 10px 0;">4 Open Roles</div>
         <div style="font-size: 0.85rem; color: var(--text-muted);">5G Core Engineer, Rack Installation Lead, HR Executive, Finance Analyst</div>
       </div>
 
       <div class="glass-card">
         <h3>Candidates Pipeline</h3>
         <div style="font-size: 2rem; font-weight: bold; color: var(--accent-sky); margin: 10px 0;">18 Applicants</div>
-        <div style="font-size: 0.85rem; color: var(--text-muted);">5 Technical Rounds, 3 Offer Stage</div>
+        <div style="font-size: 0.85rem; color: var(--text-muted);">5 Technical Rounds, 3 Director Interview Stage</div>
       </div>
 
       <div class="glass-card">
         <h3>Offers Issued</h3>
         <div style="font-size: 2rem; font-weight: bold; color: var(--accent-teal); margin: 10px 0;">3 Offers</div>
-        <div style="font-size: 0.85rem; color: var(--text-muted);">2 Accepted, 1 Pending Acceptance</div>
+        <div style="font-size: 0.85rem; color: var(--text-muted);">2 Accepted (Rahul Sharma, Priya Patel), 1 Pending</div>
+      </div>
+    </div>
+
+    <!-- Candidate Recruitment Pipeline Board -->
+    <div class="glass-card" style="margin-bottom: 25px;">
+      <h3 style="margin-bottom: 15px;">Active Recruitment Candidates Stream</h3>
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Candidate Name</th>
+              <th>Applied Role</th>
+              <th>Department</th>
+              <th>Experience</th>
+              <th>Current Pipeline Stage</th>
+              <th>Expected CTC</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Vikram Malhotra</strong><br><small style="color: var(--text-muted);">REQ-2026-089</small></td>
+              <td>Senior 5G Test Engineer</td>
+              <td>Telecom Operations</td>
+              <td>6.5 Years</td>
+              <td><span class="badge badge-primary">Director Interview</span></td>
+              <td>₹ 14.5 LPA</td>
+              <td>
+                <button class="btn btn-sm btn-primary" onclick="window.store.navigate('generator', { templateId: 'TPL-OFFER-01' })">
+                  Generate Offer
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Ananya Deshmukh</strong><br><small style="color: var(--text-muted);">REQ-2026-092</small></td>
+              <td>HR Operations Executive</td>
+              <td>Human Resources</td>
+              <td>3.0 Years</td>
+              <td><span class="badge badge-active">Offer Accepted</span></td>
+              <td>₹ 6.5 LPA</td>
+              <td>
+                <button class="btn btn-sm btn-secondary" onclick="window.store.navigate('generator', { templateId: 'TPL-APPT-01' })">
+                  Create Appt Letter
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Amitabh Joshi</strong><br><small style="color: var(--text-muted);">REQ-2026-095</small></td>
+              <td>Network Rack Installation Lead</td>
+              <td>Infrastructure</td>
+              <td>5.2 Years</td>
+              <td><span class="badge badge-warning">Technical Round 2</span></td>
+              <td>₹ 9.0 LPA</td>
+              <td>
+                <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Scheduled Technical Round 2')">
+                  Schedule Round
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   `;
 }
 
+// 2. Employee Onboarding
 export function renderOnboarding() {
   return `
     <div class="page-header">
       <div class="page-title-group">
-        <h1>Employee Onboarding</h1>
+        <h1>Employee Onboarding & Compliance</h1>
         <p class="page-subtitle">New joiner checklists, statutory document collection & appointment letter dispatch</p>
       </div>
-      <button class="btn btn-primary" onclick="window.hrApp.navigate('generator', { templateId: 'TPL-APPT-01' })">
-        + Generate Appointment Letter
+      <button class="btn btn-primary" onclick="window.store.navigate('generator', { templateId: 'TPL-APPT-01' })">
+        📄 Generate Appointment Letter
       </button>
     </div>
 
+    <div class="grid-4" style="margin-bottom: 25px;">
+      <div class="stat-card"><div class="stat-value">4</div><div class="stat-label">Onboarding Total</div></div>
+      <div class="stat-card"><div class="stat-value" style="color: var(--accent-emerald);">4</div><div class="stat-label">Docs Verified</div></div>
+      <div class="stat-card"><div class="stat-value" style="color: var(--accent-amber);">0</div><div class="stat-label">Pending Verification</div></div>
+      <div class="stat-card"><div class="stat-value" style="color: var(--primary);">100%</div><div class="stat-label">Compliance Status</div></div>
+    </div>
+
     <div class="glass-card">
-      <h3 style="margin-bottom: 15px;">Onboarding Document Checklist Status</h3>
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>New Joiner</th>
-            <th>Joining Date</th>
-            <th>PAN & Aadhaar</th>
-            <th>Past Experience Certs</th>
-            <th>Appointment Letter</th>
-            <th>NDA Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Swapnil Ghodke</strong><br><small>OBS-OPS-26-001</small></td>
-            <td>01 Sep 2024</td>
-            <td><span class="badge badge-active">Verified</span></td>
-            <td><span class="badge badge-active">Verified</span></td>
-            <td><span class="badge badge-active">Issued (OBS/HR/APPT/2026/0014)</span></td>
-            <td><span class="badge badge-active">Signed</span></td>
-          </tr>
-        </tbody>
-      </table>
+      <h3 style="margin-bottom: 15px;">Onboarding Document Checklist & Verification Status</h3>
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>New Joiner</th>
+              <th>Joining Date</th>
+              <th>PAN & Aadhaar</th>
+              <th>Experience Certs</th>
+              <th>Appointment Letter</th>
+              <th>Code of Ethics</th>
+              <th>Bank Account</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Swapnil Ghodke</strong><br><small style="color: var(--text-muted);">OBS-OPS-26-001</small></td>
+              <td>01 Sep 2024</td>
+              <td><span class="badge badge-active">Verified</span></td>
+              <td><span class="badge badge-active">Verified</span></td>
+              <td><span class="badge badge-active">Issued (OBS-APPT-2026-0014)</span></td>
+              <td><span class="badge badge-active">Signed (OBS-ETHICS-26-0001)</span></td>
+              <td><span class="badge badge-active">HDFC Bank Verified</span></td>
+            </tr>
+            <tr>
+              <td><strong>Rahul Sharma</strong><br><small style="color: var(--text-muted);">OBS-ENG-26-002</small></td>
+              <td>15 Jan 2025</td>
+              <td><span class="badge badge-active">Verified</span></td>
+              <td><span class="badge badge-active">Verified</span></td>
+              <td><span class="badge badge-active">Issued (OBS-APPT-2026-0015)</span></td>
+              <td><span class="badge badge-active">Signed</span></td>
+              <td><span class="badge badge-active">ICICI Bank Verified</span></td>
+            </tr>
+            <tr>
+              <td><strong>Priya Patel</strong><br><small style="color: var(--text-muted);">OBS-HR-26-003</small></td>
+              <td>01 Feb 2025</td>
+              <td><span class="badge badge-active">Verified</span></td>
+              <td><span class="badge badge-active">Verified</span></td>
+              <td><span class="badge badge-active">Issued (OBS-APPT-2026-0016)</span></td>
+              <td><span class="badge badge-active">Signed</span></td>
+              <td><span class="badge badge-active">Axis Bank Verified</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   `;
 }
 
+// 3. Attendance & Leave Management
 export function renderAttendanceLeave() {
   return `
     <div class="page-header">
       <div class="page-title-group">
         <h1>Attendance & Leave Management</h1>
-        <p class="page-subtitle">Track employee leave balances, annual leave requests, and attendance logs</p>
+        <p class="page-subtitle">Track employee daily attendance, leave balances, and annual leave requests</p>
       </div>
+      <button class="btn btn-primary" onclick="window.hrApp.showToast('Opened Leave Request Application modal')">
+        🌴 Apply For Leave
+      </button>
     </div>
-    <div class="grid-4">
-      <div class="stat-card"><div class="stat-value">125</div><div class="stat-label">Present Today</div></div>
-      <div class="stat-card"><div class="stat-value" style="color: var(--accent-amber);">4</div><div class="stat-label">On Leave</div></div>
+
+    <div class="grid-4" style="margin-bottom: 25px;">
+      <div class="stat-card"><div class="stat-value">4</div><div class="stat-label">Total Active Staff</div></div>
+      <div class="stat-card"><div class="stat-value" style="color: var(--accent-emerald);">4</div><div class="stat-label">Present Today</div></div>
+      <div class="stat-card"><div class="stat-value" style="color: var(--accent-amber);">0</div><div class="stat-label">On Planned Leave</div></div>
+      <div class="stat-card"><div class="stat-value" style="color: var(--primary);">100%</div><div class="stat-label">Attendance Rate</div></div>
+    </div>
+
+    <div class="glass-card">
+      <h3 style="margin-bottom: 15px;">Employee Annual Leave Balances & Status</h3>
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Employee Name</th>
+              <th>Casual Leave (CL)</th>
+              <th>Sick Leave (SL)</th>
+              <th>Earned Leave (EL)</th>
+              <th>Total Available</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Swapnil Ghodke</strong><br><small style="color: var(--text-muted);">Head of HR</small></td>
+              <td>8 / 12 Days</td>
+              <td>6 / 7 Days</td>
+              <td>12 / 15 Days</td>
+              <td><strong>26 Days Available</strong></td>
+              <td><span class="badge badge-active">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Rahul Sharma</strong><br><small style="color: var(--text-muted);">Senior Software Engineer</small></td>
+              <td>10 / 12 Days</td>
+              <td>7 / 7 Days</td>
+              <td>14 / 15 Days</td>
+              <td><strong>31 Days Available</strong></td>
+              <td><span class="badge badge-active">Present</span></td>
+            </tr>
+            <tr>
+              <td><strong>Priya Patel</strong><br><small style="color: var(--text-muted);">HR Operations Lead</small></td>
+              <td>9 / 12 Days</td>
+              <td>5 / 7 Days</td>
+              <td>10 / 15 Days</td>
+              <td><strong>24 Days Available</strong></td>
+              <td><span class="badge badge-active">Present</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   `;
 }
 
+// 4. Payroll & Salary Management
 export function renderPayroll() {
+  const state = store.getState();
+  const employees = state.employees || [];
+
   return `
     <div class="page-header">
       <div class="page-title-group">
         <h1>Payroll & Salary Management</h1>
-        <p class="page-subtitle">Monthly salary slips, statutory PF/PT deductions & CTC structure management</p>
+        <p class="page-subtitle">Monthly salary rolls, statutory PF/PT deductions & CTC structure management</p>
       </div>
-      <button class="btn btn-primary" onclick="window.hrApp.navigate('generator', { templateId: 'TPL-INCR-01' })">
-        + Issue Increment Letter
-      </button>
+      <div style="display: flex; gap: 10px;">
+        <button class="btn btn-primary" onclick="window.store.navigate('generator', { templateId: 'TPL-SLIP-01' })">
+          💵 Generate Payslip
+        </button>
+        <button class="btn btn-secondary" onclick="window.store.navigate('generator', { templateId: 'TPL-INCR-01' })">
+          📈 Issue Increment Letter
+        </button>
+      </div>
+    </div>
+
+    <div class="grid-4" style="margin-bottom: 25px;">
+      <div class="stat-card"><div class="stat-value">₹ 3.85L</div><div class="stat-label">Monthly Payroll</div></div>
+      <div class="stat-card"><div class="stat-value" style="color: var(--accent-emerald);">4</div><div class="stat-label">Processed Slips</div></div>
+      <div class="stat-card"><div class="stat-value" style="color: var(--accent-amber);">₹ 21,600</div><div class="stat-label">Statutory PF/PT Deductions</div></div>
+      <div class="stat-card"><div class="stat-value" style="color: var(--primary);">100%</div><div class="stat-label">Disbursement Status</div></div>
+    </div>
+
+    <div class="glass-card">
+      <h3 style="margin-bottom: 15px;">Monthly Salary Roll & Payslip Issuance Roster</h3>
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Employee Name</th>
+              <th>Designation</th>
+              <th>Monthly CTC</th>
+              <th>Gross Earnings</th>
+              <th>PF & Tax Deductions</th>
+              <th>Net Salary Payout</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${employees.map(emp => {
+              const annualCtc = emp.compensation?.ctcAnnual || 1080000;
+              const monthlyCtc = Math.round(annualCtc / 12);
+              const basic = Math.round(monthlyCtc * 0.5);
+              const pf = Math.min(1800, Math.round(basic * 0.12));
+              const pt = 200;
+              const netPayout = monthlyCtc - pf - pt;
+
+              return `
+                <tr>
+                  <td><strong>${emp.fullName}</strong><br><small style="color: var(--text-muted);">${emp.employeeId}</small></td>
+                  <td>${emp.employment?.designation}</td>
+                  <td>₹ ${monthlyCtc.toLocaleString('en-IN')}</td>
+                  <td>₹ ${monthlyCtc.toLocaleString('en-IN')}</td>
+                  <td>₹ ${(pf + pt).toLocaleString('en-IN')}</td>
+                  <td><strong style="color: var(--accent-emerald);">₹ ${netPayout.toLocaleString('en-IN')}</strong></td>
+                  <td>
+                    <button class="btn btn-sm btn-primary" onclick="window.store.navigate('generator', { templateId: 'TPL-SLIP-01' })">
+                      Generate Slip
+                    </button>
+                  </td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
     </div>
   `;
 }
 
+// 5. Performance & Appraisals
 export function renderPerformance() {
   return `
     <div class="page-header">
       <div class="page-title-group">
         <h1>Performance & Appraisals</h1>
-        <p class="page-subtitle">Annual performance reviews, PIP letters, and promotion recommendations</p>
+        <p class="page-subtitle">Annual performance reviews, promotion recommendations, and rating metrics</p>
       </div>
-      <button class="btn btn-primary" onclick="window.hrApp.navigate('generator', { templateId: 'TPL-PROM-01' })">
-        + Create Promotion Letter
+      <button class="btn btn-primary" onclick="window.store.navigate('generator', { templateId: 'TPL-PROM-01' })">
+        📈 Issue Promotion Letter
       </button>
+    </div>
+
+    <div class="grid-3" style="margin-bottom: 25px;">
+      <div class="glass-card">
+        <h3>Exceeds Expectations (A+)</h3>
+        <div style="font-size: 2rem; font-weight: bold; color: var(--accent-emerald); margin: 10px 0;">2 Staff</div>
+        <div style="font-size: 0.85rem; color: var(--text-muted);">Swapnil Ghodke, Rahul Sharma</div>
+      </div>
+      <div class="glass-card">
+        <h3>Meets Standards (A)</h3>
+        <div style="font-size: 2rem; font-weight: bold; color: var(--primary); margin: 10px 0;">2 Staff</div>
+        <div style="font-size: 0.85rem; color: var(--text-muted);">Priya Patel, Amit Kumar</div>
+      </div>
+      <div class="glass-card">
+        <h3>PIP Required</h3>
+        <div style="font-size: 2rem; font-weight: bold; color: var(--accent-amber); margin: 10px 0;">0 Staff</div>
+        <div style="font-size: 0.85rem; color: var(--text-muted);">All team members compliant</div>
+      </div>
     </div>
   `;
 }
 
+// 6. Asset Management
 export function renderAssets() {
   return `
     <div class="page-header">
       <div class="page-title-group">
         <h1>Asset Management</h1>
-        <p class="page-subtitle">Track hardware, laptops, and software credentials assigned to employees</p>
+        <p class="page-subtitle">Track hardware, laptops, SIM cards, and software credentials assigned to staff</p>
+      </div>
+      <button class="btn btn-primary" onclick="window.hrApp.showToast('Opened Assign Asset modal')">
+        💻 + Assign New Asset
+      </button>
+    </div>
+
+    <div class="glass-card">
+      <h3 style="margin-bottom: 15px;">Hardware & IT Assets Inventory Roster</h3>
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Asset Tag ID</th>
+              <th>Item Description</th>
+              <th>Serial Number</th>
+              <th>Assigned Employee</th>
+              <th>Issue Date</th>
+              <th>Condition</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span style="font-family: monospace; color: var(--primary); font-weight: 600;">AST-LAP-2026-001</span></td>
+              <td>MacBook Pro 16" M3 Max</td>
+              <td>C02GX001MD68</td>
+              <td><strong>Swapnil Ghodke</strong></td>
+              <td>01 Sep 2024</td>
+              <td><span class="badge badge-active">Excellent</span></td>
+            </tr>
+            <tr>
+              <td><span style="font-family: monospace; color: var(--primary); font-weight: 600;">AST-LAP-2026-002</span></td>
+              <td>Dell XPS 15 9530 i9</td>
+              <td>DLXPS20269912</td>
+              <td><strong>Rahul Sharma</strong></td>
+              <td>15 Jan 2025</td>
+              <td><span class="badge badge-active">Excellent</span></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   `;
 }
 
+// 7. Exit & Separation Management
 export function renderExit() {
   return `
     <div class="page-header">
@@ -137,13 +406,13 @@ export function renderExit() {
         <p class="page-subtitle">Employer-Initiated Terminations • Employee Resignations • Handover & Asset Clearance • F&F Settlement</p>
       </div>
       <div style="display: flex; gap: 10px;">
-        <button class="btn btn-danger" onclick="window.hrApp.navigate('generator', { templateId: 'TPL-TERM-01' })">
+        <button class="btn btn-danger" onclick="window.store.navigate('generator', { templateId: 'TPL-TERM-01' })">
           🚫 Issue Termination Order
         </button>
-        <button class="btn btn-primary" onclick="window.hrApp.navigate('generator', { templateId: 'TPL-REL-01' })">
+        <button class="btn btn-primary" onclick="window.store.navigate('generator', { templateId: 'TPL-REL-01' })">
           📄 Issue Relieving Order
         </button>
-        <button class="btn btn-secondary" onclick="window.hrApp.navigate('generator', { templateId: 'TPL-NODUES-01' })">
+        <button class="btn btn-secondary" onclick="window.store.navigate('generator', { templateId: 'TPL-NODUES-01' })">
           📑 No Dues Certificate
         </button>
       </div>
@@ -217,6 +486,7 @@ export function renderExit() {
   `;
 }
 
+// 8. HR Reports & Analytics
 export function renderReports() {
   return `
     <div class="page-header">
@@ -225,9 +495,28 @@ export function renderReports() {
         <p class="page-subtitle">Department headcount, salary expenditure distribution, and document issuance metrics</p>
       </div>
     </div>
+
+    <div class="grid-3" style="margin-bottom: 25px;">
+      <div class="glass-card">
+        <h3>Department Headcount</h3>
+        <div style="font-size: 1.8rem; font-weight: bold; color: var(--primary); margin: 10px 0;">4 Active Staff</div>
+        <div style="font-size: 0.85rem; color: var(--text-muted);">Operations (2), HR (1), Engineering (1)</div>
+      </div>
+      <div class="glass-card">
+        <h3>Monthly Document Issuance</h3>
+        <div style="font-size: 1.8rem; font-weight: bold; color: var(--accent-teal); margin: 10px 0;">45 Issued</div>
+        <div style="font-size: 0.85rem; color: var(--text-muted);">Offers (28), Appt (14), Ethics (1), Slips (2)</div>
+      </div>
+      <div class="glass-card">
+        <h3>Compliance Rate</h3>
+        <div style="font-size: 1.8rem; font-weight: bold; color: var(--accent-emerald); margin: 10px 0;">100% Audit Passed</div>
+        <div style="font-size: 0.85rem; color: var(--text-muted);">Aadhaar, PAN, Bank, Ethics Code Verified</div>
+      </div>
+    </div>
   `;
 }
 
+// 9. Company & Admin Settings
 export function renderSettings() {
   const state = store.getState();
   const company = state.company;
