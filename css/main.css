@@ -109,6 +109,7 @@ a {
 /* Sidebar Navigation */
 .sidebar {
   width: var(--sidebar-width);
+  height: 100vh;
   background: rgba(15, 23, 42, 0.95);
   backdrop-filter: blur(16px);
   border-right: 1px solid var(--border-color);
@@ -119,6 +120,7 @@ a {
   bottom: 0;
   left: 0;
   z-index: 100;
+  overflow: hidden;
   transition: var(--transition);
 }
 
@@ -129,6 +131,7 @@ a {
   align-items: center;
   gap: 12px;
   border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
 }
 
 .sidebar-brand-text {
@@ -143,7 +146,8 @@ a {
 .sidebar-menu {
   flex: 1;
   overflow-y: auto;
-  padding: 15px 12px;
+  overflow-x: hidden;
+  padding: 15px 12px 40px 12px;
   display: flex;
   flex-direction: column;
   gap: 4px;

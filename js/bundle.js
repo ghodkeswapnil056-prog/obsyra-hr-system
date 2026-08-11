@@ -4909,5 +4909,28 @@ class HRAppController {
 }
 
 // Instantiate global application singleton
-window.hrApp = new HRAppController();
+const appInstance = new HRAppController();
+window.hrApp = appInstance;
+window.hrAppInstance = appInstance;
+
+// Global Delegated Click Listener & Active Focus Switcher across all browsers
+document.addEventListener('click', (e) => {
+  const item = e.target.closest('.nav-item, [data-view]');
+  if (item) {
+    const view = item.getAttribute('data-view');
+    if (view) {
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+      item.classList.add('active');
+      store.navigate(view);
+    }
+  }
+});
+
+// Guarantee Main Content Renders on DOMContentLoaded and Window Load
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => appInstance.render());
+} else {
+  appInstance.render();
+}
+window.addEventListener('load', () => appInstance.render());
 
