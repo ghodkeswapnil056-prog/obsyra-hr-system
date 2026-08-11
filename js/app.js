@@ -623,21 +623,46 @@ window.hrAppInstance = appInstance;
 
 // Global Delegated Click Listener & Active Focus Switcher across all browsers
 document.addEventListener('click', (e) => {
-  const item = e.target.closest('.nav-item, [data-view]');
+  const item = e.target.closest('.nav-item, .sidebar-nav-item, [data-view], [data-module]');
   if (item) {
-    const view = item.getAttribute('data-view');
+    const view = item.getAttribute('data-view') || item.getAttribute('data-module') || item.getAttribute('href')?.replace('#', '');
     if (view) {
-      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-item, .sidebar-nav-item').forEach(el => el.classList.remove('active'));
       item.classList.add('active');
       store.navigate(view);
     }
   }
 });
 
-// Guarantee Main Content Renders on DOMContentLoaded and Window Load
+// Bind Direct Tab Listeners & Handle Hash Routing on DOMReady
+const initNavigation = () => {
+  document.querySelectorAll('.sidebar a, .sidebar .nav-item, [data-view], [data-module]').forEach(tab => {
+    tab.addEventListener('click', (e) => {
+      const targetView = e.currentTarget.dataset.view || e.currentTarget.dataset.module || e.currentTarget.getAttribute('href')?.replace('#', '');
+      if (targetView) {
+        document.querySelectorAll('.sidebar .nav-item, .sidebar a').forEach(item => item.classList.remove('active'));
+        e.currentTarget.classList.add('active');
+        store.navigate(targetView);
+      }
+    });
+  });
+
+  const hashView = window.location.hash.replace('#', '');
+  if (hashView && ['dashboard','employees','profile','generator','templates','history','recruitment','onboarding','attendance','payroll','performance','assets','exit','reports','settings'].includes(hashView)) {
+    store.navigate(hashView);
+  } else {
+    appInstance.render();
+  }
+};
+
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => appInstance.render());
+  document.addEventListener('DOMContentLoaded', initNavigation);
 } else {
-  appInstance.render();
+  initNavigation();
 }
+
 window.addEventListener('load', () => appInstance.render());
+window.addEventListener('hashchange', () => {
+  const hashView = window.location.hash.replace('#', '');
+  if (hashView) store.navigate(hashView);
+});
