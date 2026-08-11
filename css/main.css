@@ -237,9 +237,9 @@ a {
   gap: 10px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--border-color);
-  padding: 8px 16px;
+  padding: 8px 18px;
   border-radius: var(--radius-full);
-  width: 440px;
+  width: 520px;
   max-width: 100%;
 }
 
@@ -248,10 +248,10 @@ a {
   border: none;
   outline: none;
   color: var(--text-main);
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   flex: 1;
   width: 100%;
-  padding-right: 8px;
+  padding-right: 12px;
 }
 
 .user-profile-widget {
@@ -286,7 +286,7 @@ a {
 
 /* Page Content View Area */
 .page-content {
-  padding: 25px 30px;
+  padding: 25px 30px 80px 30px;
   flex: 1;
 }
 

@@ -3028,7 +3028,7 @@ function renderDashboard() {
       <div class="glass-card">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
           <h3 style="font-size: 1.1rem;">Recent Document Generations</h3>
-          <a href="#" onclick="window.hrApp.navigate('history'); return false;" style="font-size: 0.85rem;">View All Vault</a>
+          <a href="javascript:void(0)" data-view="history" onclick="window.store.navigate('history'); return false;" style="font-size: 0.85rem; color: var(--primary); font-weight: 600;">View All Vault →</a>
         </div>
         <div class="table-responsive">
           <table class="data-table">
@@ -3058,7 +3058,7 @@ function renderDashboard() {
       <div class="glass-card">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
           <h3 style="font-size: 1.1rem;">Recent Employee Master</h3>
-          <a href="#" onclick="window.hrApp.navigate('employees'); return false;" style="font-size: 0.85rem;">Manage Employees</a>
+          <a href="javascript:void(0)" data-view="employees" onclick="window.store.navigate('employees'); return false;" style="font-size: 0.85rem; color: var(--primary); font-weight: 600;">Manage Employees →</a>
         </div>
         <div style="display: flex; flex-direction: column; gap: 12px;">
           ${employees.slice(0, 4).map(emp => `
@@ -3072,7 +3072,7 @@ function renderDashboard() {
                   <div style="font-size: 0.78rem; color: var(--text-muted);">${emp.employment.designation} • ${emp.employment.department}</div>
                 </div>
               </div>
-              <button class="btn btn-sm btn-secondary" onclick="window.hrApp.navigate('profile', { employeeId: '${emp.id}' })">
+              <button class="btn btn-sm btn-secondary" onclick="window.store.navigate('profile', { employeeId: '${emp.id}' })">
                 View Profile
               </button>
             </div>
@@ -3080,6 +3080,16 @@ function renderDashboard() {
         </div>
       </div>
     </div>
+
+    <!-- Corporate System Footer -->
+    <footer style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; color: var(--text-subtle); font-size: 0.78rem;">
+      <div>
+        <strong>Obsyra Private Limited</strong> • CIN: U63991PN2026PTC252127 • Wagholi, Pune, Maharashtra 412207
+      </div>
+      <div>
+        Obsyra HR v2.5 Enterprise Edition • Secured & Compliance Verified
+      </div>
+    </footer>
   `;
 }
 
