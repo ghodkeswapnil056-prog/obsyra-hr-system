@@ -2351,6 +2351,7 @@ const initialTemplates = [
 
 class HRStore {
   constructor() {
+    window.store = this;
     this.listeners = [];
     this.state = {
       company: this.loadFromStorage('obsyra_company', defaultCompany),
@@ -2363,9 +2364,14 @@ class HRStore {
         role: "Super Admin", // Super Admin, HR Admin, HR Executive, Manager, Employee
         avatar: "SG"
       },
-      activeView: "dashboard",
-      viewParams: {}
+      activeView: window.pendingView || "dashboard",
+      viewParams: window.pendingParams || {}
     };
+
+    if (window.pendingView) {
+      delete window.pendingView;
+      delete window.pendingParams;
+    }
   }
 
   loadFromStorage(key, fallback) {
@@ -2526,6 +2532,7 @@ class HRStore {
 }
 
 const store = new HRStore();
+window.store = store;
 
 
 // --- File: serialEngine.js ---
