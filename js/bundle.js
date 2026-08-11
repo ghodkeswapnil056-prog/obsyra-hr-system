@@ -4893,20 +4893,7 @@ class HRAppController {
   // Toast Notification System
   showToast(message) {
     const toast = document.createElement('div');
-    toast.style.cssText = `
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      background: var(--primary-gradient);
-      color: #ffffff;
-      padding: 14px 22px;
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-lg);
-      font-weight: 600;
-      font-size: 0.9rem;
-      z-index: 9999;
-      animation: slideIn 0.3s ease;
-    `;
+    toast.style.cssText = 'position: fixed; bottom: 30px; right: 30px; background: var(--primary-gradient); color: #ffffff; padding: 14px 22px; border-radius: var(--radius-md); box-shadow: var(--shadow-lg); font-weight: 600; font-size: 0.9rem; z-index: 9999; animation: slideIn 0.3s ease;';
     toast.textContent = message;
     document.body.appendChild(toast);
 
