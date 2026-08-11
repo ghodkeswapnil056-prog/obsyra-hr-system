@@ -14,6 +14,34 @@
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/document-generator.css">
+
+  <!-- Global Navigation Proxy Script -->
+  <script>
+    window.store = window.store || {
+      navigate: function(v, p) {
+        window.pendingView = v;
+        window.pendingParams = p;
+      }
+    };
+    window.hrApp = window.hrApp || {
+      navigate: function(v, p) {
+        if (window.store && typeof window.store.navigate === 'function') {
+          window.store.navigate(v, p);
+        } else {
+          window.pendingView = v;
+          window.pendingParams = p;
+        }
+      },
+      resetSystemState: function() {
+        if (window.store && typeof window.store.resetState === 'function') {
+          window.store.resetState();
+        } else {
+          localStorage.clear();
+          location.reload();
+        }
+      }
+    };
+  </script>
 </head>
 <body>
 
@@ -146,7 +174,7 @@
     </div>
   </div>
 
-  <!-- Entry Script -->
-  <script type="module" src="js/app.js"></script>
+  <!-- Entry Script (Universal Standalone Bundle) -->
+  <script src="js/bundle.js"></script>
 </body>
 </html>
