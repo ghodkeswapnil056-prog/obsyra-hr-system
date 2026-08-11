@@ -1,4 +1,4 @@
-// Official Company Settings for Obsyra Private Limited (Updated with Ethics Sequence)
+﻿// Official Company Settings for Obsyra Private Limited (Updated with Ethics Sequence)
 export const companySettings = {
   name: "Obsyra Private Limited",
   shortName: "Obsyra",
@@ -53,9 +53,9 @@ export const companySettings = {
   logoSvg: `<div style="display: flex; align-items: center; gap: 14px;">
     <img src="assets/obsyra_logo.jpg" alt="Obsyra Logo" style="height: 65px; width: auto; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));" />
     <div>
-      <div style="font-family: 'Outfit', 'Arial', sans-serif; font-weight: 800; font-size: 26px; color: #1e293b; letter-spacing: 2px; line-height: 1;">OBSYRA</div>
-      <div style="font-family: 'Outfit', 'Arial', sans-serif; font-weight: 700; font-size: 10px; color: #c59b27; letter-spacing: 3px; margin: 3px 0 2px 0;">— PRIVATE LIMITED —</div>
-      <div style="font-family: 'Inter', 'Arial', sans-serif; font-weight: 500; font-size: 8.5px; color: #64748b;">EMPOWERING BUSINESSES WITH INNOVATION</div>
+      <div style="font-family: Outfit, 'Arial', sans-serif; font-weight: 800; font-size: 26px; color: #1e293b; letter-spacing: 2px; line-height: 1;">OBSYRA</div>
+      <div style="font-family: Outfit, 'Arial', sans-serif; font-weight: 700; font-size: 10px; color: #c59b27; letter-spacing: 3px; margin: 3px 0 2px 0;">— PRIVATE LIMITED —</div>
+      <div style="font-family: Inter, 'Arial', sans-serif; font-weight: 500; font-size: 8.5px; color: #64748b;">EMPOWERING BUSINESSES WITH INNOVATION</div>
     </div>
   </div>`,
 

@@ -56,9 +56,9 @@ const companySettings = {
   logoSvg: `<div style="display: flex; align-items: center; gap: 14px;">
     <img src="assets/obsyra_logo.jpg" alt="Obsyra Logo" style="height: 65px; width: auto; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));" />
     <div>
-      <div style="font-family: 'Outfit', 'Arial', sans-serif; font-weight: 800; font-size: 26px; color: #1e293b; letter-spacing: 2px; line-height: 1;">OBSYRA</div>
-      <div style="font-family: 'Outfit', 'Arial', sans-serif; font-weight: 700; font-size: 10px; color: #c59b27; letter-spacing: 3px; margin: 3px 0 2px 0;">— PRIVATE LIMITED —</div>
-      <div style="font-family: 'Inter', 'Arial', sans-serif; font-weight: 500; font-size: 8.5px; color: #64748b;">EMPOWERING BUSINESSES WITH INNOVATION</div>
+      <div style="font-family: Outfit, 'Arial', sans-serif; font-weight: 800; font-size: 26px; color: #1e293b; letter-spacing: 2px; line-height: 1;">OBSYRA</div>
+      <div style="font-family: Outfit, 'Arial', sans-serif; font-weight: 700; font-size: 10px; color: #c59b27; letter-spacing: 3px; margin: 3px 0 2px 0;">— PRIVATE LIMITED —</div>
+      <div style="font-family: Inter, 'Arial', sans-serif; font-weight: 500; font-size: 8.5px; color: #64748b;">EMPOWERING BUSINESSES WITH INNOVATION</div>
     </div>
   </div>`,
 
@@ -292,7 +292,7 @@ const initialTemplates = [
     name: "Employment Offer Letter (3-Level Builder)",
     category: "Recruitment",
     description: "Modular Employment Offer Letter with customizable clause toggles and live field overrides",
-    body: `<div style="font-family: 'Inter', Arial, sans-serif; color: #1e293b; line-height: 1.6;">
+    body: `<div style="font-family: Inter, Arial, sans-serif; color: #1e293b; line-height: 1.6;">
   <div style="text-align: right; font-size: 13px; color: #64748b; margin-bottom: 20px;">
     <strong>Ref No:</strong> {{doc_number}}<br>
     <strong>Date:</strong> {{issue_date}}
@@ -423,7 +423,7 @@ const initialTemplates = [
   {{#if showAcceptanceSheet}}
   <div class="document-page-break">
     <div style="text-align: center; margin-bottom: 25px; border-bottom: 2px solid #4f46e5; padding-bottom: 10px;">
-      <h3 style="font-family: 'Outfit', Arial, sans-serif; color: #4f46e5; text-transform: uppercase; letter-spacing: 1.5px; margin: 0; font-size: 18px;">FORMAL CANDIDATE ACCEPTANCE OF OFFER</h3>
+      <h3 style="font-family: Outfit, Arial, sans-serif; color: #4f46e5; text-transform: uppercase; letter-spacing: 1.5px; margin: 0; font-size: 18px;">FORMAL CANDIDATE ACCEPTANCE OF OFFER</h3>
       <div style="font-size: 12px; color: #64748b; margin-top: 4px;">Obsyra Private Limited • Duplicate Copy for HR Records</div>
     </div>
 
@@ -455,13 +455,13 @@ const initialTemplates = [
     name: "Code of Business Conduct & Ethics",
     category: "Onboarding",
     description: "Official company code of conduct policy document with mandatory employee sign-off form",
-    body: `<div style="font-family: 'Inter', Arial, sans-serif; color: #1e293b; line-height: 1.6;">
+    body: `<div style="font-family: Inter, Arial, sans-serif; color: #1e293b; line-height: 1.6;">
   <div style="text-align: right; font-size: 13px; color: #64748b; margin-bottom: 15px;">
     <strong>Ref No:</strong> {{doc_number}}<br>
     <strong>Version:</strong> 1.0 • <strong>Effective Date:</strong> May 19, 2026
   </div>
 
-  <h2 style="text-align: center; font-family: 'Outfit', Arial, sans-serif; color: #4f46e5; text-transform: uppercase; letter-spacing: 1px; margin: 20px 0 10px 0; font-size: 20px;">CODE OF BUSINESS CONDUCT AND ETHICS</h2>
+  <h2 style="text-align: center; font-family: Outfit, Arial, sans-serif; color: #4f46e5; text-transform: uppercase; letter-spacing: 1px; margin: 20px 0 10px 0; font-size: 20px;">CODE OF BUSINESS CONDUCT AND ETHICS</h2>
   <div style="text-align: center; font-style: italic; color: #64748b; margin-bottom: 25px; font-size: 13px;">Dedicated to upholding the highest standards of integrity, professionalism, and compliance at <strong>{{company_name}}</strong>.</div>
 
   <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 6px; margin-bottom: 20px; font-size: 12.5px;">
@@ -478,7 +478,7 @@ const initialTemplates = [
   </ul>
 
   <div style="margin-top: 30px; background: #f0fdf4; border: 1.5px solid #10b981; padding: 20px; border-radius: 8px;">
-    <h3 style="margin: 0 0 12px 0; color: #166534; font-family: 'Outfit', sans-serif; font-size: 16px; text-transform: uppercase;">10. Mandatory Employee Acknowledgment & Sign-Off</h3>
+    <h3 style="margin: 0 0 12px 0; color: #166534; font-family: Outfit, sans-serif; font-size: 16px; text-transform: uppercase;">10. Mandatory Employee Acknowledgment & Sign-Off</h3>
     <p style="font-size: 12.5px; margin-bottom: 15px;">I hereby confirm that I have read, understood, and agree to comply with the <strong>{{company_name}} Code of Business Conduct and Ethics</strong>.</p>
     
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-size: 13px; margin-top: 15px;">
@@ -504,7 +504,7 @@ const initialTemplates = [
     name: "Standard Appointment Letter",
     category: "Onboarding",
     description: "Comprehensive 37-point formal appointment letter with configurable legal clauses, Annexure A (Salary Breakdown) & Annexure B (Job Description)",
-    body: `<div style="font-family: 'Inter', Arial, sans-serif; color: #1e293b; line-height: 1.6;">
+    body: `<div style="font-family: Inter, Arial, sans-serif; color: #1e293b; line-height: 1.6;">
   <!-- Letter Metadata Header -->
   <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; font-size: 13px; color: #475569; border-bottom: 1.5px solid #e2e8f0; padding-bottom: 10px;">
     <div>
@@ -526,7 +526,7 @@ const initialTemplates = [
   </div>
 
   <!-- Subject Line -->
-  <h3 style="text-align: center; font-family: 'Outfit', Arial, sans-serif; color: #4f46e5; text-transform: uppercase; letter-spacing: 1.5px; margin: 25px 0 15px 0; font-size: 18px; border-bottom: 2px solid #4f46e5; padding-bottom: 8px;">
+  <h3 style="text-align: center; font-family: Outfit, Arial, sans-serif; color: #4f46e5; text-transform: uppercase; letter-spacing: 1.5px; margin: 25px 0 15px 0; font-size: 18px; border-bottom: 2px solid #4f46e5; padding-bottom: 8px;">
     LETTER OF APPOINTMENT
   </h3>
 
@@ -650,7 +650,7 @@ const initialTemplates = [
   {{#if showSalaryTable}}
   <div class="document-page-break">
     <div style="text-align: center; margin-bottom: 20px; border-bottom: 2px solid #4f46e5; padding-bottom: 8px;">
-      <h3 style="font-family: 'Outfit', Arial, sans-serif; color: #4f46e5; text-transform: uppercase; letter-spacing: 1.5px; margin: 0; font-size: 16px;">ANNEXURE A — COMPENSATION STRUCTURE</h3>
+      <h3 style="font-family: Outfit, Arial, sans-serif; color: #4f46e5; text-transform: uppercase; letter-spacing: 1.5px; margin: 0; font-size: 16px;">ANNEXURE A — COMPENSATION STRUCTURE</h3>
       <div style="font-size: 11.5px; color: #64748b;">Ref No: {{appointment_letter_no}} • Employee: {{employee_name}} ({{employee_id}})</div>
     </div>
 
@@ -702,7 +702,7 @@ const initialTemplates = [
   {{#if showAcceptanceSheet}}
   <div class="document-page-break">
     <div style="text-align: center; margin-bottom: 20px; border-bottom: 2px solid #4f46e5; padding-bottom: 8px;">
-      <h3 style="font-family: 'Outfit', Arial, sans-serif; color: #4f46e5; text-transform: uppercase; letter-spacing: 1.5px; margin: 0; font-size: 16px;">ANNEXURE B — JOB DESCRIPTION & KEY DELIVERABLES</h3>
+      <h3 style="font-family: Outfit, Arial, sans-serif; color: #4f46e5; text-transform: uppercase; letter-spacing: 1.5px; margin: 0; font-size: 16px;">ANNEXURE B — JOB DESCRIPTION & KEY DELIVERABLES</h3>
       <div style="font-size: 11.5px; color: #64748b;">Designation: {{designation}} • Department: {{department}}</div>
     </div>
 
@@ -739,13 +739,13 @@ const initialTemplates = [
     name: "Salary Increment Letter",
     category: "Salary",
     description: "Annual salary revision and appraisal increment confirmation letter",
-    body: `<div style="font-family: 'Inter', Arial, sans-serif; color: #1e293b; line-height: 1.6;">
+    body: `<div style="font-family: Inter, Arial, sans-serif; color: #1e293b; line-height: 1.6;">
   <div style="text-align: right; font-size: 13px; color: #64748b; margin-bottom: 20px;">
     <strong>Ref No:</strong> {{doc_number}}<br>
     <strong>Date:</strong> {{letter_date}}
   </div>
 
-  <h3 style="text-align: center; font-family: 'Outfit', Arial, sans-serif; color: #10b981; text-transform: uppercase; letter-spacing: 1.5px; margin: 20px 0 15px 0; font-size: 18px; border-bottom: 2px solid #10b981; padding-bottom: 8px;">
+  <h3 style="text-align: center; font-family: Outfit, Arial, sans-serif; color: #10b981; text-transform: uppercase; letter-spacing: 1.5px; margin: 20px 0 15px 0; font-size: 18px; border-bottom: 2px solid #10b981; padding-bottom: 8px;">
     SALARY REVISION & INCREMENT CONFIRMATION
   </h3>
 
@@ -832,13 +832,13 @@ const initialTemplates = [
     name: "Experience Certificate",
     category: "Certificates",
     description: "Service experience certificate issued to former or departing employees",
-    body: `<div style="font-family: 'Inter', Arial, sans-serif; color: #1e293b; line-height: 1.6;">
+    body: `<div style="font-family: Inter, Arial, sans-serif; color: #1e293b; line-height: 1.6;">
   <div style="text-align: right; font-size: 13px; color: #64748b; margin-bottom: 20px;">
     <strong>Certificate No:</strong> {{certificate_number}}<br>
     <strong>Date:</strong> {{certificate_date}}
   </div>
 
-  <h3 style="text-align: center; font-family: 'Outfit', Arial, sans-serif; color: #4f46e5; text-transform: uppercase; letter-spacing: 1.5px; margin: 20px 0 15px 0; font-size: 18px; border-bottom: 2px solid #4f46e5; padding-bottom: 8px;">
+  <h3 style="text-align: center; font-family: Outfit, Arial, sans-serif; color: #4f46e5; text-transform: uppercase; letter-spacing: 1.5px; margin: 20px 0 15px 0; font-size: 18px; border-bottom: 2px solid #4f46e5; padding-bottom: 8px;">
     TO WHOMSOEVER IT MAY CONCERN
   </h3>
 
@@ -933,13 +933,13 @@ const initialTemplates = [
     name: "Promotion & Grade Revision Letter",
     category: "Lifecycle",
     description: "Official career promotion and designation advancement letter",
-    body: `<div style="font-family: 'Inter', Arial, sans-serif; color: #1e293b; line-height: 1.6;">
+    body: `<div style="font-family: Inter, Arial, sans-serif; color: #1e293b; line-height: 1.6;">
   <div style="text-align: right; font-size: 13px; color: #64748b; margin-bottom: 20px;">
     <strong>Promotion Letter No:</strong> {{promotion_letter_number}}<br>
     <strong>Date:</strong> {{letter_date}}
   </div>
 
-  <h3 style="text-align: center; font-family: 'Outfit', Arial, sans-serif; color: #6366f1; text-transform: uppercase; letter-spacing: 1.5px; margin: 20px 0 15px 0; font-size: 18px; border-bottom: 2px solid #6366f1; padding-bottom: 8px;">
+  <h3 style="text-align: center; font-family: Outfit, Arial, sans-serif; color: #6366f1; text-transform: uppercase; letter-spacing: 1.5px; margin: 20px 0 15px 0; font-size: 18px; border-bottom: 2px solid #6366f1; padding-bottom: 8px;">
     LETTER OF PROMOTION
   </h3>
 
@@ -1056,13 +1056,13 @@ const initialTemplates = [
     name: "Non-Disclosure & Confidentiality Agreement",
     category: "Legal",
     description: "Legal non-disclosure and intellectual property protection agreement",
-    body: `<div style="font-family: 'Inter', Arial, sans-serif; color: #1e293b; line-height: 1.6;">
+    body: `<div style="font-family: Inter, Arial, sans-serif; color: #1e293b; line-height: 1.6;">
   <div style="text-align: right; font-size: 13px; color: #64748b; margin-bottom: 20px;">
     <strong>Agreement No:</strong> {{nda_number}}<br>
     <strong>Date:</strong> {{agreement_date}}
   </div>
 
-  <h3 style="text-align: center; font-family: 'Outfit', Arial, sans-serif; color: #dc2626; text-transform: uppercase; letter-spacing: 1.5px; margin: 20px 0 15px 0; font-size: 18px; border-bottom: 2px solid #dc2626; padding-bottom: 8px;">
+  <h3 style="text-align: center; font-family: Outfit, Arial, sans-serif; color: #dc2626; text-transform: uppercase; letter-spacing: 1.5px; margin: 20px 0 15px 0; font-size: 18px; border-bottom: 2px solid #dc2626; padding-bottom: 8px;">
     EMPLOYEE NON-DISCLOSURE AGREEMENT
   </h3>
 
@@ -1210,13 +1210,13 @@ const initialTemplates = [
     name: "Relieving Order & Service Release",
     category: "Exit",
     description: "Official service relieving letter issued upon full & final clearance",
-    body: `<div style="font-family: 'Inter', Arial, sans-serif; color: #1e293b; line-height: 1.6;">
+    body: `<div style="font-family: Inter, Arial, sans-serif; color: #1e293b; line-height: 1.6;">
   <div style="text-align: right; font-size: 13px; color: #64748b; margin-bottom: 20px;">
     <strong>Relieving Order No:</strong> {{relieving_order_number}}<br>
     <strong>Date:</strong> {{relieving_date}}
   </div>
 
-  <h3 style="text-align: center; font-family: 'Outfit', Arial, sans-serif; color: #0284c7; text-transform: uppercase; letter-spacing: 1.5px; margin: 20px 0 15px 0; font-size: 18px; border-bottom: 2px solid #0284c7; padding-bottom: 8px;">
+  <h3 style="text-align: center; font-family: Outfit, Arial, sans-serif; color: #0284c7; text-transform: uppercase; letter-spacing: 1.5px; margin: 20px 0 15px 0; font-size: 18px; border-bottom: 2px solid #0284c7; padding-bottom: 8px;">
     RELIEVING ORDER
   </h3>
 
@@ -1300,13 +1300,13 @@ const initialTemplates = [
     name: "Joining Letter & Duty Report",
     category: "Onboarding",
     description: "Official joining report confirming employee arrival and duty commencement",
-    body: `<div style="font-family: 'Inter', Arial, sans-serif; color: #1e293b; line-height: 1.6;">
+    body: `<div style="font-family: Inter, Arial, sans-serif; color: #1e293b; line-height: 1.6;">
   <div style="text-align: right; font-size: 13px; color: #64748b; margin-bottom: 20px;">
     <strong>Joining Report No:</strong> {{joining_report_number}}<br>
     <strong>Date:</strong> {{joining_date}}
   </div>
 
-  <h3 style="text-align: center; font-family: 'Outfit', Arial, sans-serif; color: #10b981; text-transform: uppercase; letter-spacing: 1.5px; margin: 20px 0 15px 0; font-size: 18px; border-bottom: 2px solid #10b981; padding-bottom: 8px;">
+  <h3 style="text-align: center; font-family: Outfit, Arial, sans-serif; color: #10b981; text-transform: uppercase; letter-spacing: 1.5px; margin: 20px 0 15px 0; font-size: 18px; border-bottom: 2px solid #10b981; padding-bottom: 8px;">
     JOINING REPORT & DUTY ASSUMPTION
   </h3>
 
@@ -1452,13 +1452,13 @@ const initialTemplates = [
     name: "Employment Confirmation Letter",
     category: "Lifecycle",
     description: "Letter confirming successful completion of probation period and permanent status",
-    body: `<div style="font-family: 'Inter', Arial, sans-serif; color: #1e293b; line-height: 1.6;">
+    body: `<div style="font-family: Inter, Arial, sans-serif; color: #1e293b; line-height: 1.6;">
   <div style="text-align: right; font-size: 13px; color: #64748b; margin-bottom: 20px;">
     <strong>Confirmation Letter No:</strong> {{confirmation_letter_number}}<br>
     <strong>Date:</strong> {{letter_date}}
   </div>
 
-  <h3 style="text-align: center; font-family: 'Outfit', Arial, sans-serif; color: #10b981; text-transform: uppercase; letter-spacing: 1.5px; margin: 20px 0 15px 0; font-size: 18px; border-bottom: 2px solid #10b981; padding-bottom: 8px;">
+  <h3 style="text-align: center; font-family: Outfit, Arial, sans-serif; color: #10b981; text-transform: uppercase; letter-spacing: 1.5px; margin: 20px 0 15px 0; font-size: 18px; border-bottom: 2px solid #10b981; padding-bottom: 8px;">
     EMPLOYMENT CONFIRMATION LETTER
   </h3>
 
@@ -1588,13 +1588,13 @@ const initialTemplates = [
     name: "Official Warning Letter & PIP Notice",
     category: "Compliance",
     description: "Official disciplinary performance improvement plan warning letter",
-    body: `<div style="font-family: 'Inter', Arial, sans-serif; color: #1e293b; line-height: 1.6;">
+    body: `<div style="font-family: Inter, Arial, sans-serif; color: #1e293b; line-height: 1.6;">
   <div style="text-align: right; font-size: 13px; color: #64748b; margin-bottom: 20px;">
     <strong>Warning Letter No:</strong> {{warning_letter_number}}<br>
     <strong>Date:</strong> {{letter_date}}
   </div>
 
-  <h3 style="text-align: center; font-family: 'Outfit', Arial, sans-serif; color: #ef4444; text-transform: uppercase; letter-spacing: 1.5px; margin: 20px 0 15px 0; font-size: 18px; border-bottom: 2px solid #ef4444; padding-bottom: 8px;">
+  <h3 style="text-align: center; font-family: Outfit, Arial, sans-serif; color: #ef4444; text-transform: uppercase; letter-spacing: 1.5px; margin: 20px 0 15px 0; font-size: 18px; border-bottom: 2px solid #ef4444; padding-bottom: 8px;">
     OFFICIAL WARNING LETTER — PERFORMANCE NOTICE
   </h3>
 
@@ -1709,13 +1709,13 @@ const initialTemplates = [
     name: "Office Transfer & Relocation Order",
     category: "Lifecycle",
     description: "Official office location transfer and relocation order letter",
-    body: `<div style="font-family: 'Inter', Arial, sans-serif; color: #1e293b; line-height: 1.6;">
+    body: `<div style="font-family: Inter, Arial, sans-serif; color: #1e293b; line-height: 1.6;">
   <div style="text-align: right; font-size: 13px; color: #64748b; margin-bottom: 20px;">
     <strong>Transfer Order No:</strong> {{transfer_order_number}}<br>
     <strong>Date:</strong> {{order_date}}
   </div>
 
-  <h3 style="text-align: center; font-family: 'Outfit', Arial, sans-serif; color: #f59e0b; text-transform: uppercase; letter-spacing: 1.5px; margin: 20px 0 15px 0; font-size: 18px; border-bottom: 2px solid #f59e0b; padding-bottom: 8px;">
+  <h3 style="text-align: center; font-family: Outfit, Arial, sans-serif; color: #f59e0b; text-transform: uppercase; letter-spacing: 1.5px; margin: 20px 0 15px 0; font-size: 18px; border-bottom: 2px solid #f59e0b; padding-bottom: 8px;">
     OFFICE TRANSFER ORDER
   </h3>
 
@@ -1831,13 +1831,13 @@ const initialTemplates = [
     name: "No Dues & Full & Final Clearance Certificate",
     category: "Exit",
     description: "Official full & final clearance certificate confirming zero outstanding dues",
-    body: `<div style="font-family: 'Inter', Arial, sans-serif; color: #1e293b; line-height: 1.6;">
+    body: `<div style="font-family: Inter, Arial, sans-serif; color: #1e293b; line-height: 1.6;">
   <div style="text-align: right; font-size: 13px; color: #64748b; margin-bottom: 20px;">
     <strong>Certificate No:</strong> {{certificate_number}}<br>
     <strong>Date:</strong> {{certificate_date}}
   </div>
 
-  <h3 style="text-align: center; font-family: 'Outfit', Arial, sans-serif; color: #10b981; text-transform: uppercase; letter-spacing: 1.5px; margin: 20px 0 15px 0; font-size: 18px; border-bottom: 2px solid #10b981; padding-bottom: 8px;">
+  <h3 style="text-align: center; font-family: Outfit, Arial, sans-serif; color: #10b981; text-transform: uppercase; letter-spacing: 1.5px; margin: 20px 0 15px 0; font-size: 18px; border-bottom: 2px solid #10b981; padding-bottom: 8px;">
     NO DUES & FULL & FINAL CLEARANCE CERTIFICATE
   </h3>
 
@@ -1982,7 +1982,7 @@ const initialTemplates = [
     name: "Bank Account Opening Request Letter",
     category: "Compliance",
     description: "Official corporate recommendation letter for employee salary bank account opening",
-    body: `<div style="font-family: 'Inter', Arial, sans-serif; color: #1e293b; line-height: 1.6;">
+    body: `<div style="font-family: Inter, Arial, sans-serif; color: #1e293b; line-height: 1.6;">
   <div style="text-align: right; font-size: 13px; color: #64748b; margin-bottom: 20px;">
     <strong>Ref No:</strong> {{doc_number}}<br>
     <strong>Date:</strong> {{issue_date}}
@@ -1994,7 +1994,7 @@ const initialTemplates = [
     Pune, Maharashtra
   </div>
 
-  <h3 style="text-align: center; font-family: 'Outfit', Arial, sans-serif; color: #4f46e5; text-transform: uppercase; letter-spacing: 1px; margin: 25px 0; font-size: 18px;">REQUEST FOR SALARY ACCOUNT OPENING</h3>
+  <h3 style="text-align: center; font-family: Outfit, Arial, sans-serif; color: #4f46e5; text-transform: uppercase; letter-spacing: 1px; margin: 25px 0; font-size: 18px;">REQUEST FOR SALARY ACCOUNT OPENING</h3>
 
   <p>Dear Sir / Madam,</p>
 
@@ -2009,7 +2009,7 @@ const initialTemplates = [
     name: "Termination of Employment Order",
     category: "Exit",
     description: "Comprehensive 6-section formal termination order with clearance checklists, F&F settlement breakdown, and approval audit trail",
-    body: `<div style="font-family: 'Inter', Arial, sans-serif; color: #1e293b; line-height: 1.6;">
+    body: `<div style="font-family: Inter, Arial, sans-serif; color: #1e293b; line-height: 1.6;">
   <!-- Section 1: Letter Information Header -->
   <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; font-size: 12.5px; color: #475569; border-bottom: 1.5px solid #e2e8f0; padding-bottom: 10px;">
     <div>
@@ -2035,7 +2035,7 @@ const initialTemplates = [
   </div>
 
   <!-- Subject Line -->
-  <h3 style="text-align: center; font-family: 'Outfit', Arial, sans-serif; color: #dc2626; text-transform: uppercase; letter-spacing: 1.5px; margin: 25px 0 15px 0; font-size: 18px; border-bottom: 2px solid #dc2626; padding-bottom: 8px;">
+  <h3 style="text-align: center; font-family: Outfit, Arial, sans-serif; color: #dc2626; text-transform: uppercase; letter-spacing: 1.5px; margin: 25px 0 15px 0; font-size: 18px; border-bottom: 2px solid #dc2626; padding-bottom: 8px;">
     NOTICE OF TERMINATION OF EMPLOYMENT
   </h3>
 
@@ -2157,9 +2157,9 @@ const initialTemplates = [
     name: "Monthly Salary Slip / Payslip",
     category: "Compensation",
     description: "Official monthly employee salary slip with itemized earnings, deductions, net payout, and employer contributions",
-    body: `<div style="font-family: 'Inter', Arial, sans-serif; color: #1e293b; line-height: 1.5;">
+    body: `<div style="font-family: Inter, Arial, sans-serif; color: #1e293b; line-height: 1.5;">
   <div style="text-align: center; border-bottom: 2px solid #0f172a; padding-bottom: 12px; margin-bottom: 15px;">
-    <h2 style="font-family: 'Outfit', Arial, sans-serif; color: #0f172a; text-transform: uppercase; letter-spacing: 1.5px; margin: 0 0 4px 0; font-size: 20px;">SALARY SLIP</h2>
+    <h2 style="font-family: Outfit, Arial, sans-serif; color: #0f172a; text-transform: uppercase; letter-spacing: 1.5px; margin: 0 0 4px 0; font-size: 20px;">SALARY SLIP</h2>
     <div style="font-size: 14px; font-weight: bold; color: #1e293b;">{{company_name}}</div>
     <div style="font-size: 12px; color: #64748b;">{{company_address}}</div>
     <div style="font-size: 12px; color: #64748b;">Phone: {{company_contact}} | Email: {{company_email}}</div>
