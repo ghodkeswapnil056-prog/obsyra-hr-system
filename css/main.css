@@ -162,7 +162,7 @@ a {
   padding: 12px 12px 6px 12px;
 }
 
-.nav-item {
+.nav-item, .sidebar-nav-item {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -172,17 +172,21 @@ a {
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
+  text-decoration: none !important;
+  user-select: none;
+  border-left: 3px solid transparent;
   transition: var(--transition);
 }
 
-.nav-item:hover {
+.nav-item:hover, .sidebar-nav-item:hover {
   background: rgba(255, 255, 255, 0.05);
   color: var(--text-main);
 }
 
-.nav-item.active {
-  background: var(--primary-gradient);
-  color: #ffffff;
+.nav-item.active, .sidebar-nav-item.active {
+  background: rgba(124, 58, 237, 0.18) !important;
+  border-left: 3px solid #7c3aed !important;
+  color: #ffffff !important;
   font-weight: 600;
   box-shadow: var(--shadow-glow);
 }
