@@ -8,7 +8,7 @@ class HRStore {
     window.store = this;
     this.listeners = [];
     this.state = {
-      company: this.loadFromStorage('obsyra_company', defaultCompany),
+      company: this.loadFromStorage('obsyra_company', (typeof defaultCompany !== 'undefined' ? defaultCompany : companySettings)),
       employees: this.loadFromStorage('obsyra_employees', initialEmployees),
       templates: this.loadFromStorage('obsyra_templates', initialTemplates),
       history: this.loadFromStorage('obsyra_history', this.getInitialHistory()),

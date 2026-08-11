@@ -1,4 +1,4 @@
-﻿// Official Company Settings for Obsyra Private Limited (Updated with Ethics Sequence)
+// Official Company Settings for Obsyra Private Limited (Updated with Ethics Sequence)
 export const companySettings = {
   name: "Obsyra Private Limited",
   shortName: "Obsyra",
@@ -91,3 +91,5 @@ export const companySettings = {
     GEN: 45
   }
 };
+
+export const defaultCompany = companySettings;
