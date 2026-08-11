@@ -1,4 +1,4 @@
-﻿// HR Document Templates Seed Library for Obsyra Private Limited (Updated with Modular Offer Letter)
+// HR Document Templates Seed Library for Obsyra Private Limited (Updated with Modular Offer Letter)
 export const initialTemplates = [
   {
     id: "TPL-OFFER-01",
@@ -1864,6 +1864,7 @@ export const initialTemplates = [
         <div style="margin-top: 25px;"><strong>Authorized Signatory</strong></div>
       </div>
     </div>
+  </div>`
   },
   {
     id: "TPL-SLIP-01",

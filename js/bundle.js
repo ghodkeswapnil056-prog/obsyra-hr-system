@@ -2150,6 +2150,7 @@ const initialTemplates = [
         <div style="margin-top: 25px;"><strong>Authorized Signatory</strong></div>
       </div>
     </div>
+  </div>`
   },
   {
     id: "TPL-SLIP-01",
