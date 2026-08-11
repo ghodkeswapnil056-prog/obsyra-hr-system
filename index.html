@@ -187,6 +187,9 @@
         <!-- Stat Cards Row -->
         <div class="grid-4" style="margin-bottom: 25px;">
           <div class="stat-card">
+            <div class="stat-icon-wrapper" style="background: rgba(99, 102, 241, 0.15); color: #818cf8;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            </div>
             <div>
               <div class="stat-value">4</div>
               <div class="stat-label">Total Employees</div>
@@ -194,6 +197,9 @@
           </div>
 
           <div class="stat-card">
+            <div class="stat-icon-wrapper" style="background: rgba(16, 185, 129, 0.15); color: #34d399;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            </div>
             <div>
               <div class="stat-value" style="color: var(--accent-emerald);">4</div>
               <div class="stat-label">Active Staff</div>
@@ -201,16 +207,121 @@
           </div>
 
           <div class="stat-card">
+            <div class="stat-icon-wrapper" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            </div>
             <div>
-              <div class="stat-value" style="color: var(--accent-amber);">0</div>
-              <div class="stat-label">On Probation</div>
+              <div class="stat-value" style="color: var(--accent-amber);">3</div>
+              <div class="stat-label">Documents Issued</div>
             </div>
           </div>
 
           <div class="stat-card">
+            <div class="stat-icon-wrapper" style="background: rgba(139, 92, 246, 0.15); color: #a78bfa;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+            </div>
             <div>
               <div class="stat-value" style="color: var(--primary);">16</div>
               <div class="stat-label">Document Templates</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Action Launchpad -->
+        <div class="glass-card" style="margin-bottom: 25px;">
+          <h3 style="margin-bottom: 15px; font-size: 1.1rem;">Quick Action Launchpad</h3>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <button class="btn btn-secondary" onclick="window.store.navigate('generator', { templateId: 'TPL-ETHICS-01' })">
+              📜 Code of Ethics Sign-Off
+            </button>
+            <button class="btn btn-secondary" onclick="window.store.navigate('generator', { templateId: 'TPL-APPT-01' })">
+              📄 Generate Appointment Letter
+            </button>
+            <button class="btn btn-secondary" onclick="window.store.navigate('generator', { templateId: 'TPL-OFFER-01' })">
+              ✉️ Generate Offer Letter
+            </button>
+            <button class="btn btn-secondary" onclick="window.store.navigate('generator', { templateId: 'TPL-INCR-01' })">
+              📈 Generate Increment Letter
+            </button>
+            <button class="btn btn-secondary" onclick="window.store.navigate('generator', { templateId: 'TPL-EXP-01' })">
+              🎖️ Experience Certificate
+            </button>
+            <button class="btn btn-secondary" onclick="window.store.navigate('employees')">
+              👥 Employee Directory
+            </button>
+            <button class="btn btn-secondary" onclick="window.store.navigate('history')">
+              📜 Document Vault
+            </button>
+          </div>
+        </div>
+
+        <!-- Dashboard Content Split -->
+        <div class="grid-2">
+          <!-- Recent Document Activity Stream -->
+          <div class="glass-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+              <h3 style="font-size: 1.1rem;">Recent Document Generations</h3>
+              <a href="#" onclick="window.store.navigate('history'); return false;" style="font-size: 0.85rem;">View All Vault</a>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Doc Serial Number</th>
+                    <th>Employee</th>
+                    <th>Document Title</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span style="font-family: monospace; color: var(--primary); font-weight: 600;">OBS-OFFER-2026-0028</span></td>
+                    <td><strong>Rahul Sharma</strong><br><small style="color: var(--text-muted);">OBS-ENG-26-002</small></td>
+                    <td><span class="badge badge-primary">Offer Letter</span></td>
+                    <td><small>11 August 2026</small></td>
+                  </tr>
+                  <tr>
+                    <td><span style="font-family: monospace; color: var(--primary); font-weight: 600;">OBS-APPT-2026-0014</span></td>
+                    <td><strong>Priya Patel</strong><br><small style="color: var(--text-muted);">OBS-HR-26-003</small></td>
+                    <td><span class="badge badge-primary">Appointment Letter</span></td>
+                    <td><small>10 August 2026</small></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Quick Employee Roster -->
+          <div class="glass-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+              <h3 style="font-size: 1.1rem;">Recent Employee Master</h3>
+              <a href="#" onclick="window.store.navigate('employees'); return false;" style="font-size: 0.85rem;">Manage Employees</a>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <div class="avatar-badge" style="width: 34px; height: 34px; font-size: 0.8rem;">SG</div>
+                  <div>
+                    <strong style="font-size: 0.9rem;">Swapnil Ghodke</strong>
+                    <div style="font-size: 0.78rem; color: var(--text-muted);">Head of HR • Executive Management</div>
+                  </div>
+                </div>
+                <button class="btn btn-sm btn-secondary" onclick="window.store.navigate('employees')">
+                  View Profile
+                </button>
+              </div>
+              <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <div class="avatar-badge" style="width: 34px; height: 34px; font-size: 0.8rem; background: var(--secondary);">RS</div>
+                  <div>
+                    <strong style="font-size: 0.9rem;">Rahul Sharma</strong>
+                    <div style="font-size: 0.78rem; color: var(--text-muted);">Senior Software Engineer • Engineering</div>
+                  </div>
+                </div>
+                <button class="btn btn-sm btn-secondary" onclick="window.store.navigate('employees')">
+                  View Profile
+                </button>
+              </div>
             </div>
           </div>
         </div>

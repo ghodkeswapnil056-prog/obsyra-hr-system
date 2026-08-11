@@ -110,6 +110,7 @@ a {
 .sidebar {
   width: var(--sidebar-width);
   height: 100vh;
+  max-height: 100vh;
   background: rgba(15, 23, 42, 0.95);
   backdrop-filter: blur(16px);
   border-right: 1px solid var(--border-color);
@@ -120,7 +121,8 @@ a {
   bottom: 0;
   left: 0;
   z-index: 100;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   transition: var(--transition);
 }
 
@@ -147,7 +149,7 @@ a {
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 15px 12px 40px 12px;
+  padding: 15px 12px 60px 12px;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -191,7 +193,7 @@ a {
   box-shadow: var(--shadow-glow);
 }
 
-.nav-item svg {
+.nav-item svg, .sidebar-nav-item svg {
   width: 18px;
   height: 18px;
   flex-shrink: 0;
@@ -237,7 +239,8 @@ a {
   border: 1px solid var(--border-color);
   padding: 8px 16px;
   border-radius: var(--radius-full);
-  width: 320px;
+  width: 440px;
+  max-width: 100%;
 }
 
 .search-bar input {
@@ -246,7 +249,9 @@ a {
   outline: none;
   color: var(--text-main);
   font-size: 0.88rem;
+  flex: 1;
   width: 100%;
+  padding-right: 8px;
 }
 
 .user-profile-widget {
