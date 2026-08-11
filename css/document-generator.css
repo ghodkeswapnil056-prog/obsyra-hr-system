@@ -1,0 +1,619 @@
+/* Enhanced Document Generator Layout, High-Fidelity Preview & Print CSS */
+
+/* Main Builder Container Grid Options */
+.generator-layout-3col {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+/* 3-Column Wide View Mode */
+.generator-layout-3col.mode-3col {
+  grid-template-columns: 260px 300px 1fr;
+}
+
+/* Single Paper Focus Mode */
+.generator-layout-3col.mode-paper {
+  grid-template-columns: 1fr;
+}
+
+/* Single Form Focus Mode */
+.generator-layout-3col.mode-form {
+  grid-template-columns: 1fr;
+}
+
+@media (max-width: 1200px) {
+  .generator-layout-3col {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* View Mode Selector Toolbar */
+.view-mode-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 10px 16px;
+  margin-bottom: 15px;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.view-mode-btn-group {
+  display: flex;
+  gap: 6px;
+}
+
+.view-mode-btn {
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.view-mode-btn:hover {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.view-mode-btn.active {
+  background: var(--primary-gradient);
+  color: #ffffff;
+  border-color: transparent;
+  font-weight: 600;
+}
+
+/* Builder Controls Panel */
+.builder-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
+}
+
+.builder-panel-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 8px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Clause Toggle Switches */
+.clause-toggle-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.clause-checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.82rem;
+}
+
+.clause-checkbox-item:hover {
+  background: rgba(99, 102, 241, 0.1);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+.clause-checkbox-item input[type="checkbox"] {
+  accent-color: var(--primary);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* Document Paper Box (Responsive Auto-Fitting Viewport) */
+.paper-viewport {
+  background: #1e293b;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: auto;
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+  position: relative;
+}
+
+/* Scalable Responsive Document Paper Canvas & A4 Anti-Orphan Layout Engine */
+.document-paper {
+  width: 210mm;
+  min-height: 297mm;
+  background: #ffffff;
+  color: #1e293b;
+  padding: 12mm 14mm 14mm 14mm;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  margin: 0 auto;
+  font-family: 'Inter', Arial, sans-serif;
+  transition: transform 0.2s ease, width 0.2s ease;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+/* Prevent Orphaned Words, Headings & Signature Blocks Across Pages */
+.document-paper h1,
+.document-paper h2,
+.document-paper h3,
+.document-paper h4,
+.document-paper h5,
+.document-paper h6 {
+  break-after: avoid !important;
+  page-break-after: avoid !important;
+  orphans: 3;
+  widows: 3;
+}
+
+.document-paper table,
+.document-paper tr,
+.document-paper td,
+.document-paper th,
+.document-paper .signature-block,
+.document-paper .acknowledgement-box,
+.document-paper .letterhead-footer-block,
+.document-paper .obsyra-footer-container,
+.document-paper blockquote,
+.document-paper ul,
+.document-paper ol {
+  break-inside: avoid !important;
+  page-break-inside: avoid !important;
+}
+
+.document-paper p {
+  orphans: 3;
+  widows: 3;
+  line-height: 1.55;
+  margin-bottom: 8px;
+}
+
+.document-paper table {
+  margin: 10px 0 !important;
+}
+
+.document-paper td,
+.document-paper th {
+  padding: 5px 8px !important;
+}
+
+/* Page Break Container for Acceptance Sheet */
+.document-page-break {
+  page-break-before: always !important;
+  break-before: page !important;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 2px dashed #cbd5e1;
+}
+
+/* --- Official Obsyra Letterhead Header Block --- */
+.obsyra-header-container {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.obsyra-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  gap: 15px;
+}
+
+.obsyra-brand-box {
+  display: flex;
+  align-items: center;
+}
+
+.obsyra-contact-box {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.obsyra-contact-separator {
+  width: 1.5px;
+  height: 65px;
+  background-color: #cbd5e1;
+}
+
+.obsyra-contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 11px;
+  color: #334155;
+  line-height: 1.35;
+}
+
+.obsyra-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.obsyra-icon-gold {
+  width: 13px;
+  height: 13px;
+  color: #c59b27;
+  flex-shrink: 0;
+}
+
+/* --- Dual-Color Angled Header Divider Ribbon Bar --- */
+.obsyra-header-ribbon {
+  display: flex;
+  height: 14px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  margin-top: 4px;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+.ribbon-gold-left {
+  width: 22%;
+  background: linear-gradient(90deg, #b8860b 0%, #c59b27 50%, #e6c25a 100%) !important;
+  clip-path: polygon(0 0, 85% 0, 100% 100%, 0 100%);
+  margin-right: -15px;
+  z-index: 2;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+.ribbon-charcoal-center {
+  flex: 1;
+  background: linear-gradient(90deg, #3a3d40 0%, #2d3033 100%) !important;
+  clip-path: polygon(15px 0, 97% 0, 100% 100%, 0% 100%);
+  z-index: 1;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+.ribbon-gold-right {
+  width: 25px;
+  background: linear-gradient(90deg, #c59b27 0%, #e6c25a 100%) !important;
+  clip-path: polygon(10px 0, 100% 0, 100% 100%, 0 100%);
+  margin-left: -5px;
+  z-index: 2;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+/* Letter Content Container */
+.paper-body {
+  flex: 1;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #1e293b;
+  margin-top: 6px;
+}
+
+.paper-body p {
+  margin-bottom: 8px;
+}
+
+.paper-body h1, .paper-body h2, .paper-body h3, .paper-body h4 {
+  margin-top: 14px;
+  margin-bottom: 6px;
+  break-after: avoid !important;
+  page-break-after: avoid !important;
+}
+
+.paper-body table {
+  margin: 8px 0 !important;
+}
+
+.paper-body td, .paper-body th {
+  padding: 4px 8px !important;
+  font-size: 12px;
+}
+
+/* Signatures & Seal Block */
+.letterhead-footer-block {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  break-inside: avoid !important;
+  page-break-inside: avoid !important;
+}
+
+.signatory-box {
+  text-align: left;
+  font-size: 11.5px;
+  color: #334155;
+}
+
+.signatory-box strong {
+  color: #0f172a;
+}
+
+.seal-stamp-box {
+  text-anchor: middle;
+}
+
+/* --- Official Obsyra Letterhead Footer Block --- */
+.obsyra-footer-container {
+  margin-top: auto;
+  padding-top: 15px;
+  position: relative;
+  width: 100%;
+}
+
+.obsyra-footer-top-line {
+  height: 1.5px;
+  background: linear-gradient(90deg, #c59b27 0%, #e6c25a 50%, #b8860b 100%) !important;
+  width: 100%;
+  margin-bottom: 12px;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+.obsyra-footer-columns {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-bottom: 12px;
+}
+
+.obsyra-footer-col {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  border-right: 1px solid #e2e8f0;
+  padding-right: 6px;
+}
+
+.obsyra-footer-col:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.obsyra-footer-circle-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1.5px solid #c59b27;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c59b27;
+  flex-shrink: 0;
+}
+
+.obsyra-footer-circle-icon svg {
+  width: 12px;
+  height: 12px;
+}
+
+.obsyra-footer-col-title {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 8.5px;
+  color: #c59b27;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+}
+
+.obsyra-footer-col-desc {
+  font-size: 9px;
+  color: #1e293b;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.obsyra-footer-tagline-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin: 8px 0 12px 0;
+}
+
+.obsyra-footer-line-left, .obsyra-footer-line-right {
+  height: 1px;
+  width: 40px;
+  background: #c59b27;
+}
+
+.obsyra-footer-tagline-text {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 9px;
+  color: #334155;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Bottom Metallic Curved Wave Ribbon Bar with Angled Right Stripes */
+.obsyra-footer-bottom-ribbon {
+  height: 16px;
+  width: 100%;
+  background: linear-gradient(90deg, #c59b27 0%, #d4af37 60%, #b8860b 100%) !important;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  clip-path: polygon(0% 0, 100% 0, 100% 100%, 0% 100%);
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+.obsyra-footer-stripe-silver {
+  width: 8px;
+  height: 100%;
+  background: #cbd5e1 !important;
+  transform: skewX(-30deg);
+  margin-right: 4px;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+.obsyra-footer-stripe-gold {
+  width: 8px;
+  height: 100%;
+  background: #e6c25a !important;
+  transform: skewX(-30deg);
+  margin-right: 10px;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+.watermark-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-35deg);
+  font-size: 4.5rem;
+  font-weight: 900;
+  color: rgba(197, 155, 39, 0.07);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Variable Chips Toolbar for Template Editor */
+.variable-chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--border-color);
+}
+
+.var-chip {
+  background: rgba(99, 102, 241, 0.15);
+  color: #a5b4fc;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-family: monospace;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.var-chip:hover {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   ULTRA HIGH-FIDELITY PRINT STYLES (@media print)
+   ========================================================================== */
+@media print {
+  /* Force exact color printing for ribbons, gradients, and icons */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  /* Hide app navigation chrome */
+  .sidebar,
+  .navbar,
+  .view-mode-toolbar,
+  .builder-panel,
+  .page-header,
+  .toast-container {
+    display: none !important;
+  }
+
+  /* Reset main wrapper layout for clean page printing */
+  html, body {
+    background: #ffffff !important;
+    color: #1e293b !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  #app, .main-wrapper, .page-content {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    display: block !important;
+  }
+
+  .generator-layout-3col {
+    display: block !important;
+  }
+
+  .paper-viewport {
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .document-paper {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: auto !important;
+    margin: 0 !important;
+    padding: 10mm 12mm !important;
+    box-shadow: none !important;
+    border: none !important;
+    transform: none !important;
+    page-break-after: avoid;
+  }
+
+  .document-page-break {
+    page-break-before: always !important;
+    break-before: page !important;
+    margin-top: 0 !important;
+    padding-top: 10mm !important;
+    border-top: none !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 8mm 10mm 10mm 10mm;
+  }
+}
