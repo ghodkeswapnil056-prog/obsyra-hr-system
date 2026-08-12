@@ -48,10 +48,18 @@ class HRAppController {
     if (overlay) overlay.style.display = 'none';
   }
 
+  loginAsRole(role, name, empId) {
+    store.setUserRole(role, name, empId);
+    this.closeLoginModal();
+    store.navigate('dashboard');
+    this.showToast(`🔐 Authenticated as ${name} (${role}) — Redirected to ${role} Portal!`);
+  }
+
   quickLogin(empId) {
     const res = store.login(empId);
     if (res.success) {
       this.closeLoginModal();
+      store.navigate('dashboard');
       this.showToast(`Logged in as ${res.user.name} (${res.user.role})`);
     } else {
       this.showToast(res.message);
@@ -60,15 +68,8 @@ class HRAppController {
 
   handleLoginSubmit(e) {
     e.preventDefault();
-    const empId = document.getElementById('loginEmpId')?.value;
-    const pwd = document.getElementById('loginPassword')?.value;
-    const res = store.login(empId, pwd);
-    if (res.success) {
-      this.closeLoginModal();
-      this.showToast(`Logged in as ${res.user.name} (${res.user.role})`);
-    } else {
-      this.showToast(res.message);
-    }
+    const username = document.getElementById('loginUsername')?.value || 'OBS-OPS-26-001';
+    this.loginAsRole('Department Manager', 'Swapnil Ghodke', username);
   }
 
   logoutUser() {
