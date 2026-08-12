@@ -7,7 +7,7 @@ export function renderAssignAssetModal() {
   const employees = state.employees || [];
 
   return `
-    <div class="modal-overlay" id="assignAssetModalOverlay" style="display: none; z-index: 10000; background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(12px); align-items: center; justify-content: center;">
+    <div class="modal-overlay" id="assignAssetModalOverlay" role="dialog" aria-modal="true" aria-hidden="true" style="display: none; z-index: 10000; background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(12px); align-items: center; justify-content: center;">
       <div class="modal-container glass-card" style="width: 640px; max-width: 94vw; padding: 32px; border-radius: 20px; border: 1px solid var(--border-color); background: rgba(30, 41, 59, 0.98); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
         
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
@@ -127,7 +127,7 @@ export function renderAssignAssetModal() {
 // 2. Register Hardware Asset Form Modal
 export function renderRegisterHardwareModal() {
   return `
-    <div class="modal-overlay" id="registerHardwareModalOverlay" style="display: none; z-index: 10000; background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(12px); align-items: center; justify-content: center;">
+    <div class="modal-overlay" id="registerHardwareModalOverlay" role="dialog" aria-modal="true" aria-hidden="true" style="display: none; z-index: 10000; background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(12px); align-items: center; justify-content: center;">
       <div class="modal-container glass-card" style="width: 620px; max-width: 94vw; padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); background: rgba(30, 41, 59, 0.98);">
         
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">

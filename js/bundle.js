@@ -5988,7 +5988,7 @@ function renderTraining() {
 
 function renderAddEmployeeModal() {
   return `
-    <div class="modal-overlay" id="addEmployeeModalOverlay">
+    <div class="modal-overlay" id="addEmployeeModalOverlay" role="dialog" aria-modal="true" aria-hidden="true" style="display: none; z-index: 10000;">
       <div class="modal-container" style="max-width: 750px;">
         <div class="modal-header">
           <div>
@@ -6173,7 +6173,7 @@ function renderAddEmployeeModal() {
 
 function renderLoginModal() {
   return `
-    <div class="modal-overlay" id="loginModalOverlay" style="display: none; z-index: 10000; background: rgba(15, 23, 42, 0.92); backdrop-filter: blur(12px); align-items: center; justify-content: center;">
+    <div class="modal-overlay" id="loginModalOverlay" role="dialog" aria-modal="true" aria-hidden="true" style="display: none; z-index: 10000; background: rgba(15, 23, 42, 0.92); backdrop-filter: blur(12px); align-items: center; justify-content: center;">
       <div class="modal-container glass-card" style="width: 540px; max-width: 92vw; padding: 35px; border-radius: 20px; border: 1px solid var(--border-color); background: rgba(30, 41, 59, 0.98); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
         
         <div style="text-align: center; margin-bottom: 25px;">
@@ -6250,7 +6250,7 @@ function renderAssignAssetModal() {
   const employees = state.employees || [];
 
   return `
-    <div class="modal-overlay" id="assignAssetModalOverlay" style="display: none; z-index: 10000; background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(12px); align-items: center; justify-content: center;">
+    <div class="modal-overlay" id="assignAssetModalOverlay" role="dialog" aria-modal="true" aria-hidden="true" style="display: none; z-index: 10000; background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(12px); align-items: center; justify-content: center;">
       <div class="modal-container glass-card" style="width: 640px; max-width: 94vw; padding: 32px; border-radius: 20px; border: 1px solid var(--border-color); background: rgba(30, 41, 59, 0.98); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
         
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
@@ -6370,7 +6370,7 @@ function renderAssignAssetModal() {
 // 2. Register Hardware Asset Form Modal
 function renderRegisterHardwareModal() {
   return `
-    <div class="modal-overlay" id="registerHardwareModalOverlay" style="display: none; z-index: 10000; background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(12px); align-items: center; justify-content: center;">
+    <div class="modal-overlay" id="registerHardwareModalOverlay" role="dialog" aria-modal="true" aria-hidden="true" style="display: none; z-index: 10000; background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(12px); align-items: center; justify-content: center;">
       <div class="modal-container glass-card" style="width: 620px; max-width: 94vw; padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); background: rgba(30, 41, 59, 0.98);">
         
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
@@ -6547,12 +6547,20 @@ class HRAppController {
 
   showRegisterAssetModal() {
     const overlay = document.getElementById('registerHardwareModalOverlay');
-    if (overlay) overlay.style.display = 'flex';
+    if (overlay) {
+      overlay.style.display = 'flex';
+      overlay.classList.add('is-active', 'open');
+      overlay.setAttribute('aria-hidden', 'false');
+    }
   }
 
   closeRegisterHardwareModal() {
     const overlay = document.getElementById('registerHardwareModalOverlay');
-    if (overlay) overlay.style.display = 'none';
+    if (overlay) {
+      overlay.style.display = 'none';
+      overlay.classList.remove('is-active', 'open');
+      overlay.setAttribute('aria-hidden', 'true');
+    }
   }
 
   handleRegisterHardwareSubmit(e) {
@@ -7050,11 +7058,21 @@ class HRAppController {
     const empIdInput = document.getElementById('newEmployeeId');
     if (empIdInput) empIdInput.value = nextEmpId;
 
-    document.getElementById('addEmployeeModalOverlay')?.classList.add('open');
+    const overlay = document.getElementById('addEmployeeModalOverlay');
+    if (overlay) {
+      overlay.style.display = 'flex';
+      overlay.classList.add('is-active', 'open');
+      overlay.setAttribute('aria-hidden', 'false');
+    }
   }
 
   closeAddEmployeeModal() {
-    document.getElementById('addEmployeeModalOverlay')?.classList.remove('open');
+    const overlay = document.getElementById('addEmployeeModalOverlay');
+    if (overlay) {
+      overlay.style.display = 'none';
+      overlay.classList.remove('is-active', 'open');
+      overlay.setAttribute('aria-hidden', 'true');
+    }
   }
 
   wizardStepNext() {

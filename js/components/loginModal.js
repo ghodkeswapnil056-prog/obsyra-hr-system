@@ -3,7 +3,7 @@ import { store } from '../context.js';
 
 export function renderLoginModal() {
   return `
-    <div class="modal-overlay" id="loginModalOverlay" style="display: none; z-index: 10000; background: rgba(15, 23, 42, 0.92); backdrop-filter: blur(12px); align-items: center; justify-content: center;">
+    <div class="modal-overlay" id="loginModalOverlay" role="dialog" aria-modal="true" aria-hidden="true" style="display: none; z-index: 10000; background: rgba(15, 23, 42, 0.92); backdrop-filter: blur(12px); align-items: center; justify-content: center;">
       <div class="modal-container glass-card" style="width: 540px; max-width: 92vw; padding: 35px; border-radius: 20px; border: 1px solid var(--border-color); background: rgba(30, 41, 59, 0.98); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
         
         <div style="text-align: center; margin-bottom: 25px;">

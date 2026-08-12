@@ -3,7 +3,7 @@ import { store } from '../context.js';
 
 export function renderAddEmployeeModal() {
   return `
-    <div class="modal-overlay" id="addEmployeeModalOverlay">
+    <div class="modal-overlay" id="addEmployeeModalOverlay" role="dialog" aria-modal="true" aria-hidden="true" style="display: none; z-index: 10000;">
       <div class="modal-container" style="max-width: 750px;">
         <div class="modal-header">
           <div>

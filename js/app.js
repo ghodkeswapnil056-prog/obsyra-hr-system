@@ -118,12 +118,20 @@ class HRAppController {
 
   showRegisterAssetModal() {
     const overlay = document.getElementById('registerHardwareModalOverlay');
-    if (overlay) overlay.style.display = 'flex';
+    if (overlay) {
+      overlay.style.display = 'flex';
+      overlay.classList.add('is-active', 'open');
+      overlay.setAttribute('aria-hidden', 'false');
+    }
   }
 
   closeRegisterHardwareModal() {
     const overlay = document.getElementById('registerHardwareModalOverlay');
-    if (overlay) overlay.style.display = 'none';
+    if (overlay) {
+      overlay.style.display = 'none';
+      overlay.classList.remove('is-active', 'open');
+      overlay.setAttribute('aria-hidden', 'true');
+    }
   }
 
   handleRegisterHardwareSubmit(e) {
@@ -621,11 +629,21 @@ class HRAppController {
     const empIdInput = document.getElementById('newEmployeeId');
     if (empIdInput) empIdInput.value = nextEmpId;
 
-    document.getElementById('addEmployeeModalOverlay')?.classList.add('open');
+    const overlay = document.getElementById('addEmployeeModalOverlay');
+    if (overlay) {
+      overlay.style.display = 'flex';
+      overlay.classList.add('is-active', 'open');
+      overlay.setAttribute('aria-hidden', 'false');
+    }
   }
 
   closeAddEmployeeModal() {
-    document.getElementById('addEmployeeModalOverlay')?.classList.remove('open');
+    const overlay = document.getElementById('addEmployeeModalOverlay');
+    if (overlay) {
+      overlay.style.display = 'none';
+      overlay.classList.remove('is-active', 'open');
+      overlay.setAttribute('aria-hidden', 'true');
+    }
   }
 
   wizardStepNext() {
