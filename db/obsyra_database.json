@@ -1,0 +1,119 @@
+{
+  "company": {
+    "name": "Obsyra Private Limited",
+    "shortName": "Obsyra",
+    "code": "OBS",
+    "tagline": "EMPOWERING BUSINESSES WITH INNOVATION",
+    "establishedDate": "16 February 2026",
+    "cin": "U63991PN2026PTC252127",
+    "gstin": "27AAFCO0123M1Z8",
+    "pan": "AAFCO0123M",
+    "email": "info@obsyra.co.in",
+    "corporateAddress": "Wagholi, Pune, Maharashtra, India – 412207",
+    "authorizedSignatoryName": "Avinash Dagdu Aade",
+    "authorizedSignatoryDesignation": "Director",
+    "serialFormat": "{COMPANY}/HR/{TYPE}/{YYYY}/{SEQ:4}"
+  },
+  "employees": [
+    {
+      "id": "EMP-0001",
+      "employeeId": "OBS-OPS-26-001",
+      "firstName": "Swapnil",
+      "lastName": "Ghodke",
+      "fullName": "Swapnil Ghodke",
+      "email": "swapnil.ghodke@obsyra.co.in",
+      "mobile": "+91 98230 45671",
+      "gender": "Male",
+      "employment": {
+        "department": "Telecom & Operations",
+        "designation": "Senior Project Manager (5G Testing)",
+        "dateOfJoining": "2024-09-01",
+        "status": "Active"
+      },
+      "salary": {
+        "basic": 55000,
+        "grossMonthly": 110000,
+        "netMonthly": 100000,
+        "ctcAnnual": 1320000
+      }
+    },
+    {
+      "id": "EMP-0002",
+      "employeeId": "OBS-ENG-26-002",
+      "firstName": "Rahul",
+      "lastName": "Sharma",
+      "fullName": "Rahul Sharma",
+      "email": "rahul.sharma@obsyra.co.in",
+      "mobile": "+91 98765 43210",
+      "gender": "Male",
+      "employment": {
+        "department": "IT & Infrastructure",
+        "designation": "Senior 5G Core Testing Engineer",
+        "dateOfJoining": "2025-01-15",
+        "status": "Active"
+      },
+      "salary": {
+        "basic": 45000,
+        "grossMonthly": 90000,
+        "netMonthly": 82000,
+        "ctcAnnual": 1080000
+      }
+    },
+    {
+      "id": "EMP-0003",
+      "employeeId": "OBS-HR-26-003",
+      "firstName": "Priya",
+      "lastName": "Patel",
+      "fullName": "Priya Patel",
+      "email": "priya.patel@obsyra.co.in",
+      "mobile": "+91 99887 66554",
+      "gender": "Female",
+      "employment": {
+        "department": "Human Resources",
+        "designation": "HR Operations Lead",
+        "dateOfJoining": "2025-02-01",
+        "status": "Active"
+      },
+      "salary": {
+        "basic": 35000,
+        "grossMonthly": 70000,
+        "netMonthly": 64000,
+        "ctcAnnual": 840000
+      }
+    }
+  ],
+  "history": [
+    {
+      "id": "DOC-2026-001",
+      "docNumber": "OBS-APPT-2026-0014",
+      "employeeId": "OBS-OPS-26-001",
+      "employeeName": "Swapnil Ghodke",
+      "title": "Appointment Letter",
+      "category": "Employment",
+      "generatedDate": "16 Feb 2026",
+      "status": "Finalized"
+    },
+    {
+      "id": "DOC-2026-002",
+      "docNumber": "OBS-OFFER-2026-0028",
+      "employeeId": "OBS-ENG-26-002",
+      "employeeName": "Rahul Sharma",
+      "title": "Offer Letter",
+      "category": "Recruitment",
+      "generatedDate": "16 Feb 2026",
+      "status": "Finalized"
+    }
+  ],
+  "audit_logs": [
+    {
+      "id": "LOG-001",
+      "timestamp": "2026-08-12T10:45:00Z",
+      "user": "Swapnil Ghodke",
+      "role": "Super Admin",
+      "module": "System Core",
+      "action": "Backend Database Initialized & REST API Server Connected",
+      "ip": "127.0.0.1",
+      "status": "SUCCESS"
+    }
+  ]
+}
