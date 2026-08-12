@@ -5,8 +5,9 @@ import { renderEmployees } from './modules/employees.js';
 import { renderEmployeeProfile } from './modules/employeeProfile.js';
 import { renderGenerator } from './modules/generator.js';
 import { renderTemplates } from './modules/templates.js';
-import { renderRecruitment, renderOnboarding, renderPayroll, renderPerformance, renderAssets, renderExit, renderReports, renderSettings } from './modules/operationalModules.js';
+import { renderRecruitment, renderOnboarding, renderPayroll, renderPerformance, renderExit, renderReports, renderSettings } from './modules/operationalModules.js';
 import { renderAttendanceEngine } from './modules/attendanceEngine.js';
+import { renderAssetEngine } from './modules/assetEngine.js';
 import { renderProjects } from './modules/projects.js';
 import { renderVerification } from './modules/verification.js';
 import { renderAuditLogs } from './modules/auditLogs.js';
@@ -91,6 +92,14 @@ class HRAppController {
     this.showToast('Submitted Attendance Exception Remark to Manager');
   }
 
+  showAssignAssetModal() {
+    this.showToast('Opened Asset Allocation & Handover Modal');
+  }
+
+  showRegisterAssetModal() {
+    this.showToast('Opened New Hardware Registration Form');
+  }
+
   navigate(view, params = {}) {
     store.navigate(view, params);
   }
@@ -165,7 +174,7 @@ class HRAppController {
         viewContainer.innerHTML = renderPerformance();
         break;
       case 'assets':
-        viewContainer.innerHTML = renderAssets();
+        viewContainer.innerHTML = renderAssetEngine();
         break;
       case 'exit':
         viewContainer.innerHTML = renderExit();
