@@ -16,6 +16,7 @@ import { renderTraining } from './modules/training.js';
 import { renderAddEmployeeModal } from './components/addEmployeeModal.js';
 import { renderLoginModal } from './components/loginModal.js';
 import { renderAssignAssetModal, renderRegisterHardwareModal } from './components/assetModals.js';
+import { renderLoginPage } from './modules/loginPage.js';
 import { commitDocNumberSequence } from './engine/serialEngine.js';
 
 class HRAppController {
@@ -53,6 +54,18 @@ class HRAppController {
     this.closeLoginModal();
     store.navigate('dashboard');
     this.showToast(`🔐 Authenticated as ${name} (${role}) — Redirected to ${role} Portal!`);
+  }
+
+  loginFromPage(role, name, empId) {
+    store.setUserRole(role, name, empId);
+    store.navigate('dashboard');
+    this.showToast(`🔐 Authenticated as ${name} (${role}) — Redirected to ${role} Portal!`);
+  }
+
+  handleLoginPageSubmit(e) {
+    e.preventDefault();
+    const user = document.getElementById('pageLoginUser')?.value || 'OBS-OPS-26-001';
+    this.loginFromPage('Department Manager', 'Swapnil Ghodke', user);
   }
 
   quickLogin(empId) {
@@ -188,6 +201,9 @@ class HRAppController {
 
     // Render active module
     switch (activeView) {
+      case 'login':
+        viewContainer.innerHTML = renderLoginPage();
+        break;
       case 'dashboard':
         viewContainer.innerHTML = renderDashboard();
         break;
@@ -833,6 +849,7 @@ window.closeRegisterHardwareModal = () => appInstance.closeRegisterHardwareModal
 window.toggleAttendancePunch = () => appInstance.toggleAttendancePunch();
 window.openLoginModal = () => appInstance.openLoginModal();
 window.closeLoginModal = () => appInstance.closeLoginModal();
+window.loginFromPage = (role, name, empId) => appInstance.loginFromPage(role, name, empId);
 window.showAddEmployeeModal = () => appInstance.openAddEmployeeModal();
 window.openAddEmployeeModal = () => appInstance.openAddEmployeeModal();
 window.closeAddEmployeeModal = () => appInstance.closeAddEmployeeModal();
@@ -868,7 +885,7 @@ const initNavigation = () => {
   });
 
   const hashView = window.location.hash.replace('#', '').split('?')[0];
-  const validViews = ['dashboard','employees','profile','generator','templates','history','recruitment','onboarding','attendance','payroll','performance','assets','exit','reports','settings','projects','verification','auditLogs','expenses','training'];
+  const validViews = ['login','dashboard','employees','profile','generator','templates','history','recruitment','onboarding','attendance','payroll','performance','assets','exit','reports','settings','projects','verification','auditLogs','expenses','training'];
   if (hashView && validViews.includes(hashView)) {
     store.navigate(hashView);
   } else {
