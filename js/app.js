@@ -5,7 +5,8 @@ import { renderEmployees } from './modules/employees.js';
 import { renderEmployeeProfile } from './modules/employeeProfile.js';
 import { renderGenerator } from './modules/generator.js';
 import { renderTemplates } from './modules/templates.js';
-import { renderRecruitment, renderOnboarding, renderAttendanceLeave, renderPayroll, renderPerformance, renderAssets, renderExit, renderReports, renderSettings } from './modules/operationalModules.js';
+import { renderRecruitment, renderOnboarding, renderPayroll, renderPerformance, renderAssets, renderExit, renderReports, renderSettings } from './modules/operationalModules.js';
+import { renderAttendanceEngine } from './modules/attendanceEngine.js';
 import { renderProjects } from './modules/projects.js';
 import { renderVerification } from './modules/verification.js';
 import { renderAuditLogs } from './modules/auditLogs.js';
@@ -70,6 +71,24 @@ class HRAppController {
     store.logout();
     this.openLoginModal();
     this.showToast('Signed out successfully.');
+  }
+
+  toggleAttendancePunch() {
+    store.togglePunch("Field Duty", "Kharadi, Pune, Maharashtra, India");
+    const active = store.getState().activePunch;
+    if (active) {
+      this.showToast(`📍 Checked In at ${active.checkInTime} (${active.address})`);
+    } else {
+      this.showToast('🛑 Checked Out successfully. Total working time logged.');
+    }
+  }
+
+  showPunchModal() {
+    this.toggleAttendancePunch();
+  }
+
+  showAddRemarkModal() {
+    this.showToast('Submitted Attendance Exception Remark to Manager');
   }
 
   navigate(view, params = {}) {
@@ -137,7 +156,7 @@ class HRAppController {
         viewContainer.innerHTML = renderOnboarding();
         break;
       case 'attendance':
-        viewContainer.innerHTML = renderAttendanceLeave();
+        viewContainer.innerHTML = renderAttendanceEngine();
         break;
       case 'payroll':
         viewContainer.innerHTML = renderPayroll();

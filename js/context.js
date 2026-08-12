@@ -24,6 +24,7 @@ class HRStore {
       templates: this.loadFromStorage('obsyra_templates', initialTemplates),
       history: this.loadFromStorage('obsyra_history', this.getInitialHistory()),
       currentUser: savedUser,
+      activePunch: this.loadFromStorage('obsyra_activePunch', null),
       activeView: window.pendingView || "dashboard",
       viewParams: window.pendingParams || {}
     };
@@ -32,6 +33,24 @@ class HRStore {
       delete window.pendingView;
       delete window.pendingParams;
     }
+  }
+
+  togglePunch(mode = "Field Duty", address = "Kharadi, Pune, Maharashtra, India") {
+    if (this.state.activePunch) {
+      this.state.activePunch = null;
+      this.saveToStorage('obsyra_activePunch', null);
+    } else {
+      this.state.activePunch = {
+        mode: mode,
+        address: address,
+        lat: 18.5514,
+        lng: 73.9452,
+        accuracy: 18,
+        checkInTime: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })
+      };
+      this.saveToStorage('obsyra_activePunch', this.state.activePunch);
+    }
+    this.notify();
   }
 
   // RBAC Permission Evaluator
