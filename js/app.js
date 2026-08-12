@@ -78,6 +78,11 @@ class HRAppController {
     this.showToast('Signed out successfully.');
   }
 
+  toggleMobileSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    if (sidebar) sidebar.classList.toggle('mobile-open');
+  }
+
   toggleAttendancePunch() {
     store.togglePunch("Field Duty", "Kharadi, Pune, Maharashtra, India");
     const active = store.getState().activePunch;
@@ -840,6 +845,8 @@ document.addEventListener('click', (e) => {
     if (view) {
       document.querySelectorAll('.nav-item, .sidebar-nav-item').forEach(el => el.classList.remove('active'));
       item.classList.add('active');
+      const sidebar = document.querySelector('.sidebar');
+      if (sidebar) sidebar.classList.remove('mobile-open');
       store.navigate(view);
     }
   }
@@ -853,6 +860,8 @@ const initNavigation = () => {
       if (targetView) {
         document.querySelectorAll('.sidebar .nav-item, .sidebar a').forEach(item => item.classList.remove('active'));
         e.currentTarget.classList.add('active');
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar) sidebar.classList.remove('mobile-open');
         store.navigate(targetView);
       }
     });
