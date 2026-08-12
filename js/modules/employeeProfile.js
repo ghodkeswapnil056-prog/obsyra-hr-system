@@ -239,6 +239,64 @@ function renderTabContent(tab, emp) {
         </div>
       `;
 
+    case 'assets':
+      return `
+        <div class="glass-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h3>Assigned Company Property & Hardware Register</h3>
+            <button class="btn btn-sm btn-primary" onclick="window.hrApp.showAssignAssetModal()">
+              💻 + Assign Asset to ${emp.firstName}
+            </button>
+          </div>
+
+          <div class="table-responsive" style="margin-bottom: 20px;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Asset Tag ID</th>
+                  <th>Type</th>
+                  <th>Hardware Name & Specs</th>
+                  <th>Serial Number</th>
+                  <th>Status</th>
+                  <th>Ack Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong style="font-family: monospace; color: var(--primary);">OBS-LAP-0024</strong></td>
+                  <td><span class="badge badge-primary">Laptop</span></td>
+                  <td>Dell Latitude 5440 i7 16GB</td>
+                  <td><code>DL5440202699</code></td>
+                  <td><span class="badge badge-active">ASSIGNED</span></td>
+                  <td><span class="badge badge-active">✓ Digital Ack Signed</span></td>
+                  <td>
+                    <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Generated Asset Ack Form')">Handover Form</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong style="font-family: monospace; color: var(--primary);">OBS-SIM-1044</strong></td>
+                  <td><span class="badge badge-secondary">Corporate SIM</span></td>
+                  <td>Jio 5G Testing SIM</td>
+                  <td><code>8991002345678912</code></td>
+                  <td><span class="badge badge-active">ASSIGNED</span></td>
+                  <td><span class="badge badge-active">✓ Digital Ack Signed</span></td>
+                  <td>
+                    <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Viewing SIM Details')">View SIM</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style="background: rgba(255,255,255,0.02); padding: 15px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+            <h4 style="margin-bottom: 10px;">Digital Asset Handover Acknowledgement Status</h4>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px;">Confirmed receipt of laptop & SIM card with accessories (140W Charger, Wireless Mouse, Bag).</p>
+            <small style="color: var(--accent-emerald);">✓ Signed by ${emp.fullName} on 12 Aug 2026 (IP: 182.72.102.14)</small>
+          </div>
+        </div>
+      `;
+
     default: // overview
       return `
         <div class="grid-2">
