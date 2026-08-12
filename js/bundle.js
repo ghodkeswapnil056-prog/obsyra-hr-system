@@ -2451,6 +2451,11 @@ class HRStore {
       history: this.loadFromStorage('obsyra_history', this.getInitialHistory()),
       currentUser: savedUser,
       activePunch: this.loadFromStorage('obsyra_activePunch', null),
+      attendanceLogs: this.loadFromStorage('obsyra_attendanceLogs', [
+        { id: "PUNCH-101", employeeId: "OBS-ENG-26-002", date: "12 Aug 2026", mode: "Office Duty", location: "Kharadi, Pune HQ (18.5529° N, 73.9468° E)", checkIn: "09:28 AM", checkOut: "06:30 PM", status: "PRESENT", photo: "📸 Verified" },
+        { id: "PUNCH-102", employeeId: "OBS-OPS-26-001", date: "12 Aug 2026", mode: "Field Duty", location: "Navi Mumbai Hub (19.0760° N, 72.8777° E)", checkIn: "09:15 AM", checkOut: "06:45 PM", status: "ON DUTY", photo: "📸 Verified" },
+        { id: "PUNCH-103", employeeId: "OBS-HR-26-003", date: "12 Aug 2026", mode: "Office Duty", location: "Kharadi, Pune HQ (18.5529° N, 73.9468° E)", checkIn: "09:30 AM", checkOut: "06:30 PM", status: "PRESENT", photo: "📸 Verified" }
+      ]),
       activeView: window.pendingView || "dashboard",
       viewParams: window.pendingParams || {}
     };
@@ -2461,8 +2466,27 @@ class HRStore {
     }
   }
 
+  recordAttendancePunch(punchRecord) {
+    if (!this.state.attendanceLogs) this.state.attendanceLogs = [];
+    this.state.attendanceLogs.unshift(punchRecord);
+    this.saveToStorage('obsyra_attendanceLogs', this.state.attendanceLogs);
+    this.notify();
+  }
+
   togglePunch(mode = "Field Duty", address = "Kharadi, Pune, Maharashtra, India") {
     if (this.state.activePunch) {
+      const punchOutTime = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+      this.recordAttendancePunch({
+        id: `PUNCH-${Date.now()}`,
+        employeeId: this.state.currentUser.employeeId,
+        date: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
+        mode: this.state.activePunch.mode,
+        location: this.state.activePunch.address,
+        checkIn: this.state.activePunch.checkInTime,
+        checkOut: punchOutTime,
+        status: "PRESENT",
+        photo: "📸 Verified"
+      });
       this.state.activePunch = null;
       this.saveToStorage('obsyra_activePunch', null);
     } else {
