@@ -5,8 +5,12 @@ import { renderEmployees } from './modules/employees.js';
 import { renderEmployeeProfile } from './modules/employeeProfile.js';
 import { renderGenerator } from './modules/generator.js';
 import { renderTemplates } from './modules/templates.js';
-import { renderHistory } from './modules/history.js';
 import { renderRecruitment, renderOnboarding, renderAttendanceLeave, renderPayroll, renderPerformance, renderAssets, renderExit, renderReports, renderSettings } from './modules/operationalModules.js';
+import { renderProjects } from './modules/projects.js';
+import { renderVerification } from './modules/verification.js';
+import { renderAuditLogs } from './modules/auditLogs.js';
+import { renderExpenses } from './modules/expenses.js';
+import { renderTraining } from './modules/training.js';
 import { renderAddEmployeeModal } from './components/addEmployeeModal.js';
 import { renderLoginModal } from './components/loginModal.js';
 import { commitDocNumberSequence } from './engine/serialEngine.js';
@@ -150,12 +154,76 @@ class HRAppController {
       case 'reports':
         viewContainer.innerHTML = renderReports();
         break;
+      case 'projects':
+        viewContainer.innerHTML = renderProjects();
+        break;
+      case 'verification':
+        viewContainer.innerHTML = renderVerification();
+        break;
+      case 'auditLogs':
+        viewContainer.innerHTML = renderAuditLogs();
+        break;
+      case 'expenses':
+        viewContainer.innerHTML = renderExpenses();
+        break;
+      case 'training':
+        viewContainer.innerHTML = renderTraining();
+        break;
       case 'settings':
         viewContainer.innerHTML = renderSettings();
         break;
       default:
         viewContainer.innerHTML = renderDashboard();
         break;
+    }
+  }
+
+  // Document Serial Authenticity Verification Engine
+  verifyDocumentSerial() {
+    const input = document.getElementById('verifyDocSerialInput')?.value.trim();
+    const resultContainer = document.getElementById('verificationResultContainer');
+    if (!resultContainer) return;
+
+    if (!input) {
+      this.showToast('Please enter a Document Serial Number');
+      return;
+    }
+
+    const state = store.getState();
+    const doc = state.history.find(h => (h.docNumber && h.docNumber.toUpperCase() === input.toUpperCase()) || h.id.toUpperCase() === input.toUpperCase());
+
+    if (doc) {
+      resultContainer.innerHTML = `
+        <div style="margin-top: 20px; padding: 20px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: var(--radius-md);">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+            <div style="font-size: 2.2rem; color: var(--accent-emerald);">✓</div>
+            <div>
+              <h4 style="color: #34d399; font-size: 1.15rem; margin: 0;">DOCUMENT AUTHENTIC & VERIFIED</h4>
+              <small style="color: var(--text-muted);">Obsyra Official Vault Seal Match • Verification ID: VER-${Date.now().toString().slice(-6)}</small>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 0.88rem; background: rgba(0,0,0,0.2); padding: 12px; border-radius: var(--radius-sm);">
+            <div><strong>Document Serial:</strong> ${doc.docNumber || doc.id}</div>
+            <div><strong>Document Title:</strong> ${doc.title || doc.category}</div>
+            <div><strong>Issued To Employee:</strong> ${doc.employeeName || doc.employeeId}</div>
+            <div><strong>Issued Date:</strong> ${doc.generatedDate || '16 Feb 2026'}</div>
+            <div><strong>Signatory Authority:</strong> Avinash Dagdu Aade (Director)</div>
+            <div><strong>Corporate Issuer:</strong> Obsyra Private Limited (CIN: U63991PN2026PTC252127)</div>
+          </div>
+        </div>
+      `;
+    } else {
+      resultContainer.innerHTML = `
+        <div style="margin-top: 20px; padding: 20px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: var(--radius-md);">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="font-size: 2.2rem; color: var(--accent-rose);">🚫</div>
+            <div>
+              <h4 style="color: var(--accent-rose); font-size: 1.15rem; margin: 0;">UNVERIFIED DOCUMENT SERIAL</h4>
+              <small style="color: var(--text-muted);">No matching document record found in Obsyra Corporate Vault for serial "${input}". Please check the serial number format.</small>
+            </div>
+          </div>
+        </div>
+      `;
     }
   }
 

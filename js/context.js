@@ -44,15 +44,15 @@ class HRStore {
     }
 
     if (role === "HR Executive") {
-      return ["dashboard", "employees", "profile", "generator", "history", "recruitment", "onboarding", "attendance", "payroll", "performance", "assets", "exit"].includes(view);
+      return ["dashboard", "employees", "profile", "generator", "history", "recruitment", "onboarding", "attendance", "payroll", "performance", "assets", "projects", "verification", "auditLogs", "expenses", "training", "exit"].includes(view);
     }
 
     if (role === "Department Manager") {
-      return ["dashboard", "employees", "profile", "recruitment", "onboarding", "attendance", "performance", "assets"].includes(view);
+      return ["dashboard", "employees", "profile", "recruitment", "onboarding", "attendance", "performance", "assets", "projects", "expenses", "training"].includes(view);
     }
 
     if (role === "Employee") {
-      return ["dashboard", "profile", "attendance", "payroll", "assets"].includes(view);
+      return ["dashboard", "profile", "attendance", "payroll", "assets", "expenses", "training", "verification"].includes(view);
     }
 
     return true;

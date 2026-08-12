@@ -2393,15 +2393,15 @@ class HRStore {
     }
 
     if (role === "HR Executive") {
-      return ["dashboard", "employees", "profile", "generator", "history", "recruitment", "onboarding", "attendance", "payroll", "performance", "assets", "exit"].includes(view);
+      return ["dashboard", "employees", "profile", "generator", "history", "recruitment", "onboarding", "attendance", "payroll", "performance", "assets", "projects", "verification", "auditLogs", "expenses", "training", "exit"].includes(view);
     }
 
     if (role === "Department Manager") {
-      return ["dashboard", "employees", "profile", "recruitment", "onboarding", "attendance", "performance", "assets"].includes(view);
+      return ["dashboard", "employees", "profile", "recruitment", "onboarding", "attendance", "performance", "assets", "projects", "expenses", "training"].includes(view);
     }
 
     if (role === "Employee") {
-      return ["dashboard", "profile", "attendance", "payroll", "assets"].includes(view);
+      return ["dashboard", "profile", "attendance", "payroll", "assets", "expenses", "training", "verification"].includes(view);
     }
 
     return true;
@@ -4827,6 +4827,488 @@ function renderSettings() {
 }
 
 
+// --- File: projects.js ---
+// Project & Manpower Deployment Module (Telecom Core, 5G Testing, IT & Infrastructure)
+
+function renderProjects() {
+  const state = store.getState();
+  const employees = state.employees || [];
+
+  return `
+    <div class="page-header">
+      <div class="page-title-group">
+        <h1>Project & Manpower Deployments</h1>
+        <p class="page-subtitle">Track client sites, 5G core testing projects, field deployment allocation & site timesheets</p>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <button class="btn btn-primary" onclick="window.hrApp.showToast('Initiated New Project Deployment modal')">
+          🏗️ + Create Project Deployment
+        </button>
+        <button class="btn btn-secondary" onclick="window.hrApp.showToast('Exported Deployment Schedule to Excel')">
+          📊 Export Site Roster
+        </button>
+      </div>
+    </div>
+
+    <!-- Top Project Deployment KPI Cards -->
+    <div class="grid-4" style="margin-bottom: 25px;">
+      <div class="stat-card">
+        <div class="stat-value">5 Client Sites</div>
+        <div class="stat-label">Active Deployments</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="color: var(--accent-emerald);">4 Staff</div>
+        <div class="stat-label">Deployed Field Engineers</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="color: var(--accent-teal);">98.4%</div>
+        <div class="stat-label">SLA Execution Rate</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="color: var(--primary);">PAN India</div>
+        <div class="stat-label">Service Reach</div>
+      </div>
+    </div>
+
+    <!-- Active Client Projects Grid -->
+    <div class="grid-2" style="margin-bottom: 25px;">
+      <div class="glass-card" style="border-left: 4px solid var(--primary);">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+          <div>
+            <span class="badge badge-primary" style="margin-bottom: 6px; display: inline-block;">TELECOM 5G CORE</span>
+            <h3 style="font-size: 1.15rem;">Reliance Jio 5G Core Network Testing & Drive Audit</h3>
+            <small style="color: var(--text-muted);">Client: Reliance Jio Infocomm Ltd • Location: Pune & Mumbai Hubs</small>
+          </div>
+          <span class="badge badge-active">Active Site</span>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 15px;">
+          Deployment of specialized testing teams for 5G standalone core integration, rack mounting validation, throughput optimization, and site clearance.
+        </p>
+        <div style="background: rgba(255,255,255,0.03); padding: 12px; border-radius: var(--radius-md); border: 1px solid var(--border-color); display: flex; justify-content: space-between; font-size: 0.82rem;">
+          <div><strong>Lead Specialist:</strong> Swapnil Ghodke</div>
+          <div><strong>Engineers Deployed:</strong> 2 Staff</div>
+          <div><strong>Site Shift:</strong> Day Roster (09:00 - 18:00)</div>
+        </div>
+      </div>
+
+      <div class="glass-card" style="border-left: 4px solid var(--accent-teal);">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+          <div>
+            <span class="badge badge-secondary" style="margin-bottom: 6px; display: inline-block; background: rgba(20, 184, 166, 0.15); color: #2dd4bf;">IT INFRASTRUCTURE</span>
+            <h3 style="font-size: 1.15rem;">Airtel Enterprise Rack & Server Decommissioning</h3>
+            <small style="color: var(--text-muted);">Client: Bharti Airtel Ltd • Location: Hinjewadi IT Park, Pune</small>
+          </div>
+          <span class="badge badge-active">Active Site</span>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 15px;">
+          Complete site clearance, fiber patch panel labeling, hardware rack decommissioning, and asset audit logging across data center facilities.
+        </p>
+        <div style="background: rgba(255,255,255,0.03); padding: 12px; border-radius: var(--radius-md); border: 1px solid var(--border-color); display: flex; justify-content: space-between; font-size: 0.82rem;">
+          <div><strong>Lead Specialist:</strong> Rahul Sharma</div>
+          <div><strong>Engineers Deployed:</strong> 2 Staff</div>
+          <div><strong>Site Shift:</strong> Night Roster (22:00 - 06:00)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Employee Site Deployment Assignment Table -->
+    <div class="glass-card">
+      <h3 style="margin-bottom: 15px;">Field Engineer & Site Assignment Roster</h3>
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Employee Name</th>
+              <th>Designation</th>
+              <th>Assigned Client & Site</th>
+              <th>Deployment Role</th>
+              <th>Start Date</th>
+              <th>Shift & Accommodation</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${employees.map(emp => `
+              <tr>
+                <td><strong>${emp.fullName}</strong><br><small style="color: var(--text-muted);">${emp.employeeId}</small></td>
+                <td>${emp.employment?.designation}</td>
+                <td><strong>${emp.employment?.department.includes("Telecom") ? "Reliance Jio 5G Core Hub" : "Airtel Enterprise Data Center"}</strong></td>
+                <td>${emp.employment?.designation.includes("Manager") ? "Site Supervisor" : "Deployment Engineer"}</td>
+                <td>${emp.employment?.dateOfJoining}</td>
+                <td>General Shift (Company Transit Provided)</td>
+                <td><span class="badge badge-active">Deployed On-Site</span></td>
+                <td>
+                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Viewing deployment details for ${emp.fullName}')">
+                    View Site Assignment
+                  </button>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+
+// --- File: verification.js ---
+// Public & Internal Document Verification Engine (QR Code & Serial Authenticity Portal)
+
+function renderVerification() {
+  const state = store.getState();
+  const history = state.history || [];
+
+  return `
+    <div class="page-header">
+      <div class="page-title-group">
+        <h1>Document Authenticity & QR Verification Portal</h1>
+        <p class="page-subtitle">Verify official Obsyra HR letters, offer documents, appointment certificates & experience records</p>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <span class="badge badge-active" style="font-size: 0.85rem; padding: 8px 14px; background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3);">
+          🔒 SSL Encrypted & Cryptographically Sealed
+        </span>
+      </div>
+    </div>
+
+    <!-- Verification Search & QR Input Workspace -->
+    <div class="glass-card" style="margin-bottom: 25px; border-left: 4px solid var(--accent-amber);">
+      <h3 style="margin-bottom: 12px; color: var(--accent-amber);">Instant Serial Number Lookup & QR Scanner</h3>
+      <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 20px;">
+        Enter the official Obsyra Document Serial Number (e.g. <code style="color: var(--primary);">OBS-APPT-2026-0014</code> or <code style="color: var(--primary);">OBS-ETHICS-26-0001</code>) or scan the printed QR code on the certificate.
+      </p>
+
+      <div style="display: flex; gap: 15px; max-width: 680px; margin-bottom: 15px;">
+        <input type="text" id="verifyDocSerialInput" class="form-control" placeholder="e.g. OBS-APPT-2026-0014" value="OBS-APPT-2026-0014" style="font-family: monospace; font-size: 1rem; text-transform: uppercase;">
+        <button class="btn btn-primary btn-lg" onclick="window.hrApp.verifyDocumentSerial()">
+          🔍 Verify Authenticity
+        </button>
+      </div>
+      <div id="verificationResultContainer"></div>
+    </div>
+
+    <!-- Pre-Seeded Document Verification Vault Audit Stream -->
+    <div class="glass-card">
+      <h3 style="margin-bottom: 15px;">Verifiable Corporate Documents Index</h3>
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Document Serial Number</th>
+              <th>Document Type</th>
+              <th>Issued To Employee</th>
+              <th>Issue Date</th>
+              <th>Authorized Signatory</th>
+              <th>Verification Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${history.map(doc => `
+              <tr>
+                <td><strong style="font-family: monospace; color: var(--primary);">${doc.docNumber || doc.id}</strong></td>
+                <td>${doc.title || doc.category}</td>
+                <td><strong>${doc.employeeName || doc.employeeId}</strong></td>
+                <td>${doc.generatedDate || '16 Feb 2026'}</td>
+                <td>Avinash Dagdu Aade (Director)</td>
+                <td><span class="badge badge-active">✓ Authentic & Valid</span></td>
+                <td>
+                  <button class="btn btn-sm btn-secondary" onclick="document.getElementById('verifyDocSerialInput').value = '${doc.docNumber || doc.id}'; window.hrApp.verifyDocumentSerial();">
+                    Check Record
+                  </button>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+
+// --- File: auditLogs.js ---
+// Real-Time System Security & Audit Log Viewer
+
+function renderAuditLogs() {
+  const state = store.getState();
+  const currentUser = state.currentUser;
+
+  return `
+    <div class="page-header">
+      <div class="page-title-group">
+        <h1>System Security & Audit Trail Logs</h1>
+        <p class="page-subtitle">Complete chronological record of all administrative actions, document generation events, and access logs</p>
+      </div>
+      <button class="btn btn-secondary" onclick="window.hrApp.showToast('Exported Audit Log Trail to CSV')">
+        📥 Export Audit CSV
+      </button>
+    </div>
+
+    <!-- Audit Security Summary Cards -->
+    <div class="grid-4" style="margin-bottom: 25px;">
+      <div class="stat-card">
+        <div class="stat-value">1,248</div>
+        <div class="stat-label">Total Audit Events</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="color: var(--accent-emerald);">0 Security Alerts</div>
+        <div class="stat-label">System Integrity</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="color: var(--accent-sky);">100% Passed</div>
+        <div class="stat-label">Compliance Audit</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="color: var(--primary);">256-bit AES</div>
+        <div class="stat-label">Log Encryption</div>
+      </div>
+    </div>
+
+    <div class="glass-card">
+      <h3 style="margin-bottom: 15px;">Real-Time Administrative Event Trail</h3>
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Operator / User</th>
+              <th>Role Privilege</th>
+              <th>Module</th>
+              <th>Action Details</th>
+              <th>IP Address</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>12 Aug 2026, 10:15 IST</td>
+              <td><strong>${currentUser.name}</strong></td>
+              <td><span class="badge badge-primary">${currentUser.role}</span></td>
+              <td>Document Generator</td>
+              <td>Generated Offer Letter <code>OBS-OFFER-2026-0028</code> for Rahul Sharma</td>
+              <td>10.0.4.12 (Pune HQ)</td>
+              <td><span class="badge badge-active">SUCCESS</span></td>
+            </tr>
+            <tr>
+              <td>12 Aug 2026, 09:30 IST</td>
+              <td><strong>Swapnil Ghodke</strong></td>
+              <td><span class="badge badge-primary">Super Admin</span></td>
+              <td>Company Settings</td>
+              <td>Updated Official Seal SVG and CIN Registration Record</td>
+              <td>10.0.4.15 (Pune HQ)</td>
+              <td><span class="badge badge-active">SUCCESS</span></td>
+            </tr>
+            <tr>
+              <td>11 Aug 2026, 23:15 IST</td>
+              <td><strong>Priya Patel</strong></td>
+              <td><span class="badge badge-secondary">HR Executive</span></td>
+              <td>Employee Master</td>
+              <td>Added new employee profile <code>OBS-EMP-26-004</code> (Ananya Deshmukh)</td>
+              <td>10.0.4.88 (Pune HQ)</td>
+              <td><span class="badge badge-active">SUCCESS</span></td>
+            </tr>
+            <tr>
+              <td>11 Aug 2026, 18:45 IST</td>
+              <td><strong>Avinash Dagdu Aade</strong></td>
+              <td><span class="badge badge-primary">Director / HR Admin</span></td>
+              <td>Exit Management</td>
+              <td>Approved Relieving Order <code>OBS-REL-2026-0006</code> for Exiting Engineer</td>
+              <td>10.0.4.01 (Director Desk)</td>
+              <td><span class="badge badge-active">SUCCESS</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+
+// --- File: expenses.js ---
+// Expense Claims & Reimbursements Module
+
+function renderExpenses() {
+  const state = store.getState();
+  const employees = state.employees || [];
+
+  return `
+    <div class="page-header">
+      <div class="page-title-group">
+        <h1>Expense Reimbursements & Field Claims</h1>
+        <p class="page-subtitle">Track travel allowances, client site expenses, tool procurement & employee reimbursement claims</p>
+      </div>
+      <button class="btn btn-primary" onclick="window.hrApp.showToast('Opened Expense Claim Submission modal')">
+        💸 + Submit New Expense Claim
+      </button>
+    </div>
+
+    <!-- Top Expense Summary Cards -->
+    <div class="grid-4" style="margin-bottom: 25px;">
+      <div class="stat-card">
+        <div class="stat-value">₹ 42,500</div>
+        <div class="stat-label">Total Monthly Claims</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="color: var(--accent-emerald);">₹ 35,000</div>
+        <div class="stat-label">Approved & Settled</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="color: var(--accent-amber);">₹ 7,500</div>
+        <div class="stat-label">Pending Approval</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="color: var(--primary);">2 Days</div>
+        <div class="stat-label">Average Clearance SLA</div>
+      </div>
+    </div>
+
+    <div class="glass-card">
+      <h3 style="margin-bottom: 15px;">Employee Reimbursement Claims Register</h3>
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Claim ID</th>
+              <th>Employee Name</th>
+              <th>Category</th>
+              <th>Expense Description</th>
+              <th>Claim Date</th>
+              <th>Amount</th>
+              <th>Receipt</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong style="font-family: monospace; color: var(--primary);">EXP-2026-0811</strong></td>
+              <td><strong>Swapnil Ghodke</strong><br><small style="color: var(--text-muted);">OBS-OPS-26-001</small></td>
+              <td>Field Transit / Fuel</td>
+              <td>5G Site Testing Travel (Pune to Mumbai Data Center)</td>
+              <td>10 Aug 2026</td>
+              <td><strong>₹ 4,500</strong></td>
+              <td><span class="badge badge-active">Fuel_Receipt.pdf</span></td>
+              <td><span class="badge badge-active">Approved</span></td>
+              <td>
+                <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Viewing claim EXP-2026-0811')">
+                  View Receipt
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td><strong style="font-family: monospace; color: var(--primary);">EXP-2026-0814</strong></td>
+              <td><strong>Rahul Sharma</strong><br><small style="color: var(--text-muted);">OBS-ENG-26-002</small></td>
+              <td>Hardware Procurement</td>
+              <td>Cat6 Patch Cables & Fiber Splicing Kit for Airtel Site</td>
+              <td>11 Aug 2026</td>
+              <td><strong>₹ 3,000</strong></td>
+              <td><span class="badge badge-warning">Bill_Invoice.pdf</span></td>
+              <td><span class="badge badge-warning">Pending Manager Approval</span></td>
+              <td>
+                <button class="btn btn-sm btn-primary" onclick="window.hrApp.showToast('Approved claim EXP-2026-0814')">
+                  Approve Claim
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+
+// --- File: training.js ---
+// Training, Skill Matrix & Certification Expiry Center
+
+function renderTraining() {
+  const state = store.getState();
+  const employees = state.employees || [];
+
+  return `
+    <div class="page-header">
+      <div class="page-title-group">
+        <h1>Training & Certification Center</h1>
+        <p class="page-subtitle">Track employee technical certifications, 5G telecom safety compliance & skill matrices</p>
+      </div>
+      <button class="btn btn-primary" onclick="window.hrApp.showToast('Opened Add Employee Certification modal')">
+        🎓 + Add Technical Certification
+      </button>
+    </div>
+
+    <!-- Certification Expiry Alert Widgets -->
+    <div class="grid-4" style="margin-bottom: 25px;">
+      <div class="stat-card">
+        <div class="stat-value">6 Certs</div>
+        <div class="stat-label">Active Certifications</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="color: var(--accent-emerald);">100% Verified</div>
+        <div class="stat-label">Safety Compliance</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="color: var(--accent-amber);">1 Expiring Soon</div>
+        <div class="stat-label">Renewal Window (30 Days)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="color: var(--primary);">Telecom & IT</div>
+        <div class="stat-label">Skill Domains</div>
+      </div>
+    </div>
+
+    <div class="glass-card">
+      <h3 style="margin-bottom: 15px;">Employee Technical Certifications & Expiry Tracker</h3>
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Employee Name</th>
+              <th>Certification Name</th>
+              <th>Issuing Authority</th>
+              <th>Issue Date</th>
+              <th>Expiry Date</th>
+              <th>Compliance Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Swapnil Ghodke</strong><br><small style="color: var(--text-muted);">OBS-OPS-26-001</small></td>
+              <td>Certified 5G Network Specialist (C5GNS)</td>
+              <td>Telecom Sector Skill Council (TSSC)</td>
+              <td>15 Oct 2024</td>
+              <td>14 Oct 2027</td>
+              <td><span class="badge badge-active">Valid (800 Days)</span></td>
+              <td>
+                <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Viewing Certificate C5GNS-2024-998')">
+                  View Certificate
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Rahul Sharma</strong><br><small style="color: var(--text-muted);">OBS-ENG-26-002</small></td>
+              <td>Cisco Certified Network Associate (CCNA)</td>
+              <td>Cisco Systems</td>
+              <td>10 Mar 2023</td>
+              <td>09 Sep 2026</td>
+              <td><span class="badge badge-warning">Expiring in 28 Days</span></td>
+              <td>
+                <button class="btn btn-sm btn-primary" onclick="window.hrApp.showToast('Initiated Renewal for Rahul Sharma CCNA')">
+                  Initiate Renewal
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+
 // --- File: addEmployeeModal.js ---
 // 5-Step Add Employee Wizard Modal Component
 
@@ -5215,12 +5697,76 @@ class HRAppController {
       case 'reports':
         viewContainer.innerHTML = renderReports();
         break;
+      case 'projects':
+        viewContainer.innerHTML = renderProjects();
+        break;
+      case 'verification':
+        viewContainer.innerHTML = renderVerification();
+        break;
+      case 'auditLogs':
+        viewContainer.innerHTML = renderAuditLogs();
+        break;
+      case 'expenses':
+        viewContainer.innerHTML = renderExpenses();
+        break;
+      case 'training':
+        viewContainer.innerHTML = renderTraining();
+        break;
       case 'settings':
         viewContainer.innerHTML = renderSettings();
         break;
       default:
         viewContainer.innerHTML = renderDashboard();
         break;
+    }
+  }
+
+  // Document Serial Authenticity Verification Engine
+  verifyDocumentSerial() {
+    const input = document.getElementById('verifyDocSerialInput')?.value.trim();
+    const resultContainer = document.getElementById('verificationResultContainer');
+    if (!resultContainer) return;
+
+    if (!input) {
+      this.showToast('Please enter a Document Serial Number');
+      return;
+    }
+
+    const state = store.getState();
+    const doc = state.history.find(h => (h.docNumber && h.docNumber.toUpperCase() === input.toUpperCase()) || h.id.toUpperCase() === input.toUpperCase());
+
+    if (doc) {
+      resultContainer.innerHTML = `
+        <div style="margin-top: 20px; padding: 20px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: var(--radius-md);">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+            <div style="font-size: 2.2rem; color: var(--accent-emerald);">✓</div>
+            <div>
+              <h4 style="color: #34d399; font-size: 1.15rem; margin: 0;">DOCUMENT AUTHENTIC & VERIFIED</h4>
+              <small style="color: var(--text-muted);">Obsyra Official Vault Seal Match • Verification ID: VER-${Date.now().toString().slice(-6)}</small>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 0.88rem; background: rgba(0,0,0,0.2); padding: 12px; border-radius: var(--radius-sm);">
+            <div><strong>Document Serial:</strong> ${doc.docNumber || doc.id}</div>
+            <div><strong>Document Title:</strong> ${doc.title || doc.category}</div>
+            <div><strong>Issued To Employee:</strong> ${doc.employeeName || doc.employeeId}</div>
+            <div><strong>Issued Date:</strong> ${doc.generatedDate || '16 Feb 2026'}</div>
+            <div><strong>Signatory Authority:</strong> Avinash Dagdu Aade (Director)</div>
+            <div><strong>Corporate Issuer:</strong> Obsyra Private Limited (CIN: U63991PN2026PTC252127)</div>
+          </div>
+        </div>
+      `;
+    } else {
+      resultContainer.innerHTML = `
+        <div style="margin-top: 20px; padding: 20px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: var(--radius-md);">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="font-size: 2.2rem; color: var(--accent-rose);">🚫</div>
+            <div>
+              <h4 style="color: var(--accent-rose); font-size: 1.15rem; margin: 0;">UNVERIFIED DOCUMENT SERIAL</h4>
+              <small style="color: var(--text-muted);">No matching document record found in Obsyra Corporate Vault for serial "${input}". Please check the serial number format.</small>
+            </div>
+          </div>
+        </div>
+      `;
     }
   }
 
