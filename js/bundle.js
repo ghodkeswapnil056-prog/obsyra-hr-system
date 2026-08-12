@@ -7231,6 +7231,18 @@ const appInstance = new HRAppController();
 window.hrApp = appInstance;
 window.hrAppInstance = appInstance;
 
+// Global Window Function Proxies for 100% Inline Click Guarantee
+window.showAssignAssetModal = () => appInstance.showAssignAssetModal();
+window.closeAssignAssetModal = () => appInstance.closeAssignAssetModal();
+window.showRegisterAssetModal = () => appInstance.showRegisterAssetModal();
+window.closeRegisterHardwareModal = () => appInstance.closeRegisterHardwareModal();
+window.toggleAttendancePunch = () => appInstance.toggleAttendancePunch();
+window.openLoginModal = () => appInstance.openLoginModal();
+window.closeLoginModal = () => appInstance.closeLoginModal();
+window.showAddEmployeeModal = () => appInstance.openAddEmployeeModal();
+window.openAddEmployeeModal = () => appInstance.openAddEmployeeModal();
+window.closeAddEmployeeModal = () => appInstance.closeAddEmployeeModal();
+
 // Global Delegated Click Listener & Active Focus Switcher across all browsers
 document.addEventListener('click', (e) => {
   const item = e.target.closest('.nav-item, .sidebar-nav-item, [data-view], [data-module]');
@@ -7257,8 +7269,9 @@ const initNavigation = () => {
     });
   });
 
-  const hashView = window.location.hash.replace('#', '');
-  if (hashView && ['dashboard','employees','profile','generator','templates','history','recruitment','onboarding','attendance','payroll','performance','assets','exit','reports','settings'].includes(hashView)) {
+  const hashView = window.location.hash.replace('#', '').split('?')[0];
+  const validViews = ['dashboard','employees','profile','generator','templates','history','recruitment','onboarding','attendance','payroll','performance','assets','exit','reports','settings','projects','verification','auditLogs','expenses','training'];
+  if (hashView && validViews.includes(hashView)) {
     store.navigate(hashView);
   } else {
     appInstance.render();
@@ -7273,7 +7286,7 @@ if (document.readyState === 'loading') {
 
 window.addEventListener('load', () => appInstance.render());
 window.addEventListener('hashchange', () => {
-  const hashView = window.location.hash.replace('#', '');
+  const hashView = window.location.hash.replace('#', '').split('?')[0];
   if (hashView) store.navigate(hashView);
 });
 
