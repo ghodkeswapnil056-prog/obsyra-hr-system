@@ -237,13 +237,26 @@
     <a href="index.html" class="brand-logo">
       <div class="brand-icon">O</div>
       <div>
-        <strong style="font-size: 1.15rem; font-family: var(--font-heading);">OBSYRA HR</strong>
-        <span style="display: block; font-size: 0.72rem; color: var(--text-muted);">Legal GPS & Biometric Attendance Portal</span>
+        <strong style="font-size: 1.15rem; font-family: var(--font-heading);">OBSYRA PRIVATE LIMITED</strong>
+        <span style="display: block; font-size: 0.72rem; color: var(--text-muted);">Unified Workforce & Location Management System</span>
       </div>
     </a>
-    <a href="index.html" style="color: var(--primary); text-decoration: none; font-weight: 600; font-size: 0.85rem;">
-      &larr; Main HR Portal
-    </a>
+    
+    <div style="display: flex; align-items: center; gap: 15px;">
+      <select onchange="if(this.value) window.location.href = this.value;" style="background: rgba(15, 23, 42, 0.8); color: white; border: 1px solid var(--border-color); padding: 6px 12px; border-radius: 8px; font-size: 0.82rem; font-weight: 600; cursor: pointer;">
+        <option value="">🏢 Switch Obsyra System Interface &rarr;</option>
+        <option value="login.html" selected>📍 Standalone Attendance Portal (Field & Mobile)</option>
+        <option value="index.html#dashboard">📊 Enterprise HR Hub & Executive Dashboard</option>
+        <option value="index.html#attendance">📍 Workforce Attendance & Location Engine</option>
+        <option value="index.html#payroll">💰 Statutory 3-Section Payroll Matrix</option>
+        <option value="index.html#assets">💻 Asset Allocation & Handover Suite</option>
+        <option value="index.html#generator">📄 Document Generator & Vault</option>
+        <option value="index.html#verification">🔍 Public Document Verification Portal</option>
+      </select>
+      <a href="index.html" style="color: var(--primary); text-decoration: none; font-weight: 600; font-size: 0.85rem;">
+        &larr; Executive HR Hub
+      </a>
+    </div>
   </header>
 
   <!-- Main View Container -->

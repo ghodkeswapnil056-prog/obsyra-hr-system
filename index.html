@@ -186,7 +186,20 @@
 
         <div class="user-profile-widget">
           <div class="role-switcher-dropdown">
-            <span style="font-size: 0.78rem; color: var(--text-muted); margin-right: 6px;">Active RBAC Role:</span>
+            <select onchange="if(this.value.includes('.html')) window.location.href=this.value; else window.store.navigate(this.value);" style="background: var(--bg-surface); color: #818cf8; border: 1px solid var(--border-color); padding: 6px 10px; border-radius: var(--radius-md); font-size: 0.82rem; font-weight: 600; cursor: pointer;">
+              <option value="">🏢 Switch Interface &rarr;</option>
+              <option value="dashboard">📊 Executive HR Hub</option>
+              <option value="login.html">📍 Attendance Portal (Mobile)</option>
+              <option value="attendance">📍 Attendance Engine</option>
+              <option value="payroll">💰 Payroll Matrix</option>
+              <option value="assets">💻 Asset Suite</option>
+              <option value="generator">📄 Document Vault</option>
+              <option value="verification">🔍 Verification Portal</option>
+            </select>
+          </div>
+
+          <div class="role-switcher-dropdown">
+            <span style="font-size: 0.78rem; color: var(--text-muted); margin-right: 6px;">RBAC Role:</span>
             <select onchange="window.store.setUserRole(this.value); window.hrApp.showToast('Active RBAC Privilege set to: ' + this.value);">
               <option value="Super Admin">Super Admin (Full Access)</option>
               <option value="HR Admin">HR Admin (Operations & Approvals)</option>
