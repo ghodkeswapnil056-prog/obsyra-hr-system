@@ -4641,16 +4641,16 @@ function renderPayroll() {
     </div>
 
     <div class="glass-card">
-      <h3 style="margin-bottom: 15px;">Monthly Salary Roll & Payslip Issuance Roster</h3>
+      <h3 style="margin-bottom: 15px;">Monthly Salary Roll & Statutory 3-Section Payout Matrix</h3>
       <div class="table-responsive">
         <table class="data-table">
           <thead>
             <tr>
               <th>Employee Name</th>
               <th>Designation</th>
-              <th>Monthly CTC</th>
-              <th>Gross Earnings</th>
-              <th>PF & Tax Deductions</th>
+              <th>Gross Monthly Earnings</th>
+              <th>Employee Deductions (PF+PT)</th>
+              <th>Employer Contributions (PF)</th>
               <th>Net Salary Payout</th>
               <th>Action</th>
             </tr>
@@ -4660,21 +4660,23 @@ function renderPayroll() {
               const annualCtc = emp.compensation?.ctcAnnual || 1080000;
               const monthlyCtc = Math.round(annualCtc / 12);
               const basic = Math.round(monthlyCtc * 0.5);
-              const pf = Math.min(1800, Math.round(basic * 0.12));
+              const pfEmployee = Math.min(1800, Math.round(basic * 0.12));
+              const pfEmployer = Math.min(1800, Math.round(basic * 0.12));
               const pt = 200;
-              const netPayout = monthlyCtc - pf - pt;
+              const totalDeductions = pfEmployee + pt;
+              const netPayout = monthlyCtc - totalDeductions;
 
               return `
                 <tr>
                   <td><strong>${emp.fullName}</strong><br><small style="color: var(--text-muted);">${emp.employeeId}</small></td>
                   <td>${emp.employment?.designation}</td>
-                  <td>₹ ${monthlyCtc.toLocaleString('en-IN')}</td>
-                  <td>₹ ${monthlyCtc.toLocaleString('en-IN')}</td>
-                  <td>₹ ${(pf + pt).toLocaleString('en-IN')}</td>
-                  <td><strong style="color: var(--accent-emerald);">₹ ${netPayout.toLocaleString('en-IN')}</strong></td>
+                  <td><strong>₹ ${monthlyCtc.toLocaleString('en-IN')}</strong></td>
+                  <td><span style="color: var(--accent-rose);">₹ ${totalDeductions.toLocaleString('en-IN')}</span> <small style="color: var(--text-muted);">(PF ₹${pfEmployee} + PT ₹${pt})</small></td>
+                  <td><span style="color: var(--accent-sky);">₹ ${pfEmployer.toLocaleString('en-IN')}</span> <small style="color: var(--text-muted);">(Co. Contribution)</small></td>
+                  <td><strong style="color: var(--accent-emerald); font-size: 1rem;">₹ ${netPayout.toLocaleString('en-IN')}</strong></td>
                   <td>
                     <button class="btn btn-sm btn-primary" onclick="window.store.navigate('generator', { templateId: 'TPL-SLIP-01' })">
-                      Generate Slip
+                      Generate Payslip
                     </button>
                   </td>
                 </tr>
