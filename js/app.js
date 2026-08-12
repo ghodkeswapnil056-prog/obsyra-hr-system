@@ -15,6 +15,7 @@ import { renderExpenses } from './modules/expenses.js';
 import { renderTraining } from './modules/training.js';
 import { renderAddEmployeeModal } from './components/addEmployeeModal.js';
 import { renderLoginModal } from './components/loginModal.js';
+import { renderAssignAssetModal, renderRegisterHardwareModal } from './components/assetModals.js';
 import { commitDocNumberSequence } from './engine/serialEngine.js';
 
 class HRAppController {
@@ -30,6 +31,8 @@ class HRAppController {
     // Inject modals into DOM
     document.body.insertAdjacentHTML('beforeend', renderAddEmployeeModal());
     document.body.insertAdjacentHTML('beforeend', renderLoginModal());
+    document.body.insertAdjacentHTML('beforeend', renderAssignAssetModal());
+    document.body.insertAdjacentHTML('beforeend', renderRegisterHardwareModal());
 
     // Initial render
     this.render();
@@ -93,11 +96,42 @@ class HRAppController {
   }
 
   showAssignAssetModal() {
-    this.showToast('Opened Asset Allocation & Handover Modal');
+    const overlay = document.getElementById('assignAssetModalOverlay');
+    if (overlay) overlay.style.display = 'flex';
+  }
+
+  closeAssignAssetModal() {
+    const overlay = document.getElementById('assignAssetModalOverlay');
+    if (overlay) overlay.style.display = 'none';
+  }
+
+  handleAssignAssetSubmit(e) {
+    e.preventDefault();
+    const assetId = document.getElementById('assignAssetSelect')?.value;
+    const empId = document.getElementById('assignEmployeeSelect')?.value;
+    const issueDate = document.getElementById('assignIssueDate')?.value;
+    
+    this.closeAssignAssetModal();
+    this.showToast(`💻 Asset ${assetId} successfully assigned to ${empId}! Handover slip generated.`);
   }
 
   showRegisterAssetModal() {
-    this.showToast('Opened New Hardware Registration Form');
+    const overlay = document.getElementById('registerHardwareModalOverlay');
+    if (overlay) overlay.style.display = 'flex';
+  }
+
+  closeRegisterHardwareModal() {
+    const overlay = document.getElementById('registerHardwareModalOverlay');
+    if (overlay) overlay.style.display = 'none';
+  }
+
+  handleRegisterHardwareSubmit(e) {
+    e.preventDefault();
+    const tagId = document.getElementById('regTagId')?.value || 'AST-LAP-2026-005';
+    const model = document.getElementById('regModel')?.value;
+    
+    this.closeRegisterHardwareModal();
+    this.showToast(`📦 New asset ${model} (${tagId}) registered into Corporate Storage Vault!`);
   }
 
   navigate(view, params = {}) {
