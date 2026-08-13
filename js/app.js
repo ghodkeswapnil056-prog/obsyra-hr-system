@@ -311,6 +311,9 @@ class HRAppController {
 
     if (!viewContainer) return;
 
+    // Apply persistent sidebar collapsed state
+    this.applySidebarState();
+
     // Highlight active sidebar menu item
     document.querySelectorAll('.nav-item').forEach(item => {
       item.classList.toggle('active', item.getAttribute('data-view') === activeView);
@@ -1041,27 +1044,42 @@ class HRAppController {
     }
   }
 
-  toggleSidebarCollapse() {
+  applySidebarState() {
+    const isCollapsed = localStorage.getItem('obsyra_sidebar_collapsed') === 'true';
     const sidebar = document.querySelector('.sidebar');
     const mainContent = document.querySelector('.main-content');
     const floatingBtn = document.getElementById('floatingUnhideBtn');
     const expandBtn = document.getElementById('sidebarExpandBtn');
+    const navbarBtn = document.getElementById('navbarSidebarToggleBtn');
     
     if (sidebar) {
-      const isCollapsed = sidebar.classList.toggle('collapsed');
-      if (mainContent) {
-        if (isCollapsed) {
-          mainContent.classList.add('expanded-full');
-          if (floatingBtn) floatingBtn.style.display = 'flex';
-          if (expandBtn) expandBtn.style.display = 'inline-flex';
-          this.showToast('◀ Sidebar hidden. Click "▶ Unhide Sidebar" anytime to restore.');
-        } else {
-          mainContent.classList.remove('expanded-full');
-          if (floatingBtn) floatingBtn.style.display = 'none';
-          if (expandBtn) expandBtn.style.display = 'none';
-          this.showToast('▶ Sidebar restored.');
-        }
+      if (isCollapsed) {
+        sidebar.classList.add('collapsed');
+        if (mainContent) mainContent.classList.add('expanded-full');
+        if (floatingBtn) floatingBtn.style.display = 'flex';
+        if (expandBtn) expandBtn.style.display = 'inline-flex';
+        if (navbarBtn) navbarBtn.innerHTML = '▶ Show Sidebar';
+      } else {
+        sidebar.classList.remove('collapsed');
+        if (mainContent) mainContent.classList.remove('expanded-full');
+        if (floatingBtn) floatingBtn.style.display = 'none';
+        if (expandBtn) expandBtn.style.display = 'none';
+        if (navbarBtn) navbarBtn.innerHTML = '◀ Hide Sidebar';
       }
+    }
+  }
+
+  toggleSidebarCollapse() {
+    const isCurrentlyCollapsed = localStorage.getItem('obsyra_sidebar_collapsed') === 'true';
+    const newCollapsedState = !isCurrentlyCollapsed;
+    localStorage.setItem('obsyra_sidebar_collapsed', newCollapsedState ? 'true' : 'false');
+    
+    this.applySidebarState();
+    
+    if (newCollapsedState) {
+      this.showToast('◀ Sidebar hidden. Click "▶ Show Sidebar" anytime to restore.');
+    } else {
+      this.showToast('▶ Sidebar restored.');
     }
   }
 }
