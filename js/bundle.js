@@ -5449,42 +5449,47 @@ function renderAssetEngine() {
         <h1>Obsyra Enterprise Asset Management Suite</h1>
         <p class="page-subtitle">Hardware Inventory • 5G Telecom Field Toolkits • SIM Cards • Asset Lifecycle • Digital Handover Slips</p>
       </div>
-      <div style="display: flex; gap: 10px;">
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
         <button class="btn btn-primary" onclick="window.hrApp.showAssignAssetModal()">
           💻 Handover Asset
         </button>
         <button class="btn btn-secondary" onclick="window.hrApp.showRegisterAssetModal()">
           📦 + Register Hardware
         </button>
+        <button class="btn btn-secondary" onclick="window.hrApp.showTransferAssetModal()">
+          🔄 Transfer Asset
+        </button>
+        <button class="btn btn-secondary" onclick="window.hrApp.showReturnAssetModal()">
+          🛑 Asset Return Clearance
+        </button>
       </div>
     </div>
 
     <!-- Sub-Navigation Menu Bar (Asset Module Architecture) -->
     <div class="glass-card" style="margin-bottom: 20px; padding: 12px 20px; border-left: 4px solid var(--primary);">
-      <div style="display: flex; gap: 12px; overflow-x: auto; font-weight: 600; font-size: 0.88rem;">
-        <button class="btn btn-sm btn-primary" onclick="window.hrApp.showToast('Viewing Asset Dashboard')">📊 Dashboard</button>
-        <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Viewing All Hardware Assets')">🖥️ All Assets (385)</button>
+      <div style="display: flex; gap: 10px; overflow-x: auto; font-weight: 600; font-size: 0.85rem;" id="assetFilterToolbar">
+        <button class="btn btn-sm btn-primary asset-filter-btn active" onclick="window.filterAssetTable('ALL', this)">📊 All Assets (385)</button>
+        <button class="btn btn-sm btn-secondary asset-filter-btn" onclick="window.filterAssetTable('ASSIGNED', this)">🟢 Assigned (278)</button>
+        <button class="btn btn-sm btn-secondary asset-filter-btn" onclick="window.filterAssetTable('AVAILABLE', this)">🔵 Available Vault (72)</button>
+        <button class="btn btn-sm btn-secondary asset-filter-btn" onclick="window.filterAssetTable('IN_REPAIR', this)">🔧 In Repair (15)</button>
+        <button class="btn btn-sm btn-secondary asset-filter-btn" onclick="window.filterAssetTable('DAMAGED', this)">⚠️ Damaged / Lost (12)</button>
         <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showAssignAssetModal()">💻 Handover Asset</button>
-        <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showRegisterAssetModal()">📦 + Register Hardware</button>
-        <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Viewing Assigned Assets (278)')">🟢 Assigned (278)</button>
-        <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Viewing Available Storage Vault (72)')">🔵 Available (72)</button>
-        <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Viewing Asset Transfers Log')">🔄 Transfers</button>
-        <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Viewing Asset Returns Log')">🛑 Returns</button>
-        <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Viewing Repair & Maintenance (15)')">🔧 In Repair (15)</button>
+        <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showRegisterAssetModal()">📦 Register Hardware</button>
+        <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showTransferAssetModal()">🔄 Transfers Log</button>
       </div>
     </div>
 
     <!-- Asset Summary KPI Cards -->
     <div class="grid-4" style="margin-bottom: 25px;">
-      <div class="stat-card">
+      <div class="stat-card" onclick="window.filterAssetTable('ALL')" style="cursor: pointer;">
         <div class="stat-value">385 Total</div>
         <div class="stat-label">₹ 42.8L Inventory Value</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card" onclick="window.filterAssetTable('ASSIGNED')" style="cursor: pointer;">
         <div class="stat-value" style="color: var(--accent-emerald);">278 Assigned</div>
         <div class="stat-label">72 Available in Pune Vault</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card" onclick="window.filterAssetTable('IN_REPAIR')" style="cursor: pointer;">
         <div class="stat-value" style="color: var(--accent-amber);">15 In Repair</div>
         <div class="stat-label">8 Damaged • 2 Lost</div>
       </div>
@@ -5534,12 +5539,12 @@ function renderAssetEngine() {
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
         <h3>Hardware Property Register & Assignment Logs</h3>
         <div style="display: flex; gap: 10px;">
-          <input type="text" placeholder="Search Tag ID, Serial Number or Employee..." class="form-control" style="width: 280px; font-size: 0.85rem;">
+          <input type="text" id="assetSearchInput" placeholder="Search Tag ID, Serial Number or Employee..." class="form-control" style="width: 280px; font-size: 0.85rem;" onkeyup="window.searchAssetTable(this.value)">
         </div>
       </div>
 
       <div class="table-responsive">
-        <table class="data-table">
+        <table class="data-table" id="assetMasterTable">
           <thead>
             <tr>
               <th>Asset Tag ID</th>
@@ -5549,11 +5554,11 @@ function renderAssetEngine() {
               <th>Assigned Location</th>
               <th>Status</th>
               <th>Condition</th>
-              <th>Action</th>
+              <th>Action Buttons Setup</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr data-status="ASSIGNED">
               <td><strong style="font-family: monospace; color: var(--primary);">OBS-LAP-0024</strong></td>
               <td><strong>Dell Latitude 5440 i7</strong><br><small style="color: var(--text-muted);">Laptop / Workstation</small></td>
               <td><code>DL5440202699</code></td>
@@ -5563,13 +5568,13 @@ function renderAssetEngine() {
               <td><span class="badge badge-active">Good</span></td>
               <td>
                 <div style="display: flex; gap: 6px;">
-                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Generated Asset Ack Slip for OBS-LAP-0024')">Slip</button>
-                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Initiating Asset Transfer for OBS-LAP-0024')">Transfer</button>
-                  <button class="btn btn-sm btn-primary" onclick="window.hrApp.showToast('Initiating Asset Return Inspection')">Return</button>
+                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Generated Asset Handover Slip for OBS-LAP-0024')">📄 Handover Slip</button>
+                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showTransferAssetModal('OBS-LAP-0024')">🔄 Transfer</button>
+                  <button class="btn btn-sm btn-primary" onclick="window.hrApp.showReturnAssetModal('OBS-LAP-0024')">🛑 Return</button>
                 </div>
               </td>
             </tr>
-            <tr>
+            <tr data-status="ASSIGNED">
               <td><strong style="font-family: monospace; color: var(--primary);">AST-LAP-2026-001</strong></td>
               <td><strong>MacBook Pro 16" M3 Max</strong><br><small style="color: var(--text-muted);">Laptop / Workstation</small></td>
               <td><code>C02GX001MD68</code></td>
@@ -5579,13 +5584,13 @@ function renderAssetEngine() {
               <td><span class="badge badge-active">Excellent</span></td>
               <td>
                 <div style="display: flex; gap: 6px;">
-                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Generated Asset Ack Slip for AST-LAP-2026-001')">Slip</button>
-                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Initiating Asset Transfer for AST-LAP-2026-001')">Transfer</button>
-                  <button class="btn btn-sm btn-primary" onclick="window.hrApp.showToast('Initiating Asset Return Inspection')">Return</button>
+                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Generated Asset Handover Slip for AST-LAP-2026-001')">📄 Handover Slip</button>
+                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showTransferAssetModal('AST-LAP-2026-001')">🔄 Transfer</button>
+                  <button class="btn btn-sm btn-primary" onclick="window.hrApp.showReturnAssetModal('AST-LAP-2026-001')">🛑 Return</button>
                 </div>
               </td>
             </tr>
-            <tr>
+            <tr data-status="ASSIGNED">
               <td><strong style="font-family: monospace; color: var(--primary);">OBS-KIT-0089</strong></td>
               <td><strong>5G Core Drive Test Analyzer Kit</strong><br><small style="color: var(--text-muted);">Telecom Field Tool Kit</small></td>
               <td><code>5G-KIT-PUNE-0992</code></td>
@@ -5595,23 +5600,36 @@ function renderAssetEngine() {
               <td><span class="badge badge-active">Good</span></td>
               <td>
                 <div style="display: flex; gap: 6px;">
-                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Generated Asset Ack Slip for OBS-KIT-0089')">Slip</button>
-                  <button class="btn btn-sm btn-primary" onclick="window.hrApp.showToast('Initiating Asset Return Inspection')">Return</button>
+                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Generated Asset Handover Slip for OBS-KIT-0089')">📄 Handover Slip</button>
+                  <button class="btn btn-sm btn-primary" onclick="window.hrApp.showReturnAssetModal('OBS-KIT-0089')">🛑 Return</button>
                 </div>
               </td>
             </tr>
-            <tr>
-              <td><strong style="font-family: monospace; color: var(--primary);">OBS-SIM-1044</strong></td>
-              <td><strong>Jio 5G Testing Dual SIM Card</strong><br><small style="color: var(--text-muted);">Corporate SIM / Data</small></td>
-              <td><code>8991002345678912</code></td>
-              <td><strong>Priya Patel</strong><br><small style="color: var(--text-muted);">OBS-HR-26-003</small></td>
-              <td>📍 Wagholi HQ, Pune</td>
-              <td><span class="badge badge-active">ASSIGNED</span></td>
-              <td><span class="badge badge-active">New</span></td>
+            <tr data-status="AVAILABLE">
+              <td><strong style="font-family: monospace; color: var(--accent-sky);">AST-LAP-2026-005</strong></td>
+              <td><strong>Lenovo ThinkPad P1 Gen 6</strong><br><small style="color: var(--text-muted);">Laptop / Workstation</small></td>
+              <td><code>LENV20269981</code></td>
+              <td><em>Unassigned</em><br><small style="color: var(--text-muted);">Storage Vault</small></td>
+              <td>📍 Pune HQ Vault Storage</td>
+              <td><span class="badge badge-pending">AVAILABLE</span></td>
+              <td><span class="badge badge-active">Brand New</span></td>
               <td>
                 <div style="display: flex; gap: 6px;">
-                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Viewing SIM details')">View SIM</button>
-                  <button class="btn btn-sm btn-primary" onclick="window.hrApp.showToast('Initiating SIM Return')">Return</button>
+                  <button class="btn btn-sm btn-primary" onclick="window.hrApp.showAssignAssetModal()">💻 Handover Asset</button>
+                </div>
+              </td>
+            </tr>
+            <tr data-status="IN_REPAIR">
+              <td><strong style="font-family: monospace; color: var(--accent-amber);">OBS-ROUT-0102</strong></td>
+              <td><strong>Cisco Industrial 5G Router</strong><br><small style="color: var(--text-muted);">Network Hardware</small></td>
+              <td><code>CSC5G991204</code></td>
+              <td><em>IT Repairs Desk</em><br><small style="color: var(--text-muted);">Under Maintenance</small></td>
+              <td>📍 Service Center Pune</td>
+              <td><span class="badge badge-pending" style="color: #fbbf24;">IN REPAIR</span></td>
+              <td><span class="badge badge-pending">Damaged Firmware</span></td>
+              <td>
+                <div style="display: flex; gap: 6px;">
+                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Repair Inspection Status: Hardware Diagnostic Passed')">🔧 Diagnostic</button>
                 </div>
               </td>
             </tr>
@@ -5619,6 +5637,43 @@ function renderAssetEngine() {
         </table>
       </div>
     </div>
+
+    <!-- Client-side Asset Filter Script -->
+    <script>
+      window.filterAssetTable = function(status, btnEl) {
+        if (btnEl) {
+          document.querySelectorAll('.asset-filter-btn').forEach(b => {
+            b.classList.remove('btn-primary');
+            b.classList.add('btn-secondary');
+          });
+          btnEl.classList.remove('btn-secondary');
+          btnEl.classList.add('btn-primary');
+        }
+
+        const rows = document.querySelectorAll('#assetMasterTable tbody tr');
+        rows.forEach(r => {
+          const rowStatus = r.getAttribute('data-status');
+          if (status === 'ALL' || rowStatus === status) {
+            r.style.display = '';
+          } else {
+            r.style.display = 'none';
+          }
+        });
+
+        if (window.hrApp && typeof window.hrApp.showToast === 'function') {
+          window.hrApp.showToast('Filtered Asset Register: ' + status);
+        }
+      };
+
+      window.searchAssetTable = function(query) {
+        const q = query.toLowerCase();
+        const rows = document.querySelectorAll('#assetMasterTable tbody tr');
+        rows.forEach(r => {
+          const text = r.textContent.toLowerCase();
+          r.style.display = text.includes(q) ? '' : 'none';
+        });
+      };
+    </script>
   `;
 }
 
@@ -6366,7 +6421,7 @@ function renderLoginModal() {
 // --- File: assetModals.js ---
 // Enterprise Asset Allocation, Transfer, Return & Handover Modals for Obsyra HRMS
 
-// 1. Assign New Asset Form Modal
+// 1. Handover New Asset Form Modal
 function renderAssignAssetModal() {
   const state = store.getState();
   const employees = state.employees || [];
@@ -6395,14 +6450,14 @@ function renderAssignAssetModal() {
               </select>
             </div>
             <div class="form-group">
-              <label class="form-label" style="font-weight: 600;">Asset Type Master *</label>
-              <select id="assignAssetType" class="form-control" required>
-                <option value="Laptop">Computers ➔ Laptop / Workstation</option>
-                <option value="Mobile">Mobile ➔ Mobile Phone / Tablet</option>
-                <option value="SIM">Mobile ➔ SIM Card / Data Dongle</option>
-                <option value="Telecom Kit">Telecom ➔ 5G Testing Equipment / Fiber Kit</option>
-                <option value="Network">Network ➔ Router / Switch / Firewall</option>
-                <option value="ID Card">Office ➔ ID Card / Corporate Access Badge</option>
+              <label class="form-label" style="font-weight: 600;">Asset Category *</label>
+              <select id="assignCategorySelect" class="form-control" required>
+                <option value="Laptop">💻 Laptop / Workstation</option>
+                <option value="Mobile">📱 Mobile Phone / Tablet</option>
+                <option value="SIM">📶 Corporate SIM / 5G Data Card</option>
+                <option value="Telecom Kit">📡 Telecom 5G Field Tool Kit</option>
+                <option value="Network">🔌 Router / Switch / Dongle</option>
+                <option value="ID Badge">💳 Corporate ID Badge / Access Key</option>
               </select>
             </div>
           </div>
@@ -6410,49 +6465,42 @@ function renderAssignAssetModal() {
           <div class="grid-2">
             <div class="form-group">
               <label class="form-label" style="font-weight: 600;">Asset Tag ID *</label>
-              <input type="text" id="assignAssetTag" class="form-control" value="OBS-LAP-0024" required style="font-family: monospace; font-weight: 700; color: var(--primary);">
+              <input type="text" id="assignAssetTagInput" class="form-control" value="OBS-LAP-0024" placeholder="e.g. OBS-LAP-0024" required>
             </div>
             <div class="form-group">
-              <label class="form-label" style="font-weight: 600;">Asset Name / Model *</label>
-              <input type="text" id="assignAssetName" class="form-control" value="Dell Latitude 5440 i7 16GB" required>
+              <label class="form-label" style="font-weight: 600;">Model & Specs *</label>
+              <input type="text" id="assignModelInput" class="form-control" value="Dell Latitude 5440 i7 16GB RAM 512GB SSD" placeholder="e.g. Dell Latitude 5440" required>
             </div>
           </div>
 
           <div class="grid-2">
             <div class="form-group">
-              <label class="form-label" style="font-weight: 600;">Serial Number / IMEI *</label>
-              <input type="text" id="assignSerial" class="form-control" value="DLXPS20269912" required style="font-family: monospace;">
+              <label class="form-label" style="font-weight: 600;">Serial Number / IMEI</label>
+              <input type="text" id="assignSerialInput" class="form-control" value="DL5440202699" placeholder="e.g. DL5440202699">
             </div>
             <div class="form-group">
-              <label class="form-label" style="font-weight: 600;">Assignment Date *</label>
-              <input type="date" id="assignIssueDate" class="form-control" value="${new Date().toISOString().split('T')[0]}" required>
+              <label class="form-label" style="font-weight: 600;">Physical Condition</label>
+              <select id="assignConditionSelect" class="form-control">
+                <option value="Brand New">✨ Brand New (Sealed Pack)</option>
+                <option value="Good Condition" selected>🟢 Good Condition (Fully Operational)</option>
+                <option value="Used Refurbished">🟡 Used / Refurbished</option>
+              </select>
             </div>
           </div>
 
-          <!-- Physical Condition Selection -->
           <div class="form-group">
-            <label class="form-label" style="font-weight: 600;">Physical Issue Condition</label>
-            <div style="display: flex; gap: 20px; margin-top: 4px;">
-              <label style="cursor: pointer;"><input type="radio" name="assetCondition" value="New"> 🟢 Brand New (Sealed)</label>
-              <label style="cursor: pointer;"><input type="radio" name="assetCondition" value="Good" checked> 🔵 Good Condition</label>
-              <label style="cursor: pointer;"><input type="radio" name="assetCondition" value="Used"> 🟡 Used (Refurbished)</label>
-            </div>
-          </div>
-
-          <!-- Accessories Checkboxes -->
-          <div class="form-group">
-            <label class="form-label" style="font-weight: 600;">Issued Accessories</label>
-            <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 4px;">
-              <label style="cursor: pointer;"><input type="checkbox" id="accCharger" checked> 🔌 140W Charger</label>
-              <label style="cursor: pointer;"><input type="checkbox" id="accMouse" checked> 🖱️ Wireless Mouse</label>
-              <label style="cursor: pointer;"><input type="checkbox" id="accBag" checked> 🎒 Laptop Bag</label>
-              <label style="cursor: pointer;"><input type="checkbox" id="accDock"> 🖥️ Thunderbolt Dock</label>
+            <label class="form-label" style="font-weight: 600;">Issued Accessories Included</label>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; font-size: 0.85rem;">
+              <label><input type="checkbox" checked> 🔌 140W Charger</label>
+              <label><input type="checkbox" checked> 🖱️ Wireless Mouse</label>
+              <label><input type="checkbox" checked> 🎒 Laptop Bag</label>
+              <label><input type="checkbox"> 🖥️ Docking Station</label>
             </div>
           </div>
 
           <div class="grid-2">
             <div class="form-group">
-              <label class="form-label" style="font-weight: 600;">Assignment Purpose</label>
+              <label class="form-label" style="font-weight: 600;">Handover Purpose</label>
               <select id="assignPurpose" class="form-control">
                 <option value="Project Deployment">Project Field Deployment</option>
                 <option value="Corporate Office">Corporate Office Work</option>
@@ -6498,64 +6546,172 @@ function renderRegisterHardwareModal() {
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
           <div>
             <h2 style="font-size: 1.35rem; color: var(--accent-emerald);">📦 Register Hardware Asset to Inventory</h2>
-            <small style="color: var(--text-muted);">Add new laptops, 5G field kits, SIM cards, or routers into Corporate Vault</small>
+            <small style="color: var(--text-muted);">Add new laptops, 5G field kits, SIM cards, or routers into Corporate Storage Vault</small>
           </div>
           <button type="button" style="background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer;" onclick="window.hrApp.closeRegisterHardwareModal()">✕</button>
         </div>
 
-        <form onsubmit="window.hrApp.handleRegisterHardwareSubmit(event)" style="display: flex; flex-direction: column; gap: 16px;">
+        <form onsubmit="window.hrApp.handleRegisterHardwareSubmit(event)" style="display: flex; flex-direction: column; gap: 14px;">
           <div class="grid-2">
             <div class="form-group">
-              <label class="form-label" style="font-weight: 600;">Asset Category</label>
-              <select id="regCategory" class="form-control" required>
-                <option value="Laptop / Workstation">Laptop / Workstation</option>
-                <option value="Telecom Field Tool Kit">Telecom 5G Field Tool Kit</option>
-                <option value="SIM Card / Data">Corporate SIM Card / Data</option>
-                <option value="Desktop / Server">Desktop / Server Rack</option>
-                <option value="Network Router / Switch">Network Router / Switch</option>
+              <label class="form-label">Asset Category</label>
+              <select id="regCategory" class="form-control">
+                <option value="Laptop / Workstation">💻 Laptop / Workstation</option>
+                <option value="Telecom Tool Kit">📡 Telecom 5G Field Tool Kit</option>
+                <option value="SIM / Data Card">📶 Corporate SIM Card</option>
+                <option value="Desktop / Server">🖥️ Desktop / Server</option>
+                <option value="Network Router">🔌 Router / Switch / Dongle</option>
               </select>
             </div>
             <div class="form-group">
-              <label class="form-label" style="font-weight: 600;">Asset Tag ID</label>
-              <input type="text" id="regTagId" class="form-control" value="OBS-LAP-0025" readonly style="font-family: monospace; font-weight: 700; color: var(--primary);">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" style="font-weight: 600;">Model Name & Specifications</label>
-            <input type="text" id="regModel" class="form-control" placeholder="e.g. Dell Latitude 5440 i7 16GB RAM 512GB SSD" required>
-          </div>
-
-          <div class="grid-2">
-            <div class="form-group">
-              <label class="form-label" style="font-weight: 600;">Serial Number / IMEI</label>
-              <input type="text" id="regSerial" class="form-control" placeholder="e.g. DL5440202688" required style="font-family: monospace;">
-            </div>
-            <div class="form-group">
-              <label class="form-label" style="font-weight: 600;">Purchase Price (₹ INR)</label>
-              <input type="number" id="regCost" class="form-control" placeholder="125000" required>
+              <label class="form-label">Generated Asset Tag ID</label>
+              <input type="text" id="regTagId" class="form-control" value="AST-LAP-2026-005" readonly>
             </div>
           </div>
 
           <div class="grid-2">
             <div class="form-group">
-              <label class="form-label" style="font-weight: 600;">Storage Vault Location</label>
+              <label class="form-label">Model Name & Specs</label>
+              <input type="text" id="regModel" class="form-control" value="Dell Latitude 5440 i7 16GB RAM 512GB SSD" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Serial Number / IMEI</label>
+              <input type="text" id="regSerial" class="form-control" value="DL5440202688" required>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="form-label">Purchase Price (₹ INR)</label>
+              <input type="number" id="regPrice" class="form-control" value="125000" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Storage Vault Location</label>
               <select id="regVault" class="form-control">
                 <option value="Pune Corporate HQ Vault">Pune Corporate HQ Vault</option>
                 <option value="Navi Mumbai 5G Hub Vault">Navi Mumbai 5G Hub Vault</option>
-                <option value="Jodhpur Office Vault">Jodhpur Office Vault</option>
+                <option value="Jodhpur Field Site Vault">Jodhpur Field Site Vault</option>
               </select>
-            </div>
-            <div class="form-group">
-              <label class="form-label" style="font-weight: 600;">Initial Status</label>
-              <input type="text" class="form-control" value="AVAILABLE" readonly style="font-weight: 700; color: #34d399;">
             </div>
           </div>
 
           <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 10px;">
             <button type="button" class="btn btn-secondary" onclick="window.hrApp.closeRegisterHardwareModal()">Cancel</button>
+            <button type="submit" class="btn btn-success" style="font-weight: 700;">
+              📦 Save Asset into Storage Vault
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  `;
+}
+
+// 3. Asset Transfer Form Modal
+function renderTransferAssetModal() {
+  const state = store.getState();
+  const employees = state.employees || [];
+
+  return `
+    <div class="modal-overlay" id="transferAssetModalOverlay" role="dialog" aria-modal="true" aria-hidden="true" style="display: none; z-index: 10000; background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(12px); align-items: center; justify-content: center;">
+      <div class="modal-container glass-card" style="width: 600px; max-width: 94vw; padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); background: rgba(30, 41, 59, 0.98);">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
+          <div>
+            <h2 style="font-size: 1.35rem; color: var(--accent-amber);">🔄 Asset Transfer & Re-Assignment</h2>
+            <small style="color: var(--text-muted);">Transfer company property from current holder to new employee</small>
+          </div>
+          <button type="button" style="background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer;" onclick="window.hrApp.closeTransferAssetModal()">✕</button>
+        </div>
+
+        <form onsubmit="window.hrApp.handleTransferAssetSubmit(event)" style="display: flex; flex-direction: column; gap: 14px;">
+          <div class="form-group">
+            <label class="form-label">Asset Tag to Transfer</label>
+            <input type="text" id="transferAssetTag" class="form-control" value="OBS-LAP-0024 (Dell Latitude 5440)" readonly>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="form-label">Current Holder</label>
+              <input type="text" class="form-control" value="Rahul Sharma (OBS-ENG-26-002)" readonly>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Transfer Target Employee *</label>
+              <select id="transferNewEmployee" class="form-control" required>
+                ${employees.map(emp => `
+                  <option value="${emp.employeeId}">${emp.fullName} (${emp.employeeId})</option>
+                `).join('')}
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Transfer Reason & Notes</label>
+            <textarea id="transferNotes" class="form-control" rows="2" placeholder="e.g. Employee transferred from Pune HQ to Navi Mumbai 5G Hub Project."></textarea>
+          </div>
+
+          <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 10px;">
+            <button type="button" class="btn btn-secondary" onclick="window.hrApp.closeTransferAssetModal()">Cancel</button>
             <button type="submit" class="btn btn-primary" style="font-weight: 700;">
-              📦 Save Asset into Inventory
+              🔄 Execute Asset Transfer
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  `;
+}
+
+// 4. Asset Return Inspection Form Modal
+function renderReturnAssetModal() {
+  return `
+    <div class="modal-overlay" id="returnAssetModalOverlay" role="dialog" aria-modal="true" aria-hidden="true" style="display: none; z-index: 10000; background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(12px); align-items: center; justify-content: center;">
+      <div class="modal-container glass-card" style="width: 600px; max-width: 94vw; padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); background: rgba(30, 41, 59, 0.98);">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
+          <div>
+            <h2 style="font-size: 1.35rem; color: var(--accent-rose);">🛑 Asset Return & Clearance Inspection</h2>
+            <small style="color: var(--text-muted);">Process hardware return, physical inspection rating, and return to storage vault</small>
+          </div>
+          <button type="button" style="background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer;" onclick="window.hrApp.closeReturnAssetModal()">✕</button>
+        </div>
+
+        <form onsubmit="window.hrApp.handleReturnAssetSubmit(event)" style="display: flex; flex-direction: column; gap: 14px;">
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="form-label">Returning Asset Tag</label>
+              <input type="text" id="returnAssetTag" class="form-control" value="OBS-LAP-0024" readonly>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Return Inspection Rating</label>
+              <select id="returnCondition" class="form-control">
+                <option value="Good Condition">🟢 Good Condition (Ready for Storage)</option>
+                <option value="Minor Scratch">🟡 Minor Scratch (Needs Cleaning)</option>
+                <option value="Damaged">🔴 Damaged (Requires Repair)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Accessories Returned Checklist</label>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; font-size: 0.85rem;">
+              <label><input type="checkbox" checked> 🔌 Charger</label>
+              <label><input type="checkbox" checked> 🖱️ Mouse</label>
+              <label><input type="checkbox" checked> 🎒 Bag</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Return Inspection Notes</label>
+            <textarea id="returnNotes" class="form-control" rows="2" placeholder="e.g. Asset inspected by IT Desk. Hardware in working condition, returned to Pune HQ Vault."></textarea>
+          </div>
+
+          <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 10px;">
+            <button type="button" class="btn btn-secondary" onclick="window.hrApp.closeReturnAssetModal()">Cancel</button>
+            <button type="submit" class="btn btn-danger" style="font-weight: 700;">
+              🛑 Approve Asset Clearance & Return
             </button>
           </div>
         </form>
@@ -6584,6 +6740,8 @@ class HRAppController {
     document.body.insertAdjacentHTML('beforeend', renderLoginModal());
     document.body.insertAdjacentHTML('beforeend', renderAssignAssetModal());
     document.body.insertAdjacentHTML('beforeend', renderRegisterHardwareModal());
+    document.body.insertAdjacentHTML('beforeend', renderTransferAssetModal());
+    document.body.insertAdjacentHTML('beforeend', renderReturnAssetModal());
 
     // Initial render
     this.render();
@@ -6709,6 +6867,62 @@ class HRAppController {
     
     this.closeRegisterHardwareModal();
     this.showToast(`📦 New asset ${model} (${tagId}) registered into Corporate Storage Vault!`);
+  }
+
+  showTransferAssetModal(tagId = 'OBS-LAP-0024') {
+    const overlay = document.getElementById('transferAssetModalOverlay');
+    if (overlay) {
+      overlay.style.display = 'flex';
+      overlay.classList.add('is-active', 'open');
+      overlay.setAttribute('aria-hidden', 'false');
+      const tagInput = document.getElementById('transferAssetTag');
+      if (tagInput) tagInput.value = tagId;
+    }
+  }
+
+  closeTransferAssetModal() {
+    const overlay = document.getElementById('transferAssetModalOverlay');
+    if (overlay) {
+      overlay.style.display = 'none';
+      overlay.classList.remove('is-active', 'open');
+      overlay.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  handleTransferAssetSubmit(e) {
+    e.preventDefault();
+    const tagId = document.getElementById('transferAssetTag')?.value || 'OBS-LAP-0024';
+    const targetEmp = document.getElementById('transferNewEmployee')?.value;
+    this.closeTransferAssetModal();
+    this.showToast(`🔄 Asset ${tagId} successfully transferred to ${targetEmp}! Transfer log recorded.`);
+  }
+
+  showReturnAssetModal(tagId = 'OBS-LAP-0024') {
+    const overlay = document.getElementById('returnAssetModalOverlay');
+    if (overlay) {
+      overlay.style.display = 'flex';
+      overlay.classList.add('is-active', 'open');
+      overlay.setAttribute('aria-hidden', 'false');
+      const tagInput = document.getElementById('returnAssetTag');
+      if (tagInput) tagInput.value = tagId;
+    }
+  }
+
+  closeReturnAssetModal() {
+    const overlay = document.getElementById('returnAssetModalOverlay');
+    if (overlay) {
+      overlay.style.display = 'none';
+      overlay.classList.remove('is-active', 'open');
+      overlay.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  handleReturnAssetSubmit(e) {
+    e.preventDefault();
+    const tagId = document.getElementById('returnAssetTag')?.value || 'OBS-LAP-0024';
+    const cond = document.getElementById('returnCondition')?.value;
+    this.closeReturnAssetModal();
+    this.showToast(`🛑 Asset ${tagId} successfully returned to Storage Vault! Inspection rating: ${cond}.`);
   }
 
   navigate(view, params = {}) {
@@ -7400,6 +7614,10 @@ window.showAssignAssetModal = () => appInstance.showAssignAssetModal();
 window.closeAssignAssetModal = () => appInstance.closeAssignAssetModal();
 window.showRegisterAssetModal = () => appInstance.showRegisterAssetModal();
 window.closeRegisterHardwareModal = () => appInstance.closeRegisterHardwareModal();
+window.showTransferAssetModal = (tagId) => appInstance.showTransferAssetModal(tagId);
+window.closeTransferAssetModal = () => appInstance.closeTransferAssetModal();
+window.showReturnAssetModal = (tagId) => appInstance.showReturnAssetModal(tagId);
+window.closeReturnAssetModal = () => appInstance.closeReturnAssetModal();
 window.toggleAttendancePunch = () => appInstance.toggleAttendancePunch();
 window.openLoginModal = () => appInstance.openLoginModal();
 window.closeLoginModal = () => appInstance.closeLoginModal();

@@ -15,7 +15,7 @@ import { renderExpenses } from './modules/expenses.js';
 import { renderTraining } from './modules/training.js';
 import { renderAddEmployeeModal } from './components/addEmployeeModal.js';
 import { renderLoginModal } from './components/loginModal.js';
-import { renderAssignAssetModal, renderRegisterHardwareModal } from './components/assetModals.js';
+import { renderAssignAssetModal, renderRegisterHardwareModal, renderTransferAssetModal, renderReturnAssetModal } from './components/assetModals.js';
 import { renderLoginPage } from './modules/loginPage.js';
 import { commitDocNumberSequence } from './engine/serialEngine.js';
 
@@ -34,6 +34,8 @@ class HRAppController {
     document.body.insertAdjacentHTML('beforeend', renderLoginModal());
     document.body.insertAdjacentHTML('beforeend', renderAssignAssetModal());
     document.body.insertAdjacentHTML('beforeend', renderRegisterHardwareModal());
+    document.body.insertAdjacentHTML('beforeend', renderTransferAssetModal());
+    document.body.insertAdjacentHTML('beforeend', renderReturnAssetModal());
 
     // Initial render
     this.render();
@@ -159,6 +161,62 @@ class HRAppController {
     
     this.closeRegisterHardwareModal();
     this.showToast(`📦 New asset ${model} (${tagId}) registered into Corporate Storage Vault!`);
+  }
+
+  showTransferAssetModal(tagId = 'OBS-LAP-0024') {
+    const overlay = document.getElementById('transferAssetModalOverlay');
+    if (overlay) {
+      overlay.style.display = 'flex';
+      overlay.classList.add('is-active', 'open');
+      overlay.setAttribute('aria-hidden', 'false');
+      const tagInput = document.getElementById('transferAssetTag');
+      if (tagInput) tagInput.value = tagId;
+    }
+  }
+
+  closeTransferAssetModal() {
+    const overlay = document.getElementById('transferAssetModalOverlay');
+    if (overlay) {
+      overlay.style.display = 'none';
+      overlay.classList.remove('is-active', 'open');
+      overlay.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  handleTransferAssetSubmit(e) {
+    e.preventDefault();
+    const tagId = document.getElementById('transferAssetTag')?.value || 'OBS-LAP-0024';
+    const targetEmp = document.getElementById('transferNewEmployee')?.value;
+    this.closeTransferAssetModal();
+    this.showToast(`🔄 Asset ${tagId} successfully transferred to ${targetEmp}! Transfer log recorded.`);
+  }
+
+  showReturnAssetModal(tagId = 'OBS-LAP-0024') {
+    const overlay = document.getElementById('returnAssetModalOverlay');
+    if (overlay) {
+      overlay.style.display = 'flex';
+      overlay.classList.add('is-active', 'open');
+      overlay.setAttribute('aria-hidden', 'false');
+      const tagInput = document.getElementById('returnAssetTag');
+      if (tagInput) tagInput.value = tagId;
+    }
+  }
+
+  closeReturnAssetModal() {
+    const overlay = document.getElementById('returnAssetModalOverlay');
+    if (overlay) {
+      overlay.style.display = 'none';
+      overlay.classList.remove('is-active', 'open');
+      overlay.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  handleReturnAssetSubmit(e) {
+    e.preventDefault();
+    const tagId = document.getElementById('returnAssetTag')?.value || 'OBS-LAP-0024';
+    const cond = document.getElementById('returnCondition')?.value;
+    this.closeReturnAssetModal();
+    this.showToast(`🛑 Asset ${tagId} successfully returned to Storage Vault! Inspection rating: ${cond}.`);
   }
 
   navigate(view, params = {}) {
@@ -850,6 +908,10 @@ window.showAssignAssetModal = () => appInstance.showAssignAssetModal();
 window.closeAssignAssetModal = () => appInstance.closeAssignAssetModal();
 window.showRegisterAssetModal = () => appInstance.showRegisterAssetModal();
 window.closeRegisterHardwareModal = () => appInstance.closeRegisterHardwareModal();
+window.showTransferAssetModal = (tagId) => appInstance.showTransferAssetModal(tagId);
+window.closeTransferAssetModal = () => appInstance.closeTransferAssetModal();
+window.showReturnAssetModal = (tagId) => appInstance.showReturnAssetModal(tagId);
+window.closeReturnAssetModal = () => appInstance.closeReturnAssetModal();
 window.toggleAttendancePunch = () => appInstance.toggleAttendancePunch();
 window.openLoginModal = () => appInstance.openLoginModal();
 window.closeLoginModal = () => appInstance.closeLoginModal();
