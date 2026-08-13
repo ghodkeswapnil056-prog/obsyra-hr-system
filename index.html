@@ -200,12 +200,8 @@
 
           <div class="role-switcher-dropdown">
             <span style="font-size: 0.78rem; color: var(--text-muted); margin-right: 6px;">RBAC Role:</span>
-            <select onchange="window.store.setUserRole(this.value); window.hrApp.showToast('Active RBAC Privilege set to: ' + this.value);">
-              <option value="Super Admin">Super Admin (Full Access)</option>
-              <option value="HR Admin">HR Admin (Operations & Approvals)</option>
-              <option value="HR Executive">HR Executive (Execution & Data Entry)</option>
-              <option value="Department Manager">Department Manager (Team Supervision)</option>
-              <option value="Employee">Employee (Self-Service Portal)</option>
+            <select style="background: rgba(99, 102, 241, 0.15); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.35); padding: 6px 10px; border-radius: var(--radius-md); font-size: 0.82rem; font-weight: 700; cursor: default;">
+              <option value="Super Admin">🛡️ Super Admin (Exclusive Access)</option>
             </select>
           </div>
 
