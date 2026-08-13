@@ -3112,6 +3112,40 @@ function compileTemplate(rawHtml, employee, company, overrides = {}) {
 }
 
 
+// --- File: exportEngine.js ---
+// Universal Data Exporter Engine for Payroll, Attendance & Asset Master Data
+function exportTableToCSV(filename, tableId) {
+  const table = document.getElementById(tableId);
+  if (!table) {
+    alert('Table data not found for export');
+    return;
+  }
+
+  let csv = [];
+  const rows = table.querySelectorAll('tr');
+  
+  for (let i = 0; i < rows.length; i++) {
+    let row = [];
+    const cols = rows[i].querySelectorAll('td, th');
+    
+    for (let j = 0; j < cols.length - 1; j++) { // Exclude action column
+      let text = cols[j].innerText.replace(/(\r\n|\n|\r)/gm, ' ').replace(/"/g, '""');
+      row.push('"' + text + '"');
+    }
+    csv.push(row.join(','));
+  }
+
+  const csvFile = new Blob([csv.join('\n')], { type: 'text/csv;charset=utf-8;' });
+  const downloadLink = document.createElement('a');
+  downloadLink.download = filename + '_' + new Date().toISOString().slice(0, 10) + '.csv';
+  downloadLink.href = window.URL.createObjectURL(csvFile);
+  downloadLink.style.display = 'none';
+  document.body.appendChild(downloadLink);
+  downloadLink.click();
+  document.body.removeChild(downloadLink);
+}
+
+
 // --- File: roleDashboards.js ---
 // Role-Specific Portals & Dashboards for Obsyra HRMS (Employee, Manager, HR, Admin, Payroll, Site Coordinator)
 
@@ -5199,11 +5233,14 @@ function renderAttendanceEngine() {
         <button class="btn btn-primary" onclick="window.hrApp.toggleAttendancePunch()">
           ${activePunch ? '🛑 Check Out' : '📍 Check In Now'}
         </button>
-        <button class="btn btn-secondary" onclick="window.hrApp.showToast('Exporting Attendance Register to Excel...')">
-          📊 Export Register (Excel/CSV)
+        <button class="btn btn-secondary" onclick="window.exportTableToCSV('Obsyra_Attendance_Register', 'attendanceMasterTable')">
+          📊 Export Register (CSV)
         </button>
       </div>
     </div>
+
+    <!-- Live Google Maps Field Operations & Geofence GPS Map Widget -->
+    ${renderGoogleMapsWidget()}
 
     <!-- Attendance Sub-Navigation Menu Bar (23-Point Architecture) -->
     <div class="glass-card" style="margin-bottom: 20px; padding: 12px 20px; border-left: 4px solid var(--primary);">
@@ -6929,6 +6966,183 @@ function renderInspectAssetModal() {
 }
 
 
+// --- File: aiCopilotWidget.js ---
+// Gemini AI Voice & Chat Assistant Floating Widget for Obsyra HRMS
+function renderAICopilotWidget() {
+  return `
+    <!-- Floating AI Assistant Trigger Button -->
+    <button id="aiCopilotTrigger" class="ai-copilot-trigger" onclick="window.toggleAICopilotModal()" title="Ask Gemini AI HR Copilot">
+      <span class="ai-pulse-dot"></span>
+      🤖 Ask Gemini AI
+    </button>
+
+    <!-- AI Copilot Glassmorphism Chat Modal -->
+    <div id="aiCopilotModalOverlay" class="modal-overlay" style="display: none; z-index: 10002; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(12px); align-items: flex-end; justify-content: flex-end; padding: 25px;">
+      <div class="glass-card" style="width: 420px; max-width: 95vw; height: 580px; max-height: 85vh; border-radius: 20px; display: flex; flex-direction: column; border: 1px solid rgba(99, 102, 241, 0.4); background: rgba(30, 41, 59, 0.96); box-shadow: 0 20px 40px rgba(0,0,0,0.6);">
+        
+        <!-- Modal Header -->
+        <div style="padding: 16px 20px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: rgba(99, 102, 241, 0.12); border-radius: 20px 20px 0 0;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 36px; height: 36px; border-radius: 10px; background: var(--primary-gradient); display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">🤖</div>
+            <div>
+              <strong style="color: white; font-size: 1rem; display: block;">Gemini AI HR Copilot</strong>
+              <small style="color: #60a5fa; font-size: 0.72rem; font-weight: 600;">⚡ Powered by Google Gemini 1.5 Pro</small>
+            </div>
+          </div>
+          <button onclick="window.toggleAICopilotModal()" style="background: none; border: none; color: var(--text-muted); font-size: 1.4rem; cursor: pointer;">✕</button>
+        </div>
+
+        <!-- Chat Output Stream -->
+        <div id="aiChatStream" style="flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; font-size: 0.85rem;">
+          <div class="ai-msg-box" style="background: rgba(99, 102, 241, 0.12); border: 1px solid rgba(99, 102, 241, 0.25); padding: 12px 14px; border-radius: 12px; color: var(--text-main);">
+            👋 Hello! I am your <strong>Obsyra Gemini AI Copilot</strong>. How can I help you today?
+            <div style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px;">
+              <button class="btn btn-xs btn-secondary" onclick="window.askAICopilotPrompt('How many hardware assets are currently assigned?')">💻 Active Assets?</button>
+              <button class="btn btn-xs btn-secondary" onclick="window.askAICopilotPrompt('Calculate total monthly gross payroll output')">💰 Payroll Summary?</button>
+              <button class="btn btn-xs btn-secondary" onclick="window.askAICopilotPrompt('Draft a 3-day paternity leave approval email')">📄 Draft Leave Email?</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Input Box & Actions -->
+        <div style="padding: 14px 16px; border-top: 1px solid var(--border-color); background: rgba(15, 23, 42, 0.6); border-radius: 0 0 20px 20px;">
+          <form onsubmit="window.handleAICopilotSubmit(event)" style="display: flex; gap: 8px;">
+            <input type="text" id="aiChatInput" placeholder="Ask Gemini AI policy, payroll, assets..." class="form-control" style="flex: 1; font-size: 0.85rem; padding: 10px 14px; border-radius: 10px;" required>
+            <button type="submit" class="btn btn-primary" style="padding: 0 16px; border-radius: 10px;">Send</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  `;
+}
+
+
+// --- File: notificationDrawer.js ---
+// Real-Time Notification & Pending Approvals Drawer Component
+function renderNotificationDrawer() {
+  return `
+    <!-- Notifications Bell Icon Widget in Navbar -->
+    <button id="notificationBellBtn" class="btn btn-secondary" onclick="window.toggleNotificationDrawer()" title="View Notifications & Approvals" style="position: relative; padding: 8px 12px; font-weight: 600;">
+      🔔 <span style="background: var(--accent-rose); color: white; border-radius: 9999px; padding: 2px 6px; font-size: 0.7rem; position: absolute; top: -4px; right: -4px; font-weight: 800;" id="unreadNotifCount">3</span>
+    </button>
+
+    <!-- Slide-Out Notification Drawer -->
+    <div id="notificationDrawerOverlay" class="modal-overlay" style="display: none; z-index: 10002; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(8px); justify-content: flex-end; align-items: stretch;">
+      <div class="glass-card" style="width: 380px; max-width: 90vw; height: 100vh; border-radius: 0; border-left: 1px solid var(--border-color-light); background: rgba(30, 41, 59, 0.98); display: flex; flex-direction: column; padding: 0;">
+        
+        <!-- Header -->
+        <div style="padding: 20px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.5);">
+          <div>
+            <h3 style="color: white; font-size: 1.1rem; margin-bottom: 2px;">🔔 Notifications & Action Center</h3>
+            <span style="font-size: 0.78rem; color: var(--text-muted);">Real-time pending HR approvals & system alerts</span>
+          </div>
+          <button onclick="window.toggleNotificationDrawer()" style="background: none; border: none; color: var(--text-muted); font-size: 1.4rem; cursor: pointer;">✕</button>
+        </div>
+
+        <!-- Notification List -->
+        <div style="flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 14px;">
+          
+          <!-- Item 1 -->
+          <div style="background: rgba(245, 158, 11, 0.1); border-left: 4px solid var(--accent-amber); padding: 12px 14px; border-radius: var(--radius-sm);">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+              <strong style="font-size: 0.85rem; color: #fbbf24;">💻 Asset Transfer Request</strong>
+              <small style="color: var(--text-muted); font-size: 0.7rem;">10m ago</small>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-main); margin-bottom: 8px;">Dell Latitude 5440 i7 transfer request from Rahul Sharma to Swapnil Ghodke.</p>
+            <div style="display: flex; gap: 6px;">
+              <button class="btn btn-xs btn-primary" onclick="window.hrApp.showToast('✅ Approved Asset Transfer Request'); this.parentElement.parentElement.style.opacity='0.5';">Approve</button>
+              <button class="btn btn-xs btn-secondary" onclick="window.hrApp.showToast('Rejected Request'); this.parentElement.parentElement.style.display='none';">Decline</button>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div style="background: rgba(16, 185, 129, 0.1); border-left: 4px solid var(--accent-emerald); padding: 12px 14px; border-radius: var(--radius-sm);">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+              <strong style="font-size: 0.85rem; color: #34d399;">📍 Mobile Attendance Punch</strong>
+              <small style="color: var(--text-muted); font-size: 0.7rem;">25m ago</small>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-main); margin-bottom: 4px;">Swapnil Ghodke punched IN from Wagholi HQ Geofence (18.5529° N, 73.9468° E).</p>
+            <span class="badge badge-active" style="font-size: 0.7rem;">Geo-Fence Verified</span>
+          </div>
+
+          <!-- Item 3 -->
+          <div style="background: rgba(14, 165, 233, 0.1); border-left: 4px solid var(--accent-sky); padding: 12px 14px; border-radius: var(--radius-sm);">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+              <strong style="font-size: 0.85rem; color: #38bdf8;">📑 No Dues Clearance Signed</strong>
+              <small style="color: var(--text-muted); font-size: 0.7rem;">1h ago</small>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-main);">IT & Finance clearance certificate approved for doc TPL-REL-01.</p>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  `;
+}
+
+
+// --- File: googleMapsWidget.js ---
+// Interactive Google Maps Field Workforce & Geofence Map Component
+function renderGoogleMapsWidget() {
+  return `
+    <div class="glass-card" style="margin-bottom: 25px; border-left: 4px solid var(--accent-sky);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+        <div>
+          <h3 style="color: white; font-size: 1.15rem; display: flex; align-items: center; gap: 8px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="color: var(--accent-sky);"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            PAN-India Live Field Operations & Geofence GPS Map
+          </h3>
+          <span style="font-size: 0.78rem; color: var(--text-muted);">Real-time site coordinate pins & 200m geofence radius verification</span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <span class="badge badge-active" style="background: rgba(14, 165, 233, 0.2); color: #38bdf8; border: 1px solid rgba(14, 165, 233, 0.4);">
+            ⚡ Powered by Google Maps Platform
+          </span>
+        </div>
+      </div>
+
+      <!-- Dark Mode Simulated Google Maps Canvas -->
+      <div style="position: relative; width: 100%; height: 280px; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-color); background: #0f172a; display: flex; align-items: center; justify-content: center;">
+        
+        <!-- Map Grid Lines Overlay -->
+        <div style="position: absolute; inset: 0; background-image: radial-gradient(rgba(56, 189, 248, 0.15) 1px, transparent 0); background-size: 24px 24px;"></div>
+        
+        <!-- Live Map Pins -->
+        <!-- Site 1: Pune HQ -->
+        <div style="position: absolute; top: 38%; left: 32%; display: flex; flex-direction: column; align-items: center; cursor: pointer;" onclick="window.hrApp.showToast('📍 Selected Location: Pune Wagholi HQ (18.5529° N, 73.9468° E)')">
+          <div style="width: 24px; height: 24px; border-radius: 9999px; background: rgba(99, 102, 241, 0.3); border: 2px solid var(--primary); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px var(--primary); animation: pulse 2s infinite;">
+            <div style="width: 10px; height: 10px; border-radius: 9999px; background: var(--primary);"></div>
+          </div>
+          <span style="background: rgba(15, 23, 42, 0.9); color: white; border: 1px solid var(--border-color); padding: 3px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 700; margin-top: 4px; white-space: nowrap;">📍 Pune HQ (145 Active)</span>
+        </div>
+
+        <!-- Site 2: Kharadi Site -->
+        <div style="position: absolute; top: 46%; left: 45%; display: flex; flex-direction: column; align-items: center; cursor: pointer;" onclick="window.hrApp.showToast('📍 Selected Location: Kharadi Site Pune (18.5512° N, 73.9389° E)')">
+          <div style="width: 20px; height: 20px; border-radius: 9999px; background: rgba(16, 185, 129, 0.3); border: 2px solid var(--accent-teal); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 12px var(--accent-teal);">
+            <div style="width: 8px; height: 8px; border-radius: 9999px; background: var(--accent-teal);"></div>
+          </div>
+          <span style="background: rgba(15, 23, 42, 0.9); color: #34d399; border: 1px solid var(--border-color); padding: 3px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 700; margin-top: 4px; white-space: nowrap;">📍 Kharadi (84 Field Staff)</span>
+        </div>
+
+        <!-- Site 3: Navi Mumbai 5G Core Hub -->
+        <div style="position: absolute; top: 25%; left: 62%; display: flex; flex-direction: column; align-items: center; cursor: pointer;" onclick="window.hrApp.showToast('📍 Selected Location: Navi Mumbai 5G Core Hub (19.0760° N, 72.8777° E)')">
+          <div style="width: 20px; height: 20px; border-radius: 9999px; background: rgba(14, 165, 233, 0.3); border: 2px solid var(--accent-sky); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 12px var(--accent-sky);">
+            <div style="width: 8px; height: 8px; border-radius: 9999px; background: var(--accent-sky);"></div>
+          </div>
+          <span style="background: rgba(15, 23, 42, 0.9); color: #38bdf8; border: 1px solid var(--border-color); padding: 3px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 700; margin-top: 4px; white-space: nowrap;">📡 Mumbai 5G Core (42 Engineers)</span>
+        </div>
+
+        <div style="position: absolute; bottom: 12px; left: 12px; background: rgba(15, 23, 42, 0.85); border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 8px; font-size: 0.75rem; color: var(--text-muted);">
+          📍 <strong>Active Geo-Fence Zone:</strong> 200 Meters Radius Verified • GPS High Accuracy Active
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+
 // --- File: app.js ---
 // Main HR System Application Router & Controller
 
@@ -6942,7 +7156,7 @@ class HRAppController {
     // Subscribe to global store updates
     store.subscribe(() => this.render());
 
-    // Inject modals into DOM
+    // Inject modals & widgets into DOM
     document.body.insertAdjacentHTML('beforeend', renderAddEmployeeModal());
     document.body.insertAdjacentHTML('beforeend', renderLoginModal());
     document.body.insertAdjacentHTML('beforeend', renderAssignAssetModal());
@@ -6951,6 +7165,8 @@ class HRAppController {
     document.body.insertAdjacentHTML('beforeend', renderReturnAssetModal());
     document.body.insertAdjacentHTML('beforeend', renderHandoverSlipModal());
     document.body.insertAdjacentHTML('beforeend', renderInspectAssetModal());
+    document.body.insertAdjacentHTML('beforeend', renderAICopilotWidget());
+    document.body.insertAdjacentHTML('beforeend', renderNotificationDrawer());
 
     // Initial render
     this.render();
@@ -7886,6 +8102,69 @@ class HRAppController {
     }, 3500);
   }
 
+  toggleAICopilotModal() {
+    const overlay = document.getElementById('aiCopilotModalOverlay');
+    if (overlay) {
+      const isVisible = overlay.style.display === 'flex';
+      overlay.style.display = isVisible ? 'none' : 'flex';
+      overlay.classList.toggle('is-active', !isVisible);
+      overlay.classList.toggle('open', !isVisible);
+    }
+  }
+
+  handleAICopilotSubmit(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    const input = document.getElementById('aiChatInput');
+    if (!input || !input.value.trim()) return;
+    
+    const query = input.value.trim();
+    input.value = '';
+    this.askAICopilotPrompt(query);
+  }
+
+  askAICopilotPrompt(query) {
+    const stream = document.getElementById('aiChatStream');
+    if (!stream) return;
+
+    // User Message
+    const userMsg = document.createElement('div');
+    userMsg.style.cssText = 'background: rgba(255,255,255,0.08); padding: 10px 14px; border-radius: 12px; align-self: flex-end; max-width: 85%; color: white; border: 1px solid var(--border-color);';
+    userMsg.textContent = '💬 ' + query;
+    stream.appendChild(userMsg);
+
+    // AI Response Simulation
+    setTimeout(() => {
+      const aiMsg = document.createElement('div');
+      aiMsg.style.cssText = 'background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3); padding: 12px 14px; border-radius: 12px; color: var(--text-main); align-self: flex-start; max-width: 90%;';
+      
+      let answer = '🤖 **Gemini AI Insight:** ';
+      const q = query.toLowerCase();
+      if (q.includes('asset') || q.includes('hardware')) {
+        answer += 'Currently, **278 assets are assigned** (72.2% utilization), **72 laptops/kits in vault**, 15 in repair. 100% digital handover slip compliance maintained.';
+      } else if (q.includes('payroll') || q.includes('salary')) {
+        answer += 'Obsyra HR Payroll Matrix: **₹ 24,85,000 Total Gross Salary**. Statutory PF (12%), ESI (0.75%), and PT (₹200) computed automatically across 3 sections.';
+      } else if (q.includes('email') || q.includes('leave') || q.includes('draft')) {
+        answer += 'Here is your drafted email template:\n\n*Subject: Approval: 3-Day Paternity Leave Request*\n*Dear Employee, Your paternity leave application for 3 working days has been formally approved by HR Director.*';
+      } else {
+        answer += `Processed query "${query}". All system metrics are healthy. 100% attendance synchronization active across 247 registered staff members.`;
+      }
+      
+      aiMsg.innerHTML = answer.replace(/\n/g, '<br>');
+      stream.appendChild(aiMsg);
+      stream.scrollTop = stream.scrollHeight;
+    }, 600);
+  }
+
+  toggleNotificationDrawer() {
+    const overlay = document.getElementById('notificationDrawerOverlay');
+    if (overlay) {
+      const isVisible = overlay.style.display === 'flex';
+      overlay.style.display = isVisible ? 'none' : 'flex';
+      overlay.classList.toggle('is-active', !isVisible);
+      overlay.classList.toggle('open', !isVisible);
+    }
+  }
+
   toggleSidebarCollapse() {
     const sidebar = document.querySelector('.sidebar');
     const mainContent = document.querySelector('.main-content');
@@ -7917,6 +8196,11 @@ window.hrApp = appInstance;
 window.hrAppInstance = appInstance;
 
 // Global Window Function Proxies for 100% Inline Click Guarantee
+window.toggleAICopilotModal = () => appInstance.toggleAICopilotModal();
+window.handleAICopilotSubmit = (e) => appInstance.handleAICopilotSubmit(e);
+window.askAICopilotPrompt = (q) => appInstance.askAICopilotPrompt(q);
+window.toggleNotificationDrawer = () => appInstance.toggleNotificationDrawer();
+window.exportTableToCSV = (fn, id) => exportTableToCSV(fn, id);
 window.toggleSidebarCollapse = () => appInstance.toggleSidebarCollapse();
 window.showAssignAssetModal = () => appInstance.showAssignAssetModal();
 window.closeAssignAssetModal = () => appInstance.closeAssignAssetModal();

@@ -16,6 +16,9 @@ import { renderTraining } from './modules/training.js';
 import { renderAddEmployeeModal } from './components/addEmployeeModal.js';
 import { renderLoginModal } from './components/loginModal.js';
 import { renderAssignAssetModal, renderRegisterHardwareModal, renderTransferAssetModal, renderReturnAssetModal, renderHandoverSlipModal, renderInspectAssetModal } from './components/assetModals.js';
+import { renderAICopilotWidget } from './components/aiCopilotWidget.js';
+import { renderNotificationDrawer } from './components/notificationDrawer.js';
+import { exportTableToCSV } from './engine/exportEngine.js';
 import { renderLoginPage } from './modules/loginPage.js';
 import { commitDocNumberSequence } from './engine/serialEngine.js';
 
@@ -29,7 +32,7 @@ class HRAppController {
     // Subscribe to global store updates
     store.subscribe(() => this.render());
 
-    // Inject modals into DOM
+    // Inject modals & widgets into DOM
     document.body.insertAdjacentHTML('beforeend', renderAddEmployeeModal());
     document.body.insertAdjacentHTML('beforeend', renderLoginModal());
     document.body.insertAdjacentHTML('beforeend', renderAssignAssetModal());
@@ -38,6 +41,8 @@ class HRAppController {
     document.body.insertAdjacentHTML('beforeend', renderReturnAssetModal());
     document.body.insertAdjacentHTML('beforeend', renderHandoverSlipModal());
     document.body.insertAdjacentHTML('beforeend', renderInspectAssetModal());
+    document.body.insertAdjacentHTML('beforeend', renderAICopilotWidget());
+    document.body.insertAdjacentHTML('beforeend', renderNotificationDrawer());
 
     // Initial render
     this.render();
@@ -973,6 +978,69 @@ class HRAppController {
     }, 3500);
   }
 
+  toggleAICopilotModal() {
+    const overlay = document.getElementById('aiCopilotModalOverlay');
+    if (overlay) {
+      const isVisible = overlay.style.display === 'flex';
+      overlay.style.display = isVisible ? 'none' : 'flex';
+      overlay.classList.toggle('is-active', !isVisible);
+      overlay.classList.toggle('open', !isVisible);
+    }
+  }
+
+  handleAICopilotSubmit(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    const input = document.getElementById('aiChatInput');
+    if (!input || !input.value.trim()) return;
+    
+    const query = input.value.trim();
+    input.value = '';
+    this.askAICopilotPrompt(query);
+  }
+
+  askAICopilotPrompt(query) {
+    const stream = document.getElementById('aiChatStream');
+    if (!stream) return;
+
+    // User Message
+    const userMsg = document.createElement('div');
+    userMsg.style.cssText = 'background: rgba(255,255,255,0.08); padding: 10px 14px; border-radius: 12px; align-self: flex-end; max-width: 85%; color: white; border: 1px solid var(--border-color);';
+    userMsg.textContent = '💬 ' + query;
+    stream.appendChild(userMsg);
+
+    // AI Response Simulation
+    setTimeout(() => {
+      const aiMsg = document.createElement('div');
+      aiMsg.style.cssText = 'background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3); padding: 12px 14px; border-radius: 12px; color: var(--text-main); align-self: flex-start; max-width: 90%;';
+      
+      let answer = '🤖 **Gemini AI Insight:** ';
+      const q = query.toLowerCase();
+      if (q.includes('asset') || q.includes('hardware')) {
+        answer += 'Currently, **278 assets are assigned** (72.2% utilization), **72 laptops/kits in vault**, 15 in repair. 100% digital handover slip compliance maintained.';
+      } else if (q.includes('payroll') || q.includes('salary')) {
+        answer += 'Obsyra HR Payroll Matrix: **₹ 24,85,000 Total Gross Salary**. Statutory PF (12%), ESI (0.75%), and PT (₹200) computed automatically across 3 sections.';
+      } else if (q.includes('email') || q.includes('leave') || q.includes('draft')) {
+        answer += 'Here is your drafted email template:\n\n*Subject: Approval: 3-Day Paternity Leave Request*\n*Dear Employee, Your paternity leave application for 3 working days has been formally approved by HR Director.*';
+      } else {
+        answer += `Processed query "${query}". All system metrics are healthy. 100% attendance synchronization active across 247 registered staff members.`;
+      }
+      
+      aiMsg.innerHTML = answer.replace(/\n/g, '<br>');
+      stream.appendChild(aiMsg);
+      stream.scrollTop = stream.scrollHeight;
+    }, 600);
+  }
+
+  toggleNotificationDrawer() {
+    const overlay = document.getElementById('notificationDrawerOverlay');
+    if (overlay) {
+      const isVisible = overlay.style.display === 'flex';
+      overlay.style.display = isVisible ? 'none' : 'flex';
+      overlay.classList.toggle('is-active', !isVisible);
+      overlay.classList.toggle('open', !isVisible);
+    }
+  }
+
   toggleSidebarCollapse() {
     const sidebar = document.querySelector('.sidebar');
     const mainContent = document.querySelector('.main-content');
@@ -1004,6 +1072,11 @@ window.hrApp = appInstance;
 window.hrAppInstance = appInstance;
 
 // Global Window Function Proxies for 100% Inline Click Guarantee
+window.toggleAICopilotModal = () => appInstance.toggleAICopilotModal();
+window.handleAICopilotSubmit = (e) => appInstance.handleAICopilotSubmit(e);
+window.askAICopilotPrompt = (q) => appInstance.askAICopilotPrompt(q);
+window.toggleNotificationDrawer = () => appInstance.toggleNotificationDrawer();
+window.exportTableToCSV = (fn, id) => exportTableToCSV(fn, id);
 window.toggleSidebarCollapse = () => appInstance.toggleSidebarCollapse();
 window.showAssignAssetModal = () => appInstance.showAssignAssetModal();
 window.closeAssignAssetModal = () => appInstance.closeAssignAssetModal();

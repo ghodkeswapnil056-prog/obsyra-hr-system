@@ -1,5 +1,6 @@
 // Complete 23-Point Workforce Attendance & Location Management Engine for Obsyra HR System
 import { store } from '../context.js';
+import { renderGoogleMapsWidget } from '../components/googleMapsWidget.js';
 
 export function renderAttendanceEngine() {
   const state = store.getState();
@@ -19,11 +20,14 @@ export function renderAttendanceEngine() {
         <button class="btn btn-primary" onclick="window.hrApp.toggleAttendancePunch()">
           ${activePunch ? '🛑 Check Out' : '📍 Check In Now'}
         </button>
-        <button class="btn btn-secondary" onclick="window.hrApp.showToast('Exporting Attendance Register to Excel...')">
-          📊 Export Register (Excel/CSV)
+        <button class="btn btn-secondary" onclick="window.exportTableToCSV('Obsyra_Attendance_Register', 'attendanceMasterTable')">
+          📊 Export Register (CSV)
         </button>
       </div>
     </div>
+
+    <!-- Live Google Maps Field Operations & Geofence GPS Map Widget -->
+    ${renderGoogleMapsWidget()}
 
     <!-- Attendance Sub-Navigation Menu Bar (23-Point Architecture) -->
     <div class="glass-card" style="margin-bottom: 20px; padding: 12px 20px; border-left: 4px solid var(--primary);">
