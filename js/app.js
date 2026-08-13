@@ -118,24 +118,40 @@ class HRAppController {
     this.showToast('Submitted Attendance Exception Remark to Manager');
   }
 
-  showAssignAssetModal() {
-    const overlay = document.getElementById('assignAssetModalOverlay');
-    if (overlay) overlay.style.display = 'flex';
+  showAssignAssetModal(tagId = '') {
+    let overlay = document.getElementById('assignAssetModalOverlay');
+    if (!overlay) {
+      document.body.insertAdjacentHTML('beforeend', renderAssignAssetModal());
+      overlay = document.getElementById('assignAssetModalOverlay');
+    }
+    if (overlay) {
+      overlay.style.display = 'flex';
+      overlay.classList.add('is-active', 'open');
+      overlay.setAttribute('aria-hidden', 'false');
+      if (tagId) {
+        const tagInput = document.getElementById('assignAssetTagInput');
+        if (tagInput) tagInput.value = tagId;
+      }
+    }
   }
 
   closeAssignAssetModal() {
     const overlay = document.getElementById('assignAssetModalOverlay');
-    if (overlay) overlay.style.display = 'none';
+    if (overlay) {
+      overlay.style.display = 'none';
+      overlay.classList.remove('is-active', 'open');
+      overlay.setAttribute('aria-hidden', 'true');
+    }
   }
 
   handleAssignAssetSubmit(e) {
-    e.preventDefault();
-    const assetId = document.getElementById('assignAssetSelect')?.value;
-    const empId = document.getElementById('assignEmployeeSelect')?.value;
-    const issueDate = document.getElementById('assignIssueDate')?.value;
+    if (e && e.preventDefault) e.preventDefault();
+    const tagId = document.getElementById('assignAssetTagInput')?.value || 'OBS-LAP-0024';
+    const model = document.getElementById('assignModelInput')?.value || 'Dell Latitude 5440';
+    const empId = document.getElementById('assignEmployeeSelect')?.value || 'OBS-ENG-26-002';
     
     this.closeAssignAssetModal();
-    this.showToast(`💻 Asset ${assetId} successfully handed over to ${empId}! Digital handover slip generated and saved to vault.`);
+    this.showToast(`💻 Asset ${model} (${tagId}) successfully handed over to ${empId}! Digital handover slip generated.`);
   }
 
   showRegisterAssetModal() {
@@ -166,7 +182,11 @@ class HRAppController {
   }
 
   showTransferAssetModal(tagId = 'OBS-LAP-0024') {
-    const overlay = document.getElementById('transferAssetModalOverlay');
+    let overlay = document.getElementById('transferAssetModalOverlay');
+    if (!overlay) {
+      document.body.insertAdjacentHTML('beforeend', renderTransferAssetModal());
+      overlay = document.getElementById('transferAssetModalOverlay');
+    }
     if (overlay) {
       overlay.style.display = 'flex';
       overlay.classList.add('is-active', 'open');
