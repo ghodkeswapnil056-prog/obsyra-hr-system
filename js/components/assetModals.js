@@ -398,3 +398,82 @@ export function renderHandoverSlipModal() {
     </div>
   `;
 }
+
+// 6. Complete Hardware Asset Inspection & Audit Trail Modal
+export function renderInspectAssetModal() {
+  return `
+    <div class="modal-overlay" id="inspectAssetModalOverlay" role="dialog" aria-modal="true" aria-hidden="true" style="display: none; z-index: 10000; background: rgba(15, 23, 42, 0.92); backdrop-filter: blur(14px); align-items: center; justify-content: center; padding: 20px;">
+      <div class="modal-container glass-card" style="width: 720px; max-width: 95vw; max-height: 90vh; overflow-y: auto; padding: 32px; border-radius: 20px; border: 1px solid var(--border-color); background: rgba(30, 41, 59, 0.98); color: white;">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 14px;">
+          <div>
+            <h2 style="font-size: 1.4rem; color: var(--accent-sky); font-weight: 800;">🔍 Hardware Asset Inspection & Audit Trail</h2>
+            <small style="color: var(--text-muted);">Complete Lifecycle Timeline • Maintenance Logs • Custody Audit</small>
+          </div>
+          <button type="button" style="background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer;" onclick="window.hrApp.closeInspectAssetModal()">✕</button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 24px;">
+          <div style="background: rgba(15, 23, 42, 0.6); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color);">
+            <small style="color: var(--text-muted); display: block;">Asset Tag ID</small>
+            <strong id="inspectTag" style="font-size: 1.1rem; color: var(--primary-light); font-family: monospace;">OBS-LAP-0024</strong>
+          </div>
+          <div style="background: rgba(15, 23, 42, 0.6); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color);">
+            <small style="color: var(--text-muted); display: block;">Current Custodian</small>
+            <strong id="inspectHolder" style="font-size: 1rem; color: #34d399;">Rahul Sharma (OBS-ENG-26-002)</strong>
+          </div>
+          <div style="background: rgba(15, 23, 42, 0.6); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color);">
+            <small style="color: var(--text-muted); display: block;">Storage Location</small>
+            <strong id="inspectLocation" style="font-size: 0.95rem; color: white;">📍 Kharadi Site, Pune</strong>
+          </div>
+        </div>
+
+        <!-- Audit Timeline History -->
+        <h4 style="font-size: 1rem; color: var(--accent-amber); margin-bottom: 14px; text-transform: uppercase;">📜 Asset Lifecycle Audit Logs</h4>
+        
+        <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px;">
+          <div style="display: flex; gap: 15px; background: rgba(15, 23, 42, 0.5); padding: 14px 18px; border-radius: 12px; border-left: 4px solid var(--accent-emerald);">
+            <div style="font-size: 1.3rem;">💻</div>
+            <div style="flex: 1;">
+              <div style="display: flex; justify-content: space-between;">
+                <strong>Digital Handover Slip Generated</strong>
+                <small style="color: var(--text-muted);">15 Feb 2026</small>
+              </div>
+              <p style="font-size: 0.83rem; color: var(--text-muted); margin-top: 2px;">Handed over to Rahul Sharma (\`OBS-ENG-26-002\`). Slip Ref: \`ACK-AST-2026-00042\`</p>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 15px; background: rgba(15, 23, 42, 0.5); padding: 14px 18px; border-radius: 12px; border-left: 4px solid var(--accent-sky);">
+            <div style="font-size: 1.3rem;">🔧</div>
+            <div style="flex: 1;">
+              <div style="display: flex; justify-content: space-between;">
+                <strong>Routine IT Diagnostic Passed</strong>
+                <small style="color: var(--text-muted);">04 Jun 2026</small>
+              </div>
+              <p style="font-size: 0.83rem; color: var(--text-muted); margin-top: 2px;">Hardware diagnostics & antivirus compliance verified by IT Desk.</p>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 15px; background: rgba(15, 23, 42, 0.5); padding: 14px 18px; border-radius: 12px; border-left: 4px solid var(--primary);">
+            <div style="font-size: 1.3rem;">📦</div>
+            <div style="flex: 1;">
+              <div style="display: flex; justify-content: space-between;">
+                <strong>Registered into Storage Vault</strong>
+                <small style="color: var(--text-muted);">12 Jan 2026</small>
+              </div>
+              <p style="font-size: 0.83rem; color: var(--text-muted); margin-top: 2px;">Asset registered into Pune Vault Storage by System Administrator.</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+          <button class="btn btn-secondary" onclick="window.hrApp.closeInspectAssetModal()">Close</button>
+          <button class="btn btn-primary" onclick="window.hrApp.showHandoverSlipModal('OBS-LAP-0024', 'OBS-ENG-26-002', 'Rahul Sharma', 'Dell Latitude 5440 i7', 'DL5440202699')">
+            📄 View Digital Handover Slip
+          </button>
+        </div>
+
+      </div>
+    </div>
+  `;
+}

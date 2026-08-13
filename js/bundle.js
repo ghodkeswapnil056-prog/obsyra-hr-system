@@ -5462,37 +5462,45 @@ function renderAssetEngine() {
       </div>
     </div>
 
-    <!-- Sub-Navigation Menu Bar (Asset Module Architecture) -->
-    <div class="glass-card" style="margin-bottom: 20px; padding: 12px 20px; border-left: 4px solid var(--primary);">
-      <div style="display: flex; gap: 10px; overflow-x: auto; font-weight: 600; font-size: 0.85rem;" id="assetFilterToolbar">
-        <button class="btn btn-sm btn-primary asset-filter-btn active" onclick="window.filterAssetTable('ALL', this)">📊 All Assets (385)</button>
-        <button class="btn btn-sm btn-secondary asset-filter-btn" onclick="window.filterAssetTable('ASSIGNED', this)">🟢 Assigned (278)</button>
-        <button class="btn btn-sm btn-secondary asset-filter-btn" onclick="window.filterAssetTable('AVAILABLE', this)">🔵 Available Vault (72)</button>
-        <button class="btn btn-sm btn-secondary asset-filter-btn" onclick="window.filterAssetTable('IN_REPAIR', this)">🔧 In Repair (15)</button>
-        <button class="btn btn-sm btn-secondary asset-filter-btn" onclick="window.filterAssetTable('DAMAGED', this)">⚠️ Damaged / Lost (12)</button>
-        <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showAssignAssetModal()">💻 Handover / Transfer Asset</button>
-        <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showRegisterAssetModal()">📦 Register Hardware</button>
-        <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showReturnAssetModal()">🛑 Asset Return</button>
+    <!-- Enhanced Asset Summary KPI Grid (6 Modern Glass Cards) -->
+    <div class="grid-4" style="margin-bottom: 25px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+      <div class="stat-card" onclick="window.filterAssetTable('ALL')" style="cursor: pointer; border-left: 4px solid var(--primary);">
+        <div class="stat-value" style="color: white;">385 Items</div>
+        <div class="stat-label">₹ 42.8L Inventory Value</div>
+      </div>
+      <div class="stat-card" onclick="window.filterAssetTable('ASSIGNED')" style="cursor: pointer; border-left: 4px solid var(--accent-emerald);">
+        <div class="stat-value" style="color: var(--accent-emerald);">278 Assigned</div>
+        <div class="stat-label">72.2% Active Utilization</div>
+      </div>
+      <div class="stat-card" onclick="window.filterAssetTable('AVAILABLE')" style="cursor: pointer; border-left: 4px solid var(--accent-sky);">
+        <div class="stat-value" style="color: var(--accent-sky);">72 Vault</div>
+        <div class="stat-label">Ready for Immediate Issue</div>
+      </div>
+      <div class="stat-card" onclick="window.filterAssetTable('IN_REPAIR')" style="cursor: pointer; border-left: 4px solid var(--accent-amber);">
+        <div class="stat-value" style="color: var(--accent-amber);">15 Repair</div>
+        <div class="stat-label">IT Maintenance & Diagnostics</div>
+      </div>
+      <div class="stat-card" onclick="window.filterAssetTable('DAMAGED')" style="cursor: pointer; border-left: 4px solid var(--accent-rose);">
+        <div class="stat-value" style="color: #fb7185;">10 Damaged</div>
+        <div class="stat-label">8 Damaged • 2 Missing</div>
+      </div>
+      <div class="stat-card" style="border-left: 4px solid #c084fc;">
+        <div class="stat-value" style="color: #c084fc;">100%</div>
+        <div class="stat-label">Digital Ack Compliance</div>
       </div>
     </div>
 
-    <!-- Asset Summary KPI Cards -->
-    <div class="grid-4" style="margin-bottom: 25px;">
-      <div class="stat-card" onclick="window.filterAssetTable('ALL')" style="cursor: pointer;">
-        <div class="stat-value">385 Total</div>
-        <div class="stat-label">₹ 42.8L Inventory Value</div>
-      </div>
-      <div class="stat-card" onclick="window.filterAssetTable('ASSIGNED')" style="cursor: pointer;">
-        <div class="stat-value" style="color: var(--accent-emerald);">278 Assigned</div>
-        <div class="stat-label">72 Available in Pune Vault</div>
-      </div>
-      <div class="stat-card" onclick="window.filterAssetTable('IN_REPAIR')" style="cursor: pointer;">
-        <div class="stat-value" style="color: var(--accent-amber);">15 In Repair</div>
-        <div class="stat-label">8 Damaged • 2 Lost</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" style="color: var(--primary);">100%</div>
-        <div class="stat-label">Digital Ack Compliance</div>
+    <!-- Interactive Category Quick Filter Bar Toolbar -->
+    <div class="glass-card" style="margin-bottom: 20px; padding: 14px 22px; border-left: 4px solid var(--primary-light);">
+      <div style="display: flex; gap: 10px; overflow-x: auto; font-weight: 600; font-size: 0.85rem; align-items: center;" id="assetFilterToolbar">
+        <span style="color: var(--text-muted); font-size: 0.8rem; margin-right: 6px; white-space: nowrap;">Category Filters:</span>
+        <button class="btn btn-sm btn-primary asset-filter-btn active" onclick="window.filterAssetTable('ALL', this)">📊 All Assets (385)</button>
+        <button class="btn btn-sm btn-secondary asset-filter-btn" onclick="window.filterAssetTable('ASSIGNED', this)">🟢 Assigned (278)</button>
+        <button class="btn btn-sm btn-secondary asset-filter-btn" onclick="window.filterAssetTable('AVAILABLE', this)">🔵 Vault (72)</button>
+        <button class="btn btn-sm btn-secondary asset-filter-btn" onclick="window.filterAssetTable('LAPTOP', this)">💻 Laptops (142)</button>
+        <button class="btn btn-sm btn-secondary asset-filter-btn" onclick="window.filterAssetTable('MOBILE', this)">📱 SIM & Mobile (110)</button>
+        <button class="btn btn-sm btn-secondary asset-filter-btn" onclick="window.filterAssetTable('KIT', this)">📡 5G Field Kits (48)</button>
+        <button class="btn btn-sm btn-secondary asset-filter-btn" onclick="window.filterAssetTable('IN_REPAIR', this)">🔧 Repair (15)</button>
       </div>
     </div>
 
@@ -5534,9 +5542,12 @@ function renderAssetEngine() {
     <!-- Main Hardware Inventory Roster Table -->
     <div class="glass-card" style="margin-bottom: 25px;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
-        <h3>Hardware Property Register & Assignment Logs</h3>
+        <div>
+          <h3 style="font-size: 1.15rem; color: white;">Hardware Property Register & Assignment Logs</h3>
+          <span style="font-size: 0.78rem; color: var(--text-muted);">Real-time asset state tracking with digital handover certificate linkage</span>
+        </div>
         <div style="display: flex; gap: 10px;">
-          <input type="text" id="assetSearchInput" placeholder="Search Tag ID, Serial Number or Employee..." class="form-control" style="width: 280px; font-size: 0.85rem;" onkeyup="window.searchAssetTable(this.value)">
+          <input type="text" id="assetSearchInput" placeholder="Search Tag ID, Serial Number or Employee..." class="form-control" style="width: 300px; font-size: 0.85rem;" onkeyup="window.searchAssetTable(this.value)">
         </div>
       </div>
 
@@ -5546,87 +5557,107 @@ function renderAssetEngine() {
             <tr>
               <th>Asset Tag ID</th>
               <th>Category & Model</th>
-              <th>Serial Number / IMEI</th>
+              <th>Serial / IMEI</th>
               <th>Assigned Employee</th>
               <th>Assigned Location</th>
               <th>Status</th>
               <th>Condition</th>
-              <th>Action Buttons Setup</th>
+              <th>Action Setup</th>
             </tr>
           </thead>
           <tbody>
-            <tr data-status="ASSIGNED">
+            <tr data-status="ASSIGNED" data-category="LAPTOP">
               <td><strong style="font-family: monospace; color: var(--primary);">OBS-LAP-0024</strong></td>
               <td><strong>Dell Latitude 5440 i7</strong><br><small style="color: var(--text-muted);">Laptop / Workstation</small></td>
               <td><code>DL5440202699</code></td>
               <td><strong>Rahul Sharma</strong><br><small style="color: var(--text-muted);">OBS-ENG-26-002</small></td>
-              <td>📍 Kharadi, Pune</td>
+              <td>📍 Kharadi Site, Pune</td>
               <td><span class="badge badge-active">ASSIGNED</span></td>
-              <td><span class="badge badge-active">Good</span></td>
+              <td><span class="badge badge-active">🟢 Good (95%)</span></td>
               <td>
-                <div style="display: flex; gap: 6px;">
+                <div style="display: flex; gap: 5px;">
                   <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showHandoverSlipModal('OBS-LAP-0024', 'OBS-ENG-26-002', 'Rahul Sharma', 'Dell Latitude 5440 i7', 'DL5440202699')">📄 Handover Slip</button>
-                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showTransferAssetModal('OBS-LAP-0024')">🔄 Transfer</button>
+                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showTransferAssetModal('OBS-LAP-0024')">💻 Transfer</button>
                   <button class="btn btn-sm btn-primary" onclick="window.hrApp.showReturnAssetModal('OBS-LAP-0024')">🛑 Return</button>
+                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showInspectAssetModal('OBS-LAP-0024')">🔍 Audit</button>
                 </div>
               </td>
             </tr>
-            <tr data-status="ASSIGNED">
+            <tr data-status="ASSIGNED" data-category="LAPTOP">
               <td><strong style="font-family: monospace; color: var(--primary);">AST-LAP-2026-001</strong></td>
               <td><strong>MacBook Pro 16" M3 Max</strong><br><small style="color: var(--text-muted);">Laptop / Workstation</small></td>
               <td><code>C02GX001MD68</code></td>
               <td><strong>Swapnil Ghodke</strong><br><small style="color: var(--text-muted);">OBS-OPS-26-001</small></td>
               <td>📍 Wagholi HQ, Pune</td>
               <td><span class="badge badge-active">ASSIGNED</span></td>
-              <td><span class="badge badge-active">Excellent</span></td>
+              <td><span class="badge badge-active">✨ Excellent (99%)</span></td>
               <td>
-                <div style="display: flex; gap: 6px;">
+                <div style="display: flex; gap: 5px;">
                   <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showHandoverSlipModal('AST-LAP-2026-001', 'OBS-OPS-26-001', 'Swapnil Ghodke', 'MacBook Pro 16 M3 Max', 'C02GX001MD68')">📄 Handover Slip</button>
-                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showTransferAssetModal('AST-LAP-2026-001')">🔄 Transfer</button>
+                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showTransferAssetModal('AST-LAP-2026-001')">💻 Transfer</button>
                   <button class="btn btn-sm btn-primary" onclick="window.hrApp.showReturnAssetModal('AST-LAP-2026-001')">🛑 Return</button>
+                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showInspectAssetModal('AST-LAP-2026-001')">🔍 Audit</button>
                 </div>
               </td>
             </tr>
-            <tr data-status="ASSIGNED">
+            <tr data-status="ASSIGNED" data-category="KIT">
               <td><strong style="font-family: monospace; color: var(--primary);">OBS-KIT-0089</strong></td>
               <td><strong>5G Core Drive Test Analyzer Kit</strong><br><small style="color: var(--text-muted);">Telecom Field Tool Kit</small></td>
               <td><code>5G-KIT-PUNE-0992</code></td>
               <td><strong>Swapnil Ghodke</strong><br><small style="color: var(--text-muted);">OBS-OPS-26-001</small></td>
               <td>📍 Navi Mumbai 5G Core Hub</td>
               <td><span class="badge badge-active">ASSIGNED</span></td>
-              <td><span class="badge badge-active">Good</span></td>
+              <td><span class="badge badge-active">🟢 Good (90%)</span></td>
               <td>
-                <div style="display: flex; gap: 6px;">
+                <div style="display: flex; gap: 5px;">
                   <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showHandoverSlipModal('OBS-KIT-0089', 'OBS-OPS-26-001', 'Swapnil Ghodke', '5G Core Drive Test Analyzer Kit', '5G-KIT-PUNE-0992')">📄 Handover Slip</button>
                   <button class="btn btn-sm btn-primary" onclick="window.hrApp.showReturnAssetModal('OBS-KIT-0089')">🛑 Return</button>
+                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showInspectAssetModal('OBS-KIT-0089')">🔍 Audit</button>
                 </div>
               </td>
             </tr>
-            <tr data-status="AVAILABLE">
+            <tr data-status="ASSIGNED" data-category="MOBILE">
+              <td><strong style="font-family: monospace; color: var(--primary);">OBS-SIM-1044</strong></td>
+              <td><strong>Jio 5G Testing Dual SIM Card</strong><br><small style="color: var(--text-muted);">Corporate SIM / Data</small></td>
+              <td><code>8991002345678912</code></td>
+              <td><strong>Priya Patel</strong><br><small style="color: var(--text-muted);">OBS-HR-26-003</small></td>
+              <td>📍 Wagholi HQ, Pune</td>
+              <td><span class="badge badge-active">ASSIGNED</span></td>
+              <td><span class="badge badge-active">✨ Brand New</span></td>
+              <td>
+                <div style="display: flex; gap: 5px;">
+                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showHandoverSlipModal('OBS-SIM-1044', 'OBS-HR-26-003', 'Priya Patel', 'Jio 5G Dual SIM Card', '8991002345678912')">📄 Handover Slip</button>
+                  <button class="btn btn-sm btn-primary" onclick="window.hrApp.showReturnAssetModal('OBS-SIM-1044')">🛑 Return</button>
+                </div>
+              </td>
+            </tr>
+            <tr data-status="AVAILABLE" data-category="LAPTOP">
               <td><strong style="font-family: monospace; color: var(--accent-sky);">AST-LAP-2026-005</strong></td>
               <td><strong>Lenovo ThinkPad P1 Gen 6</strong><br><small style="color: var(--text-muted);">Laptop / Workstation</small></td>
               <td><code>LENV20269981</code></td>
               <td><em>Unassigned</em><br><small style="color: var(--text-muted);">Storage Vault</small></td>
               <td>📍 Pune HQ Vault Storage</td>
               <td><span class="badge badge-pending">AVAILABLE</span></td>
-              <td><span class="badge badge-active">Brand New</span></td>
+              <td><span class="badge badge-active">✨ Sealed (100%)</span></td>
               <td>
-                <div style="display: flex; gap: 6px;">
+                <div style="display: flex; gap: 5px;">
                   <button class="btn btn-sm btn-primary" onclick="window.hrApp.showAssignAssetModal()">💻 Handover Asset</button>
+                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showInspectAssetModal('AST-LAP-2026-005')">🔍 Audit</button>
                 </div>
               </td>
             </tr>
-            <tr data-status="IN_REPAIR">
+            <tr data-status="IN_REPAIR" data-category="KIT">
               <td><strong style="font-family: monospace; color: var(--accent-amber);">OBS-ROUT-0102</strong></td>
               <td><strong>Cisco Industrial 5G Router</strong><br><small style="color: var(--text-muted);">Network Hardware</small></td>
               <td><code>CSC5G991204</code></td>
               <td><em>IT Repairs Desk</em><br><small style="color: var(--text-muted);">Under Maintenance</small></td>
               <td>📍 Service Center Pune</td>
               <td><span class="badge badge-pending" style="color: #fbbf24;">IN REPAIR</span></td>
-              <td><span class="badge badge-pending">Damaged Firmware</span></td>
+              <td><span class="badge badge-pending">🟡 Firmware Repair</span></td>
               <td>
-                <div style="display: flex; gap: 6px;">
+                <div style="display: flex; gap: 5px;">
                   <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Repair Inspection Status: Hardware Diagnostic Passed')">🔧 Diagnostic</button>
+                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showInspectAssetModal('OBS-ROUT-0102')">🔍 Audit</button>
                 </div>
               </td>
             </tr>
@@ -5635,9 +5666,9 @@ function renderAssetEngine() {
       </div>
     </div>
 
-    <!-- Client-side Asset Filter Script -->
+    <!-- Client-side Asset Filter & Search Script -->
     <script>
-      window.filterAssetTable = function(status, btnEl) {
+      window.filterAssetTable = function(filterVal, btnEl) {
         if (btnEl) {
           document.querySelectorAll('.asset-filter-btn').forEach(b => {
             b.classList.remove('btn-primary');
@@ -5650,7 +5681,9 @@ function renderAssetEngine() {
         const rows = document.querySelectorAll('#assetMasterTable tbody tr');
         rows.forEach(r => {
           const rowStatus = r.getAttribute('data-status');
-          if (status === 'ALL' || rowStatus === status) {
+          const rowCat = r.getAttribute('data-category');
+
+          if (filterVal === 'ALL' || rowStatus === filterVal || rowCat === filterVal) {
             r.style.display = '';
           } else {
             r.style.display = 'none';
@@ -5658,7 +5691,7 @@ function renderAssetEngine() {
         });
 
         if (window.hrApp && typeof window.hrApp.showToast === 'function') {
-          window.hrApp.showToast('Filtered Asset Register: ' + status);
+          window.hrApp.showToast('Filtered Asset Inventory: ' + filterVal);
         }
       };
 
@@ -6816,6 +6849,85 @@ function renderHandoverSlipModal() {
   `;
 }
 
+// 6. Complete Hardware Asset Inspection & Audit Trail Modal
+function renderInspectAssetModal() {
+  return `
+    <div class="modal-overlay" id="inspectAssetModalOverlay" role="dialog" aria-modal="true" aria-hidden="true" style="display: none; z-index: 10000; background: rgba(15, 23, 42, 0.92); backdrop-filter: blur(14px); align-items: center; justify-content: center; padding: 20px;">
+      <div class="modal-container glass-card" style="width: 720px; max-width: 95vw; max-height: 90vh; overflow-y: auto; padding: 32px; border-radius: 20px; border: 1px solid var(--border-color); background: rgba(30, 41, 59, 0.98); color: white;">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 14px;">
+          <div>
+            <h2 style="font-size: 1.4rem; color: var(--accent-sky); font-weight: 800;">🔍 Hardware Asset Inspection & Audit Trail</h2>
+            <small style="color: var(--text-muted);">Complete Lifecycle Timeline • Maintenance Logs • Custody Audit</small>
+          </div>
+          <button type="button" style="background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer;" onclick="window.hrApp.closeInspectAssetModal()">✕</button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 24px;">
+          <div style="background: rgba(15, 23, 42, 0.6); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color);">
+            <small style="color: var(--text-muted); display: block;">Asset Tag ID</small>
+            <strong id="inspectTag" style="font-size: 1.1rem; color: var(--primary-light); font-family: monospace;">OBS-LAP-0024</strong>
+          </div>
+          <div style="background: rgba(15, 23, 42, 0.6); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color);">
+            <small style="color: var(--text-muted); display: block;">Current Custodian</small>
+            <strong id="inspectHolder" style="font-size: 1rem; color: #34d399;">Rahul Sharma (OBS-ENG-26-002)</strong>
+          </div>
+          <div style="background: rgba(15, 23, 42, 0.6); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color);">
+            <small style="color: var(--text-muted); display: block;">Storage Location</small>
+            <strong id="inspectLocation" style="font-size: 0.95rem; color: white;">📍 Kharadi Site, Pune</strong>
+          </div>
+        </div>
+
+        <!-- Audit Timeline History -->
+        <h4 style="font-size: 1rem; color: var(--accent-amber); margin-bottom: 14px; text-transform: uppercase;">📜 Asset Lifecycle Audit Logs</h4>
+        
+        <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px;">
+          <div style="display: flex; gap: 15px; background: rgba(15, 23, 42, 0.5); padding: 14px 18px; border-radius: 12px; border-left: 4px solid var(--accent-emerald);">
+            <div style="font-size: 1.3rem;">💻</div>
+            <div style="flex: 1;">
+              <div style="display: flex; justify-content: space-between;">
+                <strong>Digital Handover Slip Generated</strong>
+                <small style="color: var(--text-muted);">15 Feb 2026</small>
+              </div>
+              <p style="font-size: 0.83rem; color: var(--text-muted); margin-top: 2px;">Handed over to Rahul Sharma (\`OBS-ENG-26-002\`). Slip Ref: \`ACK-AST-2026-00042\`</p>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 15px; background: rgba(15, 23, 42, 0.5); padding: 14px 18px; border-radius: 12px; border-left: 4px solid var(--accent-sky);">
+            <div style="font-size: 1.3rem;">🔧</div>
+            <div style="flex: 1;">
+              <div style="display: flex; justify-content: space-between;">
+                <strong>Routine IT Diagnostic Passed</strong>
+                <small style="color: var(--text-muted);">04 Jun 2026</small>
+              </div>
+              <p style="font-size: 0.83rem; color: var(--text-muted); margin-top: 2px;">Hardware diagnostics & antivirus compliance verified by IT Desk.</p>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 15px; background: rgba(15, 23, 42, 0.5); padding: 14px 18px; border-radius: 12px; border-left: 4px solid var(--primary);">
+            <div style="font-size: 1.3rem;">📦</div>
+            <div style="flex: 1;">
+              <div style="display: flex; justify-content: space-between;">
+                <strong>Registered into Storage Vault</strong>
+                <small style="color: var(--text-muted);">12 Jan 2026</small>
+              </div>
+              <p style="font-size: 0.83rem; color: var(--text-muted); margin-top: 2px;">Asset registered into Pune Vault Storage by System Administrator.</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+          <button class="btn btn-secondary" onclick="window.hrApp.closeInspectAssetModal()">Close</button>
+          <button class="btn btn-primary" onclick="window.hrApp.showHandoverSlipModal('OBS-LAP-0024', 'OBS-ENG-26-002', 'Rahul Sharma', 'Dell Latitude 5440 i7', 'DL5440202699')">
+            📄 View Digital Handover Slip
+          </button>
+        </div>
+
+      </div>
+    </div>
+  `;
+}
+
 
 // --- File: app.js ---
 // Main HR System Application Router & Controller
@@ -6838,6 +6950,7 @@ class HRAppController {
     document.body.insertAdjacentHTML('beforeend', renderTransferAssetModal());
     document.body.insertAdjacentHTML('beforeend', renderReturnAssetModal());
     document.body.insertAdjacentHTML('beforeend', renderHandoverSlipModal());
+    document.body.insertAdjacentHTML('beforeend', renderInspectAssetModal());
 
     // Initial render
     this.render();
@@ -7047,6 +7160,27 @@ class HRAppController {
 
   closeHandoverSlipModal() {
     const overlay = document.getElementById('handoverSlipModalOverlay');
+    if (overlay) {
+      overlay.style.display = 'none';
+      overlay.classList.remove('is-active', 'open');
+      overlay.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  showInspectAssetModal(tagId = 'OBS-LAP-0024') {
+    const overlay = document.getElementById('inspectAssetModalOverlay');
+    if (overlay) {
+      overlay.style.display = 'flex';
+      overlay.classList.add('is-active', 'open');
+      overlay.setAttribute('aria-hidden', 'false');
+
+      const elTag = document.getElementById('inspectTag');
+      if (elTag) elTag.textContent = tagId;
+    }
+  }
+
+  closeInspectAssetModal() {
+    const overlay = document.getElementById('inspectAssetModalOverlay');
     if (overlay) {
       overlay.style.display = 'none';
       overlay.classList.remove('is-active', 'open');
@@ -7749,6 +7883,8 @@ window.showReturnAssetModal = (tagId) => appInstance.showReturnAssetModal(tagId)
 window.closeReturnAssetModal = () => appInstance.closeReturnAssetModal();
 window.showHandoverSlipModal = (tag, id, name, model, serial) => appInstance.showHandoverSlipModal(tag, id, name, model, serial);
 window.closeHandoverSlipModal = () => appInstance.closeHandoverSlipModal();
+window.showInspectAssetModal = (tagId) => appInstance.showInspectAssetModal(tagId);
+window.closeInspectAssetModal = () => appInstance.closeInspectAssetModal();
 window.toggleAttendancePunch = () => appInstance.toggleAttendancePunch();
 window.openLoginModal = () => appInstance.openLoginModal();
 window.closeLoginModal = () => appInstance.closeLoginModal();

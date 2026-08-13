@@ -15,7 +15,7 @@ import { renderExpenses } from './modules/expenses.js';
 import { renderTraining } from './modules/training.js';
 import { renderAddEmployeeModal } from './components/addEmployeeModal.js';
 import { renderLoginModal } from './components/loginModal.js';
-import { renderAssignAssetModal, renderRegisterHardwareModal, renderTransferAssetModal, renderReturnAssetModal, renderHandoverSlipModal } from './components/assetModals.js';
+import { renderAssignAssetModal, renderRegisterHardwareModal, renderTransferAssetModal, renderReturnAssetModal, renderHandoverSlipModal, renderInspectAssetModal } from './components/assetModals.js';
 import { renderLoginPage } from './modules/loginPage.js';
 import { commitDocNumberSequence } from './engine/serialEngine.js';
 
@@ -37,6 +37,7 @@ class HRAppController {
     document.body.insertAdjacentHTML('beforeend', renderTransferAssetModal());
     document.body.insertAdjacentHTML('beforeend', renderReturnAssetModal());
     document.body.insertAdjacentHTML('beforeend', renderHandoverSlipModal());
+    document.body.insertAdjacentHTML('beforeend', renderInspectAssetModal());
 
     // Initial render
     this.render();
@@ -246,6 +247,27 @@ class HRAppController {
 
   closeHandoverSlipModal() {
     const overlay = document.getElementById('handoverSlipModalOverlay');
+    if (overlay) {
+      overlay.style.display = 'none';
+      overlay.classList.remove('is-active', 'open');
+      overlay.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  showInspectAssetModal(tagId = 'OBS-LAP-0024') {
+    const overlay = document.getElementById('inspectAssetModalOverlay');
+    if (overlay) {
+      overlay.style.display = 'flex';
+      overlay.classList.add('is-active', 'open');
+      overlay.setAttribute('aria-hidden', 'false');
+
+      const elTag = document.getElementById('inspectTag');
+      if (elTag) elTag.textContent = tagId;
+    }
+  }
+
+  closeInspectAssetModal() {
+    const overlay = document.getElementById('inspectAssetModalOverlay');
     if (overlay) {
       overlay.style.display = 'none';
       overlay.classList.remove('is-active', 'open');
@@ -948,6 +970,8 @@ window.showReturnAssetModal = (tagId) => appInstance.showReturnAssetModal(tagId)
 window.closeReturnAssetModal = () => appInstance.closeReturnAssetModal();
 window.showHandoverSlipModal = (tag, id, name, model, serial) => appInstance.showHandoverSlipModal(tag, id, name, model, serial);
 window.closeHandoverSlipModal = () => appInstance.closeHandoverSlipModal();
+window.showInspectAssetModal = (tagId) => appInstance.showInspectAssetModal(tagId);
+window.closeInspectAssetModal = () => appInstance.closeInspectAssetModal();
 window.toggleAttendancePunch = () => appInstance.toggleAttendancePunch();
 window.openLoginModal = () => appInstance.openLoginModal();
 window.closeLoginModal = () => appInstance.closeLoginModal();
