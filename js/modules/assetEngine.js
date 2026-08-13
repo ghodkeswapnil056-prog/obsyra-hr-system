@@ -127,7 +127,7 @@ export function renderAssetEngine() {
               <td><span class="badge badge-active">Good</span></td>
               <td>
                 <div style="display: flex; gap: 6px;">
-                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Generated Asset Handover Slip for OBS-LAP-0024')">📄 Handover Slip</button>
+                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showHandoverSlipModal('OBS-LAP-0024', 'OBS-ENG-26-002', 'Rahul Sharma', 'Dell Latitude 5440 i7', 'DL5440202699')">📄 Handover Slip</button>
                   <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showTransferAssetModal('OBS-LAP-0024')">🔄 Transfer</button>
                   <button class="btn btn-sm btn-primary" onclick="window.hrApp.showReturnAssetModal('OBS-LAP-0024')">🛑 Return</button>
                 </div>
@@ -143,7 +143,7 @@ export function renderAssetEngine() {
               <td><span class="badge badge-active">Excellent</span></td>
               <td>
                 <div style="display: flex; gap: 6px;">
-                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Generated Asset Handover Slip for AST-LAP-2026-001')">📄 Handover Slip</button>
+                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showHandoverSlipModal('AST-LAP-2026-001', 'OBS-OPS-26-001', 'Swapnil Ghodke', 'MacBook Pro 16 M3 Max', 'C02GX001MD68')">📄 Handover Slip</button>
                   <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showTransferAssetModal('AST-LAP-2026-001')">🔄 Transfer</button>
                   <button class="btn btn-sm btn-primary" onclick="window.hrApp.showReturnAssetModal('AST-LAP-2026-001')">🛑 Return</button>
                 </div>
@@ -159,7 +159,7 @@ export function renderAssetEngine() {
               <td><span class="badge badge-active">Good</span></td>
               <td>
                 <div style="display: flex; gap: 6px;">
-                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Generated Asset Handover Slip for OBS-KIT-0089')">📄 Handover Slip</button>
+                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showHandoverSlipModal('OBS-KIT-0089', 'OBS-OPS-26-001', 'Swapnil Ghodke', '5G Core Drive Test Analyzer Kit', '5G-KIT-PUNE-0992')">📄 Handover Slip</button>
                   <button class="btn btn-sm btn-primary" onclick="window.hrApp.showReturnAssetModal('OBS-KIT-0089')">🛑 Return</button>
                 </div>
               </td>

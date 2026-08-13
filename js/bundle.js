@@ -5565,7 +5565,7 @@ function renderAssetEngine() {
               <td><span class="badge badge-active">Good</span></td>
               <td>
                 <div style="display: flex; gap: 6px;">
-                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Generated Asset Handover Slip for OBS-LAP-0024')">📄 Handover Slip</button>
+                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showHandoverSlipModal('OBS-LAP-0024', 'OBS-ENG-26-002', 'Rahul Sharma', 'Dell Latitude 5440 i7', 'DL5440202699')">📄 Handover Slip</button>
                   <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showTransferAssetModal('OBS-LAP-0024')">🔄 Transfer</button>
                   <button class="btn btn-sm btn-primary" onclick="window.hrApp.showReturnAssetModal('OBS-LAP-0024')">🛑 Return</button>
                 </div>
@@ -5581,7 +5581,7 @@ function renderAssetEngine() {
               <td><span class="badge badge-active">Excellent</span></td>
               <td>
                 <div style="display: flex; gap: 6px;">
-                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Generated Asset Handover Slip for AST-LAP-2026-001')">📄 Handover Slip</button>
+                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showHandoverSlipModal('AST-LAP-2026-001', 'OBS-OPS-26-001', 'Swapnil Ghodke', 'MacBook Pro 16 M3 Max', 'C02GX001MD68')">📄 Handover Slip</button>
                   <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showTransferAssetModal('AST-LAP-2026-001')">🔄 Transfer</button>
                   <button class="btn btn-sm btn-primary" onclick="window.hrApp.showReturnAssetModal('AST-LAP-2026-001')">🛑 Return</button>
                 </div>
@@ -5597,7 +5597,7 @@ function renderAssetEngine() {
               <td><span class="badge badge-active">Good</span></td>
               <td>
                 <div style="display: flex; gap: 6px;">
-                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Generated Asset Handover Slip for OBS-KIT-0089')">📄 Handover Slip</button>
+                  <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showHandoverSlipModal('OBS-KIT-0089', 'OBS-OPS-26-001', 'Swapnil Ghodke', '5G Core Drive Test Analyzer Kit', '5G-KIT-PUNE-0992')">📄 Handover Slip</button>
                   <button class="btn btn-sm btn-primary" onclick="window.hrApp.showReturnAssetModal('OBS-KIT-0089')">🛑 Return</button>
                 </div>
               </td>
@@ -6718,6 +6718,104 @@ function renderReturnAssetModal() {
   `;
 }
 
+// 5. Official Asset Handover Slip Modal Component
+function renderHandoverSlipModal() {
+  return `
+    <div class="modal-overlay" id="handoverSlipModalOverlay" role="dialog" aria-modal="true" aria-hidden="true" style="display: none; z-index: 10000; background: rgba(15, 23, 42, 0.92); backdrop-filter: blur(14px); align-items: center; justify-content: center; padding: 20px;">
+      <div class="modal-container glass-card" style="width: 760px; max-width: 95vw; max-height: 90vh; overflow-y: auto; padding: 36px; border-radius: 20px; border: 1px solid var(--border-color); background: rgba(30, 41, 59, 0.98); color: white;">
+        
+        <!-- Header Controls -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px dashed rgba(255,255,255,0.15); padding-bottom: 15px;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 44px; height: 44px; background: var(--primary-gradient); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.3rem;">O</div>
+            <div>
+              <strong style="font-size: 1.25rem; font-family: var(--font-heading);">OBSYRA PRIVATE LIMITED</strong>
+              <span style="display: block; font-size: 0.78rem; color: var(--text-muted);">CIN: U63991PN2026PTC252127 • Wagholi, Pune HQ</span>
+            </div>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button class="btn btn-sm btn-primary" onclick="window.print()" style="display: flex; align-items: center; gap: 6px; font-weight: 700;">
+              🖨️ Print Slip
+            </button>
+            <button type="button" style="background: none; border: none; color: var(--text-muted); font-size: 1.6rem; cursor: pointer; line-height: 1;" onclick="window.hrApp.closeHandoverSlipModal()">✕</button>
+          </div>
+        </div>
+
+        <!-- Official Document Certificate Container -->
+        <div id="printableHandoverSlip" style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-color); padding: 28px; border-radius: 16px; margin-bottom: 20px;">
+          
+          <div style="text-align: center; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">
+            <span class="badge badge-active" style="margin-bottom: 8px; letter-spacing: 1px;">OFFICIAL PROPERTY ISSUANCE</span>
+            <h2 style="font-size: 1.5rem; color: var(--primary-light); font-weight: 800; text-transform: uppercase;">Corporate Asset Handover Certificate</h2>
+            <p style="font-size: 0.82rem; color: var(--text-muted);">Ref Serial: <code id="slipSerialNo" style="color: var(--accent-sky); font-weight: 700;">ACK-AST-2026-00042</code> • Issued Date: <span id="slipDate">12 Aug 2026</span></p>
+          </div>
+
+          <!-- Grid: Employee & Asset Details -->
+          <div class="grid-2" style="gap: 20px; margin-bottom: 24px;">
+            <div style="background: rgba(30, 41, 59, 0.6); padding: 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08);">
+              <h4 style="color: var(--accent-emerald); font-size: 0.92rem; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">👤 Recipient Employee</h4>
+              <p style="margin-bottom: 4px; font-weight: 700; font-size: 1.05rem;" id="slipEmpName">Rahul Sharma</p>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;">Employee ID: <strong id="slipEmpId" style="color: white;">OBS-ENG-26-002</strong></p>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;">Designation: <span id="slipEmpDesignation">Software Engineer</span></p>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">Department: <span id="slipEmpDept">Engineering</span></p>
+            </div>
+
+            <div style="background: rgba(30, 41, 59, 0.6); padding: 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08);">
+              <h4 style="color: var(--accent-sky); font-size: 0.92rem; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">💻 Hardware Details</h4>
+              <p style="margin-bottom: 4px; font-weight: 700; font-size: 1.05rem;" id="slipAssetModel">Dell Latitude 5440 i7 16GB RAM</p>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;">Asset Tag ID: <strong id="slipAssetTag" style="color: var(--primary-light);">OBS-LAP-0024</strong></p>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;">Serial / IMEI: <code id="slipAssetSerial">DL5440202699</code></p>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">Condition: <span class="badge badge-active" id="slipCondition">Good Condition</span></p>
+            </div>
+          </div>
+
+          <!-- Included Accessories Checklist -->
+          <div style="background: rgba(30, 41, 59, 0.6); padding: 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); margin-bottom: 24px;">
+            <h4 style="color: var(--accent-amber); font-size: 0.92rem; margin-bottom: 10px; text-transform: uppercase;">🔌 Issued Accessories Checklist</h4>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; font-size: 0.85rem; font-weight: 600;">
+              <div>✅ 140W Adapter</div>
+              <div>✅ Wireless Mouse</div>
+              <div>✅ Laptop Bag</div>
+              <div>✅ Security Lock</div>
+            </div>
+          </div>
+
+          <!-- Undertaking Statement & Digital Signature -->
+          <div style="background: rgba(99, 102, 241, 0.08); border: 1px solid rgba(99, 102, 241, 0.25); padding: 18px; border-radius: 12px; margin-bottom: 25px;">
+            <strong style="font-size: 0.88rem; color: var(--primary-light); display: block; margin-bottom: 6px;">Legal Undertaking & Property Ownership:</strong>
+            <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+              I hereby acknowledge physical receipt of the company hardware and accessories listed above in fully operational condition. I agree to safeguard this property for business duties at Obsyra Private Limited and surrender it upon demand or employment separation in accordance with IT Policy.
+            </p>
+          </div>
+
+          <!-- Signatures Footer Grid -->
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; text-align: center; border-top: 1px dashed rgba(255,255,255,0.15); padding-top: 25px;">
+            <div>
+              <div style="height: 40px; font-family: 'Brush Script MT', cursive, sans-serif; font-size: 1.4rem; color: #818cf8;">Swapnil Ghodke</div>
+              <strong style="font-size: 0.85rem; display: block;">Authorized Handover Officer</strong>
+              <small style="color: var(--text-muted); font-size: 0.75rem;">Swapnil Ghodke • HR & Operations Lead</small>
+            </div>
+            <div>
+              <div style="height: 40px; font-family: 'Brush Script MT', cursive, sans-serif; font-size: 1.4rem; color: #34d399;" id="slipEmpSig">Rahul Sharma</div>
+              <strong style="font-size: 0.85rem; display: block;">Employee Acknowledgement Signature</strong>
+              <small style="color: var(--text-muted); font-size: 0.75rem;">Digitally Verified via Obsyra HR Portal</small>
+            </div>
+          </div>
+
+        </div>
+
+        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+          <button class="btn btn-secondary" onclick="window.hrApp.closeHandoverSlipModal()">Close</button>
+          <button class="btn btn-primary" onclick="window.print()" style="font-weight: 700;">
+            🖨️ Print Official Handover Slip
+          </button>
+        </div>
+
+      </div>
+    </div>
+  `;
+}
+
 
 // --- File: app.js ---
 // Main HR System Application Router & Controller
@@ -6739,6 +6837,7 @@ class HRAppController {
     document.body.insertAdjacentHTML('beforeend', renderRegisterHardwareModal());
     document.body.insertAdjacentHTML('beforeend', renderTransferAssetModal());
     document.body.insertAdjacentHTML('beforeend', renderReturnAssetModal());
+    document.body.insertAdjacentHTML('beforeend', renderHandoverSlipModal());
 
     // Initial render
     this.render();
@@ -6920,6 +7019,39 @@ class HRAppController {
     const cond = document.getElementById('returnCondition')?.value;
     this.closeReturnAssetModal();
     this.showToast(`🛑 Asset ${tagId} successfully returned to Storage Vault! Inspection rating: ${cond}.`);
+  }
+
+  showHandoverSlipModal(tagId = 'OBS-LAP-0024', empId = 'OBS-ENG-26-002', empName = 'Rahul Sharma', model = 'Dell Latitude 5440 i7', serial = 'DL5440202699') {
+    const overlay = document.getElementById('handoverSlipModalOverlay');
+    if (overlay) {
+      overlay.style.display = 'flex';
+      overlay.classList.add('is-active', 'open');
+      overlay.setAttribute('aria-hidden', 'false');
+
+      // Populate slip details dynamically
+      const elTag = document.getElementById('slipAssetTag');
+      const elEmpId = document.getElementById('slipEmpId');
+      const elEmpName = document.getElementById('slipEmpName');
+      const elEmpSig = document.getElementById('slipEmpSig');
+      const elModel = document.getElementById('slipAssetModel');
+      const elSerial = document.getElementById('slipAssetSerial');
+
+      if (elTag) elTag.textContent = tagId;
+      if (elEmpId) elEmpId.textContent = empId;
+      if (elEmpName) elEmpName.textContent = empName;
+      if (elEmpSig) elEmpSig.textContent = empName;
+      if (elModel) elModel.textContent = model;
+      if (elSerial) elSerial.textContent = serial;
+    }
+  }
+
+  closeHandoverSlipModal() {
+    const overlay = document.getElementById('handoverSlipModalOverlay');
+    if (overlay) {
+      overlay.style.display = 'none';
+      overlay.classList.remove('is-active', 'open');
+      overlay.setAttribute('aria-hidden', 'true');
+    }
   }
 
   navigate(view, params = {}) {
@@ -7615,6 +7747,8 @@ window.showTransferAssetModal = (tagId) => appInstance.showTransferAssetModal(ta
 window.closeTransferAssetModal = () => appInstance.closeTransferAssetModal();
 window.showReturnAssetModal = (tagId) => appInstance.showReturnAssetModal(tagId);
 window.closeReturnAssetModal = () => appInstance.closeReturnAssetModal();
+window.showHandoverSlipModal = (tag, id, name, model, serial) => appInstance.showHandoverSlipModal(tag, id, name, model, serial);
+window.closeHandoverSlipModal = () => appInstance.closeHandoverSlipModal();
 window.toggleAttendancePunch = () => appInstance.toggleAttendancePunch();
 window.openLoginModal = () => appInstance.openLoginModal();
 window.closeLoginModal = () => appInstance.closeLoginModal();

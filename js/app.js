@@ -15,7 +15,7 @@ import { renderExpenses } from './modules/expenses.js';
 import { renderTraining } from './modules/training.js';
 import { renderAddEmployeeModal } from './components/addEmployeeModal.js';
 import { renderLoginModal } from './components/loginModal.js';
-import { renderAssignAssetModal, renderRegisterHardwareModal, renderTransferAssetModal, renderReturnAssetModal } from './components/assetModals.js';
+import { renderAssignAssetModal, renderRegisterHardwareModal, renderTransferAssetModal, renderReturnAssetModal, renderHandoverSlipModal } from './components/assetModals.js';
 import { renderLoginPage } from './modules/loginPage.js';
 import { commitDocNumberSequence } from './engine/serialEngine.js';
 
@@ -36,6 +36,7 @@ class HRAppController {
     document.body.insertAdjacentHTML('beforeend', renderRegisterHardwareModal());
     document.body.insertAdjacentHTML('beforeend', renderTransferAssetModal());
     document.body.insertAdjacentHTML('beforeend', renderReturnAssetModal());
+    document.body.insertAdjacentHTML('beforeend', renderHandoverSlipModal());
 
     // Initial render
     this.render();
@@ -217,6 +218,39 @@ class HRAppController {
     const cond = document.getElementById('returnCondition')?.value;
     this.closeReturnAssetModal();
     this.showToast(`🛑 Asset ${tagId} successfully returned to Storage Vault! Inspection rating: ${cond}.`);
+  }
+
+  showHandoverSlipModal(tagId = 'OBS-LAP-0024', empId = 'OBS-ENG-26-002', empName = 'Rahul Sharma', model = 'Dell Latitude 5440 i7', serial = 'DL5440202699') {
+    const overlay = document.getElementById('handoverSlipModalOverlay');
+    if (overlay) {
+      overlay.style.display = 'flex';
+      overlay.classList.add('is-active', 'open');
+      overlay.setAttribute('aria-hidden', 'false');
+
+      // Populate slip details dynamically
+      const elTag = document.getElementById('slipAssetTag');
+      const elEmpId = document.getElementById('slipEmpId');
+      const elEmpName = document.getElementById('slipEmpName');
+      const elEmpSig = document.getElementById('slipEmpSig');
+      const elModel = document.getElementById('slipAssetModel');
+      const elSerial = document.getElementById('slipAssetSerial');
+
+      if (elTag) elTag.textContent = tagId;
+      if (elEmpId) elEmpId.textContent = empId;
+      if (elEmpName) elEmpName.textContent = empName;
+      if (elEmpSig) elEmpSig.textContent = empName;
+      if (elModel) elModel.textContent = model;
+      if (elSerial) elSerial.textContent = serial;
+    }
+  }
+
+  closeHandoverSlipModal() {
+    const overlay = document.getElementById('handoverSlipModalOverlay');
+    if (overlay) {
+      overlay.style.display = 'none';
+      overlay.classList.remove('is-active', 'open');
+      overlay.setAttribute('aria-hidden', 'true');
+    }
   }
 
   navigate(view, params = {}) {
@@ -912,6 +946,8 @@ window.showTransferAssetModal = (tagId) => appInstance.showTransferAssetModal(ta
 window.closeTransferAssetModal = () => appInstance.closeTransferAssetModal();
 window.showReturnAssetModal = (tagId) => appInstance.showReturnAssetModal(tagId);
 window.closeReturnAssetModal = () => appInstance.closeReturnAssetModal();
+window.showHandoverSlipModal = (tag, id, name, model, serial) => appInstance.showHandoverSlipModal(tag, id, name, model, serial);
+window.closeHandoverSlipModal = () => appInstance.closeHandoverSlipModal();
 window.toggleAttendancePunch = () => appInstance.toggleAttendancePunch();
 window.openLoginModal = () => appInstance.openLoginModal();
 window.closeLoginModal = () => appInstance.closeLoginModal();
