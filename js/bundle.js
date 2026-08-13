@@ -5451,13 +5451,10 @@ function renderAssetEngine() {
       </div>
       <div style="display: flex; gap: 10px; flex-wrap: wrap;">
         <button class="btn btn-primary" onclick="window.hrApp.showAssignAssetModal()">
-          💻 Handover Asset
+          💻 Handover / Transfer Asset
         </button>
         <button class="btn btn-secondary" onclick="window.hrApp.showRegisterAssetModal()">
           📦 + Register Hardware
-        </button>
-        <button class="btn btn-secondary" onclick="window.hrApp.showTransferAssetModal()">
-          🔄 Transfer Asset
         </button>
         <button class="btn btn-secondary" onclick="window.hrApp.showReturnAssetModal()">
           🛑 Asset Return Clearance
@@ -5473,9 +5470,9 @@ function renderAssetEngine() {
         <button class="btn btn-sm btn-secondary asset-filter-btn" onclick="window.filterAssetTable('AVAILABLE', this)">🔵 Available Vault (72)</button>
         <button class="btn btn-sm btn-secondary asset-filter-btn" onclick="window.filterAssetTable('IN_REPAIR', this)">🔧 In Repair (15)</button>
         <button class="btn btn-sm btn-secondary asset-filter-btn" onclick="window.filterAssetTable('DAMAGED', this)">⚠️ Damaged / Lost (12)</button>
-        <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showAssignAssetModal()">💻 Handover Asset</button>
+        <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showAssignAssetModal()">💻 Handover / Transfer Asset</button>
         <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showRegisterAssetModal()">📦 Register Hardware</button>
-        <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showTransferAssetModal()">🔄 Transfers Log</button>
+        <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showReturnAssetModal()">🛑 Asset Return</button>
       </div>
     </div>
 
@@ -6432,8 +6429,8 @@ function renderAssignAssetModal() {
         
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
           <div>
-            <h2 style="font-size: 1.4rem; color: var(--primary-light);">💻 Handover Company Hardware & Asset</h2>
-            <small style="color: var(--text-muted);">Issue hardware, SIM cards, telecom 5G kits or company property with signed digital handover slip</small>
+            <h2 style="font-size: 1.4rem; color: var(--primary-light);">💻 Handover & Transfer Company Hardware Asset</h2>
+            <small style="color: var(--text-muted);">Issue or transfer hardware, SIM cards, telecom 5G kits or property with digital handover slip</small>
           </div>
           <button type="button" style="background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer;" onclick="window.hrApp.closeAssignAssetModal()">✕</button>
         </div>

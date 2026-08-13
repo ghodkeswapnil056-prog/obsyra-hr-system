@@ -13,13 +13,10 @@ export function renderAssetEngine() {
       </div>
       <div style="display: flex; gap: 10px; flex-wrap: wrap;">
         <button class="btn btn-primary" onclick="window.hrApp.showAssignAssetModal()">
-          💻 Handover Asset
+          💻 Handover / Transfer Asset
         </button>
         <button class="btn btn-secondary" onclick="window.hrApp.showRegisterAssetModal()">
           📦 + Register Hardware
-        </button>
-        <button class="btn btn-secondary" onclick="window.hrApp.showTransferAssetModal()">
-          🔄 Transfer Asset
         </button>
         <button class="btn btn-secondary" onclick="window.hrApp.showReturnAssetModal()">
           🛑 Asset Return Clearance
@@ -35,9 +32,9 @@ export function renderAssetEngine() {
         <button class="btn btn-sm btn-secondary asset-filter-btn" onclick="window.filterAssetTable('AVAILABLE', this)">🔵 Available Vault (72)</button>
         <button class="btn btn-sm btn-secondary asset-filter-btn" onclick="window.filterAssetTable('IN_REPAIR', this)">🔧 In Repair (15)</button>
         <button class="btn btn-sm btn-secondary asset-filter-btn" onclick="window.filterAssetTable('DAMAGED', this)">⚠️ Damaged / Lost (12)</button>
-        <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showAssignAssetModal()">💻 Handover Asset</button>
+        <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showAssignAssetModal()">💻 Handover / Transfer Asset</button>
         <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showRegisterAssetModal()">📦 Register Hardware</button>
-        <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showTransferAssetModal()">🔄 Transfers Log</button>
+        <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showReturnAssetModal()">🛑 Asset Return</button>
       </div>
     </div>
 

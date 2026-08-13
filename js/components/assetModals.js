@@ -12,8 +12,8 @@ export function renderAssignAssetModal() {
         
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
           <div>
-            <h2 style="font-size: 1.4rem; color: var(--primary-light);">💻 Handover Company Hardware & Asset</h2>
-            <small style="color: var(--text-muted);">Issue hardware, SIM cards, telecom 5G kits or company property with signed digital handover slip</small>
+            <h2 style="font-size: 1.4rem; color: var(--primary-light);">💻 Handover & Transfer Company Hardware Asset</h2>
+            <small style="color: var(--text-muted);">Issue or transfer hardware, SIM cards, telecom 5G kits or property with digital handover slip</small>
           </div>
           <button type="button" style="background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer;" onclick="window.hrApp.closeAssignAssetModal()">✕</button>
         </div>
