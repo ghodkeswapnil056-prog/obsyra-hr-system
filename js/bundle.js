@@ -7889,6 +7889,7 @@ class HRAppController {
   toggleSidebarCollapse() {
     const sidebar = document.querySelector('.sidebar');
     const mainContent = document.querySelector('.main-content');
+    const floatingBtn = document.getElementById('floatingUnhideBtn');
     const expandBtn = document.getElementById('sidebarExpandBtn');
     
     if (sidebar) {
@@ -7896,10 +7897,12 @@ class HRAppController {
       if (mainContent) {
         if (isCollapsed) {
           mainContent.classList.add('expanded-full');
+          if (floatingBtn) floatingBtn.style.display = 'flex';
           if (expandBtn) expandBtn.style.display = 'inline-flex';
-          this.showToast('◀ Sidebar hidden. Main view expanded to full width.');
+          this.showToast('◀ Sidebar hidden. Click "▶ Unhide Sidebar" anytime to restore.');
         } else {
           mainContent.classList.remove('expanded-full');
+          if (floatingBtn) floatingBtn.style.display = 'none';
           if (expandBtn) expandBtn.style.display = 'none';
           this.showToast('▶ Sidebar restored.');
         }
