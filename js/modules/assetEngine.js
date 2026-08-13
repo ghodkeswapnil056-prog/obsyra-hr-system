@@ -13,7 +13,7 @@ export function renderAssetEngine() {
       </div>
       <div style="display: flex; gap: 10px;">
         <button class="btn btn-primary" onclick="window.hrApp.showAssignAssetModal()">
-          💻 + Assign New Asset
+          💻 Handover Asset
         </button>
         <button class="btn btn-secondary" onclick="window.hrApp.showRegisterAssetModal()">
           📦 + Register Hardware
@@ -26,7 +26,7 @@ export function renderAssetEngine() {
       <div style="display: flex; gap: 12px; overflow-x: auto; font-weight: 600; font-size: 0.88rem;">
         <button class="btn btn-sm btn-primary" onclick="window.hrApp.showToast('Viewing Asset Dashboard')">📊 Dashboard</button>
         <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Viewing All Hardware Assets')">🖥️ All Assets (385)</button>
-        <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showAssignAssetModal()">💻 + Assign New Asset</button>
+        <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showAssignAssetModal()">💻 Handover Asset</button>
         <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showRegisterAssetModal()">📦 + Register Hardware</button>
         <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Viewing Assigned Assets (278)')">🟢 Assigned (278)</button>
         <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Viewing Available Storage Vault (72)')">🔵 Available (72)</button>

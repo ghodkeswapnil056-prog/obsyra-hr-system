@@ -5451,7 +5451,7 @@ function renderAssetEngine() {
       </div>
       <div style="display: flex; gap: 10px;">
         <button class="btn btn-primary" onclick="window.hrApp.showAssignAssetModal()">
-          💻 + Assign New Asset
+          💻 Handover Asset
         </button>
         <button class="btn btn-secondary" onclick="window.hrApp.showRegisterAssetModal()">
           📦 + Register Hardware
@@ -5464,7 +5464,7 @@ function renderAssetEngine() {
       <div style="display: flex; gap: 12px; overflow-x: auto; font-weight: 600; font-size: 0.88rem;">
         <button class="btn btn-sm btn-primary" onclick="window.hrApp.showToast('Viewing Asset Dashboard')">📊 Dashboard</button>
         <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Viewing All Hardware Assets')">🖥️ All Assets (385)</button>
-        <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showAssignAssetModal()">💻 + Assign New Asset</button>
+        <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showAssignAssetModal()">💻 Handover Asset</button>
         <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showRegisterAssetModal()">📦 + Register Hardware</button>
         <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Viewing Assigned Assets (278)')">🟢 Assigned (278)</button>
         <button class="btn btn-sm btn-secondary" onclick="window.hrApp.showToast('Viewing Available Storage Vault (72)')">🔵 Available (72)</button>
@@ -6377,8 +6377,8 @@ function renderAssignAssetModal() {
         
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
           <div>
-            <h2 style="font-size: 1.4rem; color: var(--primary-light);">💻 Assign Company Hardware Asset</h2>
-            <small style="color: var(--text-muted);">Issue hardware, SIM cards, telecom kits or property with digital handover slip</small>
+            <h2 style="font-size: 1.4rem; color: var(--primary-light);">💻 Handover Company Hardware & Asset</h2>
+            <small style="color: var(--text-muted);">Issue hardware, SIM cards, telecom 5G kits or company property with signed digital handover slip</small>
           </div>
           <button type="button" style="background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer;" onclick="window.hrApp.closeAssignAssetModal()">✕</button>
         </div>
@@ -6478,8 +6478,8 @@ function renderAssignAssetModal() {
 
           <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 10px;">
             <button type="button" class="btn btn-secondary" onclick="window.hrApp.closeAssignAssetModal()">Cancel</button>
-            <button type="submit" class="btn btn-primary" style="font-weight: 700; width: 220px;">
-              📋 Assign Asset & Issue Slip
+            <button type="submit" class="btn btn-primary" style="font-weight: 700; width: 240px;">
+              📋 Handover Asset & Issue Slip
             </button>
           </div>
         </form>
@@ -6681,7 +6681,7 @@ class HRAppController {
     const issueDate = document.getElementById('assignIssueDate')?.value;
     
     this.closeAssignAssetModal();
-    this.showToast(`💻 Asset ${assetId} successfully assigned to ${empId}! Handover slip generated.`);
+    this.showToast(`💻 Asset ${assetId} successfully handed over to ${empId}! Digital handover slip generated and saved to vault.`);
   }
 
   showRegisterAssetModal() {

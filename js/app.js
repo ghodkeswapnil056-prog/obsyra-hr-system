@@ -131,7 +131,7 @@ class HRAppController {
     const issueDate = document.getElementById('assignIssueDate')?.value;
     
     this.closeAssignAssetModal();
-    this.showToast(`💻 Asset ${assetId} successfully assigned to ${empId}! Handover slip generated.`);
+    this.showToast(`💻 Asset ${assetId} successfully handed over to ${empId}! Digital handover slip generated and saved to vault.`);
   }
 
   showRegisterAssetModal() {
