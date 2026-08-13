@@ -8171,25 +8171,25 @@ class HRAppController {
   applySidebarState() {
     const isCollapsed = localStorage.getItem('obsyra_sidebar_collapsed') === 'true';
     const sidebar = document.querySelector('.sidebar');
-    const mainContent = document.querySelector('.main-content');
+    const mainWrapper = document.querySelector('.main-wrapper') || document.querySelector('.main-content');
     const floatingBtn = document.getElementById('floatingUnhideBtn');
     const expandBtn = document.getElementById('sidebarExpandBtn');
     const navbarBtn = document.getElementById('navbarSidebarToggleBtn');
     
-    if (sidebar) {
-      if (isCollapsed) {
-        sidebar.classList.add('collapsed');
-        if (mainContent) mainContent.classList.add('expanded-full');
-        if (floatingBtn) floatingBtn.style.display = 'flex';
-        if (expandBtn) expandBtn.style.display = 'inline-flex';
-        if (navbarBtn) navbarBtn.innerHTML = '▶ Show Sidebar';
-      } else {
-        sidebar.classList.remove('collapsed');
-        if (mainContent) mainContent.classList.remove('expanded-full');
-        if (floatingBtn) floatingBtn.style.display = 'none';
-        if (expandBtn) expandBtn.style.display = 'none';
-        if (navbarBtn) navbarBtn.innerHTML = '◀ Hide Sidebar';
-      }
+    if (isCollapsed) {
+      document.body.classList.add('sidebar-hidden');
+      if (sidebar) sidebar.classList.add('collapsed');
+      if (mainWrapper) mainWrapper.classList.add('expanded-full');
+      if (floatingBtn) floatingBtn.style.display = 'flex';
+      if (expandBtn) expandBtn.style.display = 'inline-flex';
+      if (navbarBtn) navbarBtn.innerHTML = '▶ Show Sidebar';
+    } else {
+      document.body.classList.remove('sidebar-hidden');
+      if (sidebar) sidebar.classList.remove('collapsed');
+      if (mainWrapper) mainWrapper.classList.remove('expanded-full');
+      if (floatingBtn) floatingBtn.style.display = 'none';
+      if (expandBtn) expandBtn.style.display = 'none';
+      if (navbarBtn) navbarBtn.innerHTML = '◀ Hide Sidebar';
     }
   }
 
