@@ -177,22 +177,26 @@ class HRAppController {
       item.classList.toggle('active', item.getAttribute('data-view') === activeView);
     });
 
-    // Check RBAC permission for requested view
+    // Check Super Admin privilege gate for Executive Hub
     if (!store.hasPermission(activeView)) {
       viewContainer.innerHTML = `
-        <div class="glass-card" style="margin-top: 40px; text-align: center; padding: 45px; border-left: 4px solid var(--accent-rose);">
-          <div style="font-size: 3rem; margin-bottom: 10px;">🔒</div>
-          <h2 style="color: var(--accent-rose); font-size: 1.5rem; margin-bottom: 10px;">Restricted Access Privilege</h2>
-          <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 600px; margin: 0 auto 20px auto;">
-            Your active logged-in role (<strong>${state.currentUser.role}</strong>) does not have authorization to view or manage the <strong>${activeView.toUpperCase()}</strong> module according to company RBAC policy.
+        <div class="glass-card" style="margin: 40px auto; max-width: 750px; text-align: center; padding: 50px 35px; border-top: 5px solid var(--primary); box-shadow: var(--shadow-glow);">
+          <div style="width: 70px; height: 70px; background: rgba(99, 102, 241, 0.15); border-radius: 20px; display: inline-flex; align-items: center; justify-content: center; font-size: 2.5rem; margin-bottom: 20px;">🛡️</div>
+          
+          <h2 style="font-size: 1.75rem; font-weight: 800; color: white; margin-bottom: 10px;">SUPER ADMIN VIEW ONLY</h2>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; max-width: 600px; margin: 0 auto 25px auto;">
+            The Executive HR Hub & Main System Dashboard is configured for <strong>Super Admin View Only</strong> for Obsyra Private Limited. 
+            <br><br>
+            Active Session Role: <span class="badge badge-danger">${state.currentUser.role} (${state.currentUser.name})</span>
           </p>
-          <div style="display: flex; gap: 10px; justify-content: center;">
-            <button class="btn btn-primary" onclick="window.hrApp.openLoginModal()">
-              🔑 Switch Account / Sign In as Admin
+
+          <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <button class="btn btn-primary" onclick="window.hrApp.loginAsRole('Super Admin', 'Swapnil Ghodke', 'OBS-ADM-26-000')" style="padding: 12px 24px; font-weight: 700;">
+              🔑 Authenticate Super Admin Access
             </button>
-            <button class="btn btn-secondary" onclick="window.store.navigate('dashboard')">
-              🏠 Back to Dashboard
-            </button>
+            <a href="login.html" class="btn btn-secondary" style="padding: 12px 24px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center;">
+              📍 Go to Mobile Attendance Portal
+            </a>
           </div>
         </div>
       `;

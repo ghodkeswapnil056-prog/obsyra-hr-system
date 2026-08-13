@@ -77,28 +77,18 @@ class HRStore {
     this.notify();
   }
 
-  // RBAC Permission Evaluator
+  // RBAC Super Admin View Privilege Evaluator
   hasPermission(view) {
     const role = this.state.currentUser.role;
-    if (role === "Super Admin") return true;
     
-    if (role === "HR Admin") {
-      return view !== "settings_edit";
-    }
+    // Super Admin has full unrestricted access to Executive Hub
+    if (role === "Super Admin") return true;
 
-    if (role === "HR Executive") {
-      return ["dashboard", "employees", "profile", "generator", "history", "recruitment", "onboarding", "attendance", "payroll", "performance", "assets", "projects", "verification", "auditLogs", "expenses", "training", "exit"].includes(view);
-    }
+    // Public Verification view is open for serial verification
+    if (view === "verification") return true;
 
-    if (role === "Department Manager") {
-      return ["dashboard", "employees", "profile", "recruitment", "onboarding", "attendance", "performance", "assets", "projects", "expenses", "training"].includes(view);
-    }
-
-    if (role === "Employee") {
-      return ["dashboard", "profile", "attendance", "payroll", "assets", "expenses", "training", "verification"].includes(view);
-    }
-
-    return true;
+    // All Executive HR Hub modules are Super Admin View Only
+    return false;
   }
 
   // User Authentication Methods
