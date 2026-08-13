@@ -7885,6 +7885,27 @@ class HRAppController {
       setTimeout(() => document.body.removeChild(toast), 300);
     }, 3500);
   }
+
+  toggleSidebarCollapse() {
+    const sidebar = document.querySelector('.sidebar');
+    const mainContent = document.querySelector('.main-content');
+    const expandBtn = document.getElementById('sidebarExpandBtn');
+    
+    if (sidebar) {
+      const isCollapsed = sidebar.classList.toggle('collapsed');
+      if (mainContent) {
+        if (isCollapsed) {
+          mainContent.classList.add('expanded-full');
+          if (expandBtn) expandBtn.style.display = 'inline-flex';
+          this.showToast('◀ Sidebar hidden. Main view expanded to full width.');
+        } else {
+          mainContent.classList.remove('expanded-full');
+          if (expandBtn) expandBtn.style.display = 'none';
+          this.showToast('▶ Sidebar restored.');
+        }
+      }
+    }
+  }
 }
 
 // Instantiate global application singleton
@@ -7893,6 +7914,7 @@ window.hrApp = appInstance;
 window.hrAppInstance = appInstance;
 
 // Global Window Function Proxies for 100% Inline Click Guarantee
+window.toggleSidebarCollapse = () => appInstance.toggleSidebarCollapse();
 window.showAssignAssetModal = () => appInstance.showAssignAssetModal();
 window.closeAssignAssetModal = () => appInstance.closeAssignAssetModal();
 window.showRegisterAssetModal = () => appInstance.showRegisterAssetModal();

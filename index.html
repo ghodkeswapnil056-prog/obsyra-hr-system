@@ -51,12 +51,17 @@
   <div id="app">
     <!-- Left Navigation Sidebar Drawer -->
     <aside class="sidebar">
-      <div class="sidebar-header">
-        <img src="assets/obsyra_logo.jpg" alt="Obsyra Logo" style="width: 42px; height: 42px; border-radius: 8px; object-fit: contain; background: #ffffff; padding: 2px; box-shadow: 0 2px 8px rgba(0,0,0,0.3);" />
-        <div>
-          <div class="sidebar-brand-text">OBSYRA</div>
-          <small style="color: var(--text-subtle); font-size: 0.62rem; font-weight: 700; letter-spacing: 1px;">PRIVATE LIMITED</small>
+      <div class="sidebar-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <img src="assets/obsyra_logo.jpg" alt="Obsyra Logo" style="width: 42px; height: 42px; border-radius: 8px; object-fit: contain; background: #ffffff; padding: 2px; box-shadow: 0 2px 8px rgba(0,0,0,0.3);" />
+          <div>
+            <div class="sidebar-brand-text">OBSYRA</div>
+            <small style="color: var(--text-subtle); font-size: 0.62rem; font-weight: 700; letter-spacing: 1px;">PRIVATE LIMITED</small>
+          </div>
         </div>
+        <button type="button" class="sidebar-toggle-btn" onclick="window.toggleSidebarCollapse()" title="Hide Sidebar Navigation" aria-label="Hide Sidebar Navigation">
+          ◀ Hide
+        </button>
       </div>
 
       <nav class="sidebar-menu">
@@ -179,6 +184,9 @@
       <!-- Top Sticky Navbar -->
       <header class="navbar">
         <button class="mobile-menu-toggle" onclick="window.hrApp.toggleMobileSidebar()" aria-label="Toggle Navigation Menu">☰</button>
+        <button type="button" id="sidebarExpandBtn" class="sidebar-toggle-btn" onclick="window.toggleSidebarCollapse()" title="Show Sidebar Navigation" aria-label="Show Sidebar Navigation" style="display: none; margin-right: 10px;">
+          ▶ Show Sidebar
+        </button>
         <div class="search-bar">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text-muted);"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
           <input type="text" placeholder="Global search employee name, doc number..." onkeyup="if(event.key === 'Enter') { window.store.navigate('employees'); }">
@@ -382,6 +390,6 @@
   </div>
 
   <!-- Entry Script (Universal Standalone Bundle) -->
-  <script src="js/bundle.js?v=3.8.0&t=1786511150"></script>
+  <script src="js/bundle.js?v=3.9.0&t=1786511151"></script>
 </body>
 </html>
